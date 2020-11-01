@@ -28,7 +28,7 @@
       </slide>
     </carousel-3d>
     <div v-if="selectedSlideId===1">
-      <AboutUs/>
+      <AboutUs v-model="openDetail" @close="closeDetail"/>
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       slides: [
-        {id: 1, name: "About Us", img: imageOne},
+        {id: 1, name: "About CityHack", img: imageOne},
         {id: 2, name: "Rules", img: imageThree},
         {id: 3, name: "TimeLine", img: imageTwo},
         {id: 4, name: "Prizes", img: imageFour},
@@ -68,6 +68,10 @@ export default {
       this.selectedSlideId = slideId;
       this.openDetail = true;
       console.log(this.selectedSlideId, this.openDetail);
+    },
+    closeDetail() {
+      this.selectedSlideId = null;
+      this.openDetail = false;
     }
   }
 }
