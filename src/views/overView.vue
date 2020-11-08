@@ -1,7 +1,7 @@
 <template>
   <v-row>
-    <v-col class="pl-5" cols="12" sm="1" lg="2">
-      <scrollactive class="my-nav">
+    <v-col class="mt-2 pl-5" cols="12" sm="1" lg="2">
+      <scrollactive class="my-nav" active-class="active">
         <ul>
           <li><a href="#aboutUs" class="scrollactive-item">About CityHack</a></li>
           <li><a href="#rulesAndCriteria" class="scrollactive-item">Rules & Judging Criteria</a></li>
@@ -14,13 +14,13 @@
       </scrollactive>
     </v-col>
     <v-col cols="12" sm="11" lg="10">
-      <div id="aboutUs" style=""><AboutUs /></div>
-      <div id="rulesAndCriteria" style=""><RulesAndCriteria /></div>
-      <div id="timeLine" style=""> <TimeLine /></div>
-      <div id="prizes" style=""><Prizes /></div>
-      <div id="QandA" style=""><QandA /></div>
-      <div id="judges" style=""><Judges /></div>
-      <div id="sponsors" style=""><Sponsors /></div>
+      <div style="padding-bottom: 8rem;" id="aboutUs"><AboutUs /></div>
+      <div style="padding-bottom: 8rem;" id="rulesAndCriteria"><RulesAndCriteria /></div>
+      <div style="padding-bottom: 8rem;" id="timeLine"> <TimeLine /></div>
+      <div style="padding-bottom: 8rem;" id="prizes"><Prizes /></div>
+      <div style="padding-bottom: 8rem;" id="QandA"><QandA /></div>
+      <div style="padding-bottom: 8rem;" id="judges"><Judges /></div>
+      <div style="padding-bottom: 8rem;" id="sponsors"><Sponsors /></div>
     </v-col>
   </v-row>
 </template>
@@ -45,10 +45,18 @@ export default {
     Sponsors,
     QandA,
   },
+  methods: {
+    // onItemChanged(event, currentItem, lastActiveItem){
+    //   console.log(event, currentItem, lastActiveItem);
+    // }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+.active {
+  color: #e74d08;
+}
 ul {
   display: flex;
   position: fixed;
