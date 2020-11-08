@@ -129,7 +129,6 @@ export default {
   },
   methods: {
     close() {
-      console.log("CLOSING");
       this.$emit('close');
     }
   }
@@ -138,6 +137,6 @@ export default {
 
 <style scoped>
 .container {
-  margin-top: 8rem;
+  margin-top: 5rem;
 }
 </style>
