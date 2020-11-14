@@ -32,7 +32,7 @@
 		<div class="title"><router-link to="/">#CityHack 2021</router-link></div>
 		<b-nav align="center">
 			<b-nav-item>
-				<v-app-bar-nav-icon @click.stop="toogleDrawer"></v-app-bar-nav-icon>
+				<v-app-bar-nav-icon @click.stop="toggleDrawer"></v-app-bar-nav-icon>
 				<!-- {{ drawer }} -->
 			</b-nav-item>
 			<b-nav-item active>
@@ -49,7 +49,7 @@
 	export default {
     name: 'navBar',
     methods: {
-      ...mapMutations('menu', ['toogleDrawer'])
+      ...mapMutations('menu', ['toggleDrawer'])
     }
 	};
 </script>

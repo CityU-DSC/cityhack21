@@ -2,7 +2,12 @@
 	<div>
 		<!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 		<div class="my-nav ml-5 v-chip--clickable">
-			<v-navigation-drawer :value="drawer" absolute>
+			<v-navigation-drawer
+				:value="drawer"
+				absolute
+				temporary
+				@input="opened => !opened? toggleDrawer(): null"
+			>
 				<v-list-item>
 					<v-list-item-content>
 						<v-list-item-title class="title">
@@ -16,7 +21,9 @@
 
 				<v-divider></v-divider>
 				<ul>
-					<li @click="$refs.fullpage.api.moveTo(1)">About CityHack</li>
+					<li @click="$refs.fullpage.api.moveTo(1)">
+						About CityHack {{ drawer ? 'yes' : 'no' }}
+					</li>
 					<li @click="$refs.fullpage.api.moveTo(2)">
 						Rules & Judging Criteria
 					</li>
@@ -73,7 +80,7 @@
 	import RulesAndCriteria from '../components/landingPage/rulesAndCriteria';
 	import Sponsors from '../components/landingPage/sponsors';
 	import QandA from '../components/landingPage/QandA';
-	import { mapGetters } from 'vuex';
+	import { mapGetters, mapMutations } from 'vuex';
 
 	export default {
 		name: 'overView',
@@ -86,10 +93,10 @@
 			Sponsors,
 			QandA,
 		},
-    computed: {
-      // eslint-disable-next-line no-mixed-spaces-and-tabs
-		  ...mapGetters('menu', ['drawer']),
-    },
+		computed: {
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+			...mapGetters('menu', ['drawer']),
+		},
 		data() {
 			return {
 				options: {
@@ -104,7 +111,9 @@
 				],
 			};
 		},
-		methods: {},
+		methods: {
+			...mapMutations('menu', ['toggleDrawer']),
+		},
 	};
 </script>
 
