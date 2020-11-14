@@ -6,23 +6,15 @@
 				:value="drawer"
 				absolute
 				temporary
-				@input="opened => !opened? toggleDrawer(): null"
+				@input="(opened) => (!opened ? toggleDrawer() : null)"
+				width="325"
 			>
-				<v-list-item>
-					<v-list-item-content>
-						<v-list-item-title class="title">
-							Application
-						</v-list-item-title>
-						<v-list-item-subtitle>
-							subtext
-						</v-list-item-subtitle>
-					</v-list-item-content>
-				</v-list-item>
+				<h2 class="navCityHacktitle">City Hack 2021</h2>
 
 				<v-divider></v-divider>
 				<ul>
 					<li @click="$refs.fullpage.api.moveTo(1)">
-						About CityHack {{ drawer ? 'yes' : 'no' }}
+						About CityHack
 					</li>
 					<li @click="$refs.fullpage.api.moveTo(2)">
 						Rules & Judging Criteria
@@ -128,8 +120,8 @@
 		flex-direction: column;
 		align-items: start;
 		list-style-type: none;
-		z-index: 100;
-
+		// z-index: 100;
+		padding-left: 20px;
 		li {
 			padding: 6px 0;
 
@@ -165,5 +157,12 @@
 				transform-origin: left;
 			}
 		}
+	}
+	.navCityHacktitle {
+		text-align: center;
+		h2 {
+			margin-bottom: 0;
+		}
+		margin-top: 20px;
 	}
 </style>

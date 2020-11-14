@@ -30,16 +30,20 @@
 			</v-row>
 		</v-container>
 		<div class="title"><router-link to="/">#CityHack 2021</router-link></div>
-		<b-nav align="center">
-			<b-nav-item>
-				<v-app-bar-nav-icon @click.stop="toggleDrawer"></v-app-bar-nav-icon>
-				<!-- {{ drawer }} -->
-			</b-nav-item>
+		<b-nav align="center" class="navBarNav  d-flex align-items-center">
 			<b-nav-item active>
 				<router-link to="/overview">Overview</router-link>
 			</b-nav-item>
 			<b-nav-item>Resources</b-nav-item>
 			<b-nav-item>Log In</b-nav-item>
+			<b-nav-item v-if="isOverviewPage">
+				<v-app-bar-nav-icon
+					class="overviewNavButton"
+					@click.stop="toggleDrawer"
+					width
+				></v-app-bar-nav-icon>
+				<!-- {{ drawer }} -->
+			</b-nav-item>
 		</b-nav>
 	</div>
 </template>
@@ -47,10 +51,16 @@
 <script>
 	import { mapMutations } from 'vuex';
 	export default {
-    name: 'navBar',
-    methods: {
-      ...mapMutations('menu', ['toggleDrawer'])
-    }
+		name: 'navBar',
+		methods: {
+			...mapMutations('menu', ['toggleDrawer']),
+		},
+		computed: {
+			isOverviewPage() {
+				console.log(this.$route);
+				return this.$route.name === 'overview';
+			},
+		},
 	};
 </script>
 
@@ -58,6 +68,13 @@
 	a {
 		text-decoration: none;
 		color: black;
+	}
+	.nav-link {
+		padding: 0;
+		padding-left: 20px;
+	}
+	.navBarNav {
+		height: 36px;
 	}
 
 	.iconLink {
@@ -67,6 +84,10 @@
 	.navigation {
 		/* height: 20vh; */
 		text-align: center;
+		position: relative;
+		z-index: 6;
+		background: white;
+		box-shadow: 0 3px  rgba(0, 0, 0, .2);
 	}
 
 	.title {
