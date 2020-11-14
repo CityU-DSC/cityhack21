@@ -1,24 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import user from './modules/user';
+import menu from './modules/menu';
 
 Vue.use(Vuex);
 
-const store = () => new Vuex.Store({
+export default new Vuex.Store({
     modules: {
-        // user,
+        menu,
     },
-    state: {
-        drawerOpen: false,
-    },
-    getters: {
-        isLoggedIn: (state) => state.user.isLoggedIn,
-        currentUsername: (state) => state.user.username,
-        drawer: (state) => state.drawerOpen,
-    },
-    mutations: {
-        toogleDrawer: (state) => { state.drawerOpen = !state.drawerOpen }
-    }
 });
-
-export default store;

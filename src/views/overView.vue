@@ -73,6 +73,7 @@
 	import RulesAndCriteria from '../components/landingPage/rulesAndCriteria';
 	import Sponsors from '../components/landingPage/sponsors';
 	import QandA from '../components/landingPage/QandA';
+	import { mapGetters } from 'vuex';
 
 	export default {
 		name: 'overView',
@@ -85,6 +86,10 @@
 			Sponsors,
 			QandA,
 		},
+    computed: {
+      // eslint-disable-next-line no-mixed-spaces-and-tabs
+		  ...mapGetters('menu', ['drawer']),
+    },
 		data() {
 			return {
 				options: {
@@ -93,7 +98,6 @@
 					autoScrolling: true,
 					fitToSection: true,
 				},
-				drawer: null,
 				items: [
 					{ title: 'About CityHack', icon: 'mdi-view-dashboard' },
 					{ title: 'About', icon: 'mdi-forum' },
