@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       options: {
-        licenseKey: 'YOUR_KEY_HEERE',
+        licenseKey: '',
         menu: '#menu',
         autoScrolling: true,
         fitToSection: true,
