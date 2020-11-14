@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 
-import Store from './store'
+import store from './store'
 import Carousel3d from 'vue-carousel-3d'
 import vuetify from './plugins/vuetify';
 
@@ -34,7 +34,7 @@ const router = new VueRouter({
 });
 
 new Vue({
-  Store,
+  store,
   vuetify,
   router,
   render: h => h(App)

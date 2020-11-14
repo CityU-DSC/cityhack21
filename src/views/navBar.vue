@@ -32,7 +32,7 @@
 		<div class="title"><router-link to="/">#CityHack 2021</router-link></div>
 		<b-nav align="center">
 			<b-nav-item>
-				<v-app-bar-nav-icon @click.stop="$Store.mutations.toogleDrawer"></v-app-bar-nav-icon>
+				<v-app-bar-nav-icon @click.stop="toogleDrawer"></v-app-bar-nav-icon>
 				<!-- {{ drawer }} -->
 			</b-nav-item>
 			<b-nav-item active>
@@ -45,14 +45,11 @@
 </template>
 
 <script>
-	// import { mapGetters } from 'vuex';
+	import { mapMutations } from 'vuex';
 	export default {
-		name: 'navBar',
-		// computed: {
-		// 	...mapGetters(['drawer']),
-    // },
-    mounted: () =>{
-      // console.log($refs)
+    name: 'navBar',
+    methods: {
+      ...mapMutations('menu', ['toogleDrawer'])
     }
 	};
 </script>

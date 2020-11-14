@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+		<!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
 		<div class="my-nav ml-5 v-chip--clickable">
 			<v-navigation-drawer v-model="drawer" absolute>
 				<v-list-item>
