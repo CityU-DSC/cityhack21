@@ -37,19 +37,50 @@ export default {
       qas: [
         {
           img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample1.jpg',
-          question: 'How can you do this to me?',
-          answer: 'bcoz u r my ex',
+          question: 'I\'m not a CityU student, can I register?',
+          answer: 'Why not? We welcome all Hong Kong undergraduate and postgraduate students.',
         },
         {
           img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample4.jpg',
-          question: 'How can you do this to me?',
-          answer: 'bcoz u r my ex',
+          question: 'Do I have to form a group? May I work by myself?',
+          answer: 'Students are encouraged to apply in a group with 3 to 5 persons. \
+                    If you register individually, we will assign you to a group based on your role preference.',
+        },
+        {
+          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample5.jpg',
+          question: 'Do we have to attend the event physically?',
+          answer: 'Considering this year\'s special pandemic case, CityHack2021 will be held completely online. \
+                    Ceremonies and meetings will be conducted on online conference platform. And stay safe!'
         },
         {
           img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample9.jpg',
-          question: 'How can you do this to me?',
-          answer: 'bcoz u r my ex',
+          question: 'What are the topics about and expected deliverables for this competition?',
+          answer: 'The competition will be AI-related, though detailed information will be announced during the opening ceremony. \
+                  Expected outcomes for the competition can range from a product (e.g. Website, Mobile App), \
+                  a solution (e.g. a predictive model, a pipeline) for the provided problems to beyond the universe.',
         },
+        {
+          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg',
+          question: 'What support will be offered during the competition?',
+          answer: 'Workshops will be provided to walk you through the topic background, accompanied by tutorials to get you started \
+                  in using the recommended software tools, e.g. AI Developing Kit. There will also have staffs on the spot\
+                  during the event to answer your enquiries regarding the technical issues.'
+        },
+        {
+          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample6.jpg',
+          question: 'May I develop on and present some projects I already have done before?',
+          answer: 'No. Your project must be built during the competition.'
+        },
+        {
+          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample7.jpg',
+          question: 'How will teams be judged?',
+          answer: 'We will have preliminary round for selection, followed by a second round, a third round, a forth round, etc...'
+        },
+        {
+          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample8.jpg',
+          question: 'How do we present our project?',
+          answer: 'Get to the top of Burj Khalifa and livestream there.'
+        }
       ],
     }
   },
