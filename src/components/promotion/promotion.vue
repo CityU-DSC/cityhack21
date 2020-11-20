@@ -1,5 +1,11 @@
 <!-- This is the page for the promotion -->
 <template>
+    <h3>Just a fucking test</h3>
+    <!-- Place the image in here -->
+    
+</template>
+<!-- 
+<template>
     <div id="novin-alert-container">
         <div v-for="message in messages" v-bind:key="message.id" class="alert novin-alert" :class="message.class">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -29,3 +35,5 @@
         }
     }
 </script>
+
+-->

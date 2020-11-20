@@ -2,6 +2,7 @@
   <div id="app">
     <b-modal ref="my-modal" hide-footer title="Using Component Methods">
         <div class="d-block text-center">
+          <PromotionMaterial/>
         <h3>This is the promotional material</h3>
       </div>
       <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
@@ -13,6 +14,8 @@
 
 <script>
 import NavBar from './views/navBar.vue';
+import PromotionMaterial from './components/promotion/promotion.vue';
+
 export default {
   name: 'App',
   methods: {
@@ -28,6 +31,7 @@ export default {
   },
   components: {
     NavBar,
+    PromotionMaterial
   }
 }
 </script>
