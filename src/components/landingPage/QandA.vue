@@ -2,6 +2,7 @@
 <!-- TODO: modify  
 1. choose arrow or delimiter 
 2. make sure mobile looks ok.
+https://vuetifyjs.com/en/api/v-carousel/
 https://vuetifyjs.com/en/components/carousels/ -->
 <template>
 	<v-container>
@@ -15,11 +16,10 @@ https://vuetifyjs.com/en/components/carousels/ -->
 		<v-carousel v-if='isOverviewPage'
 			:continuous="false"
 			:cycle="true"
-			:show-arrows="false"
-      dark
-      hide-delimiter-background
+			:show-arrows="true"
+      show-arrows-on-hover
 		>
-			<v-carousel-item v-for="qa in qas" :key="qa.id">
+			<v-carousel-item v-for="qa in qas" :key="qa.id" width='100%' height='100%'>
 				<!-- <v-sheet :color="colors[i]" height="100%" tile>
 					<v-row class="fill-height" align="center" justify="center">
 						<div class="display-3">{{ slide }} Slide</div>
@@ -63,7 +63,7 @@ https://vuetifyjs.com/en/components/carousels/ -->
 	export default {
 		name: 'QandA',
 		props: {
-			value: Boolean,
+      value: Boolean,
 		},
 		data() {
 			return {
