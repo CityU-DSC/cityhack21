@@ -2,11 +2,14 @@ import router from '@/routes'
 
 export default {
     namespaced: true,
-    state: {},
-    getters: {
+    state: {
         isOverviewPage: function (){ 
-            console.log(router);
-            return router.name === 'overview'}
+            return router.currentRoute.name === 'overview'}
     },
-    mutations: {}
+    getters: {
+        
+    },
+    mutations: {
+
+    }
 }

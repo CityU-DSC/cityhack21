@@ -7,7 +7,26 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-timeline>
+
+    <v-expansion-panels accordion class="d-md-none">
+      <v-expansion-panel
+        v-for="timeLine in timeLines"
+        :key="timeLine.id"
+       
+      >
+        <v-expansion-panel-header disable-icon-rotate>{{ timeLine.time }}
+          <template v-slot:actions>
+            <v-icon color="#1867c0">
+              $expand
+            </v-icon>
+          </template></v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <h1>{{ timeLine.title }}</h1>{{timeLine.content}}
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+
+    <v-timeline class="d-none d-md-block">
       <v-timeline-item
           v-for="timeLine in timeLines"
           :key="timeLine.id"

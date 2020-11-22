@@ -14,28 +14,24 @@
       <v-tabs vertical>
         <v-tab>
           <v-icon left> mdi-information </v-icon>
-          What is Hackathon
         </v-tab>
         <v-tab>
           <v-icon left> mdi-layers-search </v-icon>
-          What is CityHack
         </v-tab>
         <v-tab>
           <v-icon left> mdi-view-agenda </v-icon>
-          Events Outline
         </v-tab>
         <v-tab>
           <v-icon left> mdi-shape </v-icon>
-          Themes
         </v-tab>
         <v-tab>
           <v-icon left> mdi-contacts </v-icon>
-          Contact Info
         </v-tab>
 
         <v-tab-item>
           <v-card flat>
             <v-card-text>
+              <h1>What is Hackathon</h1>
               <p>
                 The word “hackathon” is a portmanteau of “hacking marathon”.
               </p>
@@ -48,6 +44,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
+              <h1>What is CityHack</h1>
               <p>
                 CityHack is CityU’s largest Hackathon event. We aim to break away from conventional education and provide students with a unique opportunity to create a “hack” through a collaborative effort.
               </p>
@@ -63,6 +60,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
+              <h1>Events Outline</h1>
               <h4>Basic Information</h4>
               <p>Name: CityHack 2021</p>
               <p>Time: 30 January 2021 - 30 January 2021</p>
@@ -83,6 +81,9 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
+              <h1>
+                Themes
+              </h1>
               <p>
                 This year we will have open-ended tasks. Participants can think of possible solutions or ideas to improve the situation caused by Covid19. Below are the four main aspects that they can consider in their solutions:
               </p>
@@ -98,6 +99,9 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
+              <h1>
+                Contact Info
+              </h1>
               <ul class="ml-3">
                 <li>Team Lead: Su Jin -  <a href = "mailto: sjyeap2-c@my.cityu.edu.hk">sjyeap2-c@my.cityu.edu.hk</a></li>
                 <li>Google DSC Lead: Ryan Yen – <a href = "mailto: ryanyen2-c@my.cityu.edu.hk">ryanyen2-c@my.cityu.edu.hk</a></li>
