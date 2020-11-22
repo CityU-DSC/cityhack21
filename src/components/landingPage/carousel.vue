@@ -1,18 +1,5 @@
 <template>
-  <div>
-    <v-breadcrumbs
-        :items="navSlides"
-        large
-        class="text-center"
-    >
-      <template v-slot:item="{item}">
-        <v-breadcrumbs-item class="v-chip--clickable" @click="quickNavigate(item.id)">
-          {{ item.text }}
-        </v-breadcrumbs-item>
-      </template>
-    </v-breadcrumbs>
-
-
+  <div class="mt-5">
     <carousel-3d
         :width="1000" height="500"
         :controls-visible="true"
