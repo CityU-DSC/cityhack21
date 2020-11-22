@@ -20,10 +20,10 @@
 						Rules & Judging Criteria
 					</li>
 					<li @click="$refs.fullpage.api.moveTo(3)">TimeLine</li>
-					<li @click="$refs.fullpage.api.moveTo(4)">Prizes</li>
-					<li @click="$refs.fullpage.api.moveTo(5)">Q&As</li>
-					<li @click="$refs.fullpage.api.moveTo(6)">Judges</li>
-					<li @click="$refs.fullpage.api.moveTo(7)">Sponsors</li>
+<!--					<li @click="$refs.fullpage.api.moveTo(4)">Prizes</li>-->
+					<li @click="$refs.fullpage.api.moveTo(4)">Q&As</li>
+<!--					<li @click="$refs.fullpage.api.moveTo(6)">Judges</li>-->
+					<li @click="$refs.fullpage.api.moveTo(5)">Sponsors</li>
 				</ul>
 				<!-- <v-list dense nav>
 					<v-list-item v-for="item in items" :key="item.title" link>
@@ -48,15 +48,15 @@
 			<div id="timeLine" class="section">
 				<TimeLine />
 			</div>
-			<div id="prizes" class="section">
-				<Prizes />
-			</div>
+<!--			<div id="prizes" class="section">-->
+<!--				<Prizes />-->
+<!--			</div>-->
 			<div id="QandA" class="section">
 				<QandA />
 			</div>
-			<div id="judges" class="section">
-				<Judges />
-			</div>
+<!--			<div id="judges" class="section">-->
+<!--				<Judges />-->
+<!--			</div>-->
 			<div id="sponsors" class="section fp-auto-height-responsive">
 				<Sponsors />
 			</div>
@@ -67,8 +67,8 @@
 <script>
 	import AboutUs from '../components/landingPage/aboutUs';
 	import TimeLine from '../components/landingPage/timeLine';
-	import Judges from '../components/landingPage/judges';
-	import Prizes from '../components/landingPage/prizes';
+	// import Judges from '../components/landingPage/judges';
+	// import Prizes from '../components/landingPage/prizes';
 	import RulesAndCriteria from '../components/landingPage/rulesAndCriteria';
 	import Sponsors from '../components/landingPage/sponsors';
 	import QandA from '../components/landingPage/QandA';
@@ -79,8 +79,8 @@
 		components: {
 			AboutUs,
 			TimeLine,
-			Judges,
-			Prizes,
+			// Judges,
+			// Prizes,
 			RulesAndCriteria,
 			Sponsors,
 			QandA,
