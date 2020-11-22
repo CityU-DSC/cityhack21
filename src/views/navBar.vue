@@ -33,27 +33,27 @@
       <b-nav-item active>
         <router-link to="/overview">Overview</router-link>
       </b-nav-item>
-      <b-nav-item>Resources</b-nav-item>
-      <b-nav-item-dropdown v-if="isLoggedIn">
-        <template #button-content>
-          <em>Hello {{ currentUserName }}</em>
-        </template>
-        <b-dropdown-item @click="logOut">Log Out</b-dropdown-item>
-        <b-dropdown-item>
-          <router-link to="/login">Switch Account</router-link>
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
-      <b-nav-item-dropdown v-else>
-        <template #button-content>
-          <em>Log In</em>
-        </template>
-        <b-dropdown-item>
-          <router-link to="/login">Log In</router-link>
-        </b-dropdown-item>
-        <b-dropdown-item>
-          <router-link to="/register">Register</router-link>
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
+<!--      <b-nav-item>Resources</b-nav-item>-->
+<!--      <b-nav-item-dropdown v-if="isLoggedIn">-->
+<!--        <template #button-content>-->
+<!--          <em>Hello {{ currentUserName }}</em>-->
+<!--        </template>-->
+<!--        <b-dropdown-item @click="logOut">Log Out</b-dropdown-item>-->
+<!--        <b-dropdown-item>-->
+<!--          <router-link to="/login">Switch Account</router-link>-->
+<!--        </b-dropdown-item>-->
+<!--      </b-nav-item-dropdown>-->
+<!--      <b-nav-item-dropdown v-else>-->
+<!--        <template #button-content>-->
+<!--          <em>Log In</em>-->
+<!--        </template>-->
+<!--        <b-dropdown-item>-->
+<!--          <router-link to="/login">Log In</router-link>-->
+<!--        </b-dropdown-item>-->
+<!--        <b-dropdown-item>-->
+<!--          <router-link to="/register">Register</router-link>-->
+<!--        </b-dropdown-item>-->
+<!--      </b-nav-item-dropdown>-->
     </b-nav>
   </div>
 </template>
