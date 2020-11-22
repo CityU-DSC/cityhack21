@@ -147,7 +147,9 @@ https://vuetifyjs.com/en/components/carousels/ -->
 					this.$emit('input', value);
 				},
 			},
-			isOverviewPage: () => this.$route.name === 'overview',
+			isOverviewPage() {
+				return this.$route.name === 'overview';
+			},
 		},
 		methods: {
 			close() {

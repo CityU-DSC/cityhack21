@@ -71,7 +71,7 @@ import CityHackLogo from "../assets/logo/city_hack_logo.png";
       }
     },
     computed: {
-      isOverviewPage: () => this.$route.name === 'overview',
+      isOverviewPage() { return this.$route.name === 'overview'; } ,
       ...mapGetters('auth', ['isLoggedIn', 'currentUserName']),
     },
     methods: {
