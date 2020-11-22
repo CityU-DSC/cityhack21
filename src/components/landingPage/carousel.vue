@@ -151,8 +151,11 @@ li:hover {
 
 .carousel-3d-container figcaption[data-v-05ba4f99] {
   background-color: rgba(0, 0, 0, 0);
-  margin-left: 26rem;
+  /* margin-left: 26rem; */
   margin-bottom: 1rem;
+
+  display: flex;
+  justify-content: center;
 }
 
 .bounce {

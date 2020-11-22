@@ -1,4 +1,3 @@
-
 <!-- TODO: modify  
 1. choose arrow or delimiter 
 2. make sure mobile looks ok.
@@ -13,19 +12,25 @@ https://vuetifyjs.com/en/components/carousels/ -->
 				<v-icon>mdi-close</v-icon>
 			</v-btn>
 		</v-toolbar>
-		<v-carousel v-if='isOverviewPage'
+		<v-carousel
+			v-if="isOverviewPage"
 			:continuous="false"
 			:cycle="true"
 			:show-arrows="true"
-      show-arrows-on-hover
+			show-arrows-on-hover
 		>
-			<v-carousel-item v-for="qa in qas" :key="qa.id" width='100%' height='100%'>
+			<v-carousel-item
+				v-for="qa in qas"
+				:key="qa.id"
+				width="100%"
+				height="100%"
+			>
 				<!-- <v-sheet :color="colors[i]" height="100%" tile>
 					<v-row class="fill-height" align="center" justify="center">
 						<div class="display-3">{{ slide }} Slide</div>
 					</v-row>
 				</v-sheet> -->
-        <figure class="qaCard">
+				<figure class="qaCard">
 					<div class="profile-image">
 						<img :src="qa.img" alt="qa profile" />
 						<div class="icons">
@@ -40,7 +45,7 @@ https://vuetifyjs.com/en/components/carousels/ -->
 			</v-carousel-item>
 		</v-carousel>
 
-		<v-row v-if='!isOverviewPage'>
+		<v-row v-if="!isOverviewPage">
 			<v-col cols="12" sm="12" md="12" lg="6" v-for="qa in qas" :key="qa.id">
 				<figure class="qaCard">
 					<div class="profile-image">
@@ -63,7 +68,7 @@ https://vuetifyjs.com/en/components/carousels/ -->
 	export default {
 		name: 'QandA',
 		props: {
-      value: Boolean,
+			value: Boolean,
 		},
 		data() {
 			return {
@@ -141,14 +146,14 @@ https://vuetifyjs.com/en/components/carousels/ -->
 				set(value) {
 					this.$emit('input', value);
 				},
-      },
-      isOverviewPage: () => true
+			},
+			isOverviewPage: () => this.$route.name === 'overview',
 		},
 		methods: {
 			close() {
 				this.$emit('close');
 			},
-    },
+		},
 	};
 </script>
 
