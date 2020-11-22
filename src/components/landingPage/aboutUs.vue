@@ -14,42 +14,33 @@
       <v-tabs vertical>
         <v-tab>
           <v-icon left> mdi-information </v-icon>
-          What is CityHack
+          What is Hackathon
         </v-tab>
         <v-tab>
           <v-icon left> mdi-layers-search </v-icon>
-          Outline of CityHack
+          What is CityHack
+        </v-tab>
+        <v-tab>
+          <v-icon left> mdi-view-agenda </v-icon>
+          Events Outline
         </v-tab>
         <v-tab>
           <v-icon left> mdi-shape </v-icon>
           Themes
         </v-tab>
         <v-tab>
-          <v-icon left> mdi-bullseye-arrow </v-icon>
-          Goal
-        </v-tab>
-        <v-tab>
-          <v-icon left> mdi-history </v-icon>
-          Past Events
+          <v-icon left> mdi-contacts </v-icon>
+          Contact Info
         </v-tab>
 
         <v-tab-item>
           <v-card flat>
             <v-card-text>
               <p>
-                Sed aliquam ultrices mauris. Donec posuere vulputate arcu. Morbi ac felis. Etiam feugiat lorem non
-                metus. Sed a libero.
+                The word “hackathon” is a portmanteau of “hacking marathon”.
               </p>
-
               <p>
-                Nam ipsum risus, rutrum vitae, vestibulum eu, molestie vel, lacus. Aenean tellus metus, bibendum sed,
-                posuere ac, mattis non, nunc. Aliquam lobortis. Aliquam lobortis. Suspendisse non nisl sit amet velit
-                hendrerit rutrum.
-              </p>
-
-              <p class="mb-0">
-                Phasellus dolor. Fusce neque. Fusce fermentum odio nec arcu. Pellentesque libero tortor, tincidunt et,
-                tincidunt eget, semper nec, quam. Phasellus blandit leo ut odio.
+                A hackathon is a design sprint-like event which involves parties with software development background such as computer programmers, graphic designers, interface designers, project managers, and others who collaborate intensively on software projects. The goal of the hackathon is to create functioning software or hardware before the end of the event.
               </p>
             </v-card-text>
           </v-card>
@@ -58,33 +49,13 @@
           <v-card flat>
             <v-card-text>
               <p>
-                Morbi nec metus. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae
-                iaculis lacus elit id tortor. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non
-                adipiscing dolor urna a orci. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet,
-                leo. Nunc sed turpis.
+                CityHack is CityU’s largest Hackathon event. We aim to break away from conventional education and provide students with a unique opportunity to create a “hack” through a collaborative effort.
               </p>
-
               <p>
-                Suspendisse feugiat. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus,
-                vitae iaculis lacus elit id tortor. Proin viverra, ligula sit amet ultrices semper, ligula arcu
-                tristique sapien, a accumsan nisi mauris ac eros. In hac habitasse platea dictumst. Fusce ac felis sit
-                amet ligula pharetra condimentum.
+                For us, a hackathon means creative and innovative problem-solving. CityHack is open to everyone, be it designers, curious individuals, geeks, or even technophobes. Even if you have never been to a hackathon before, believe us when we say: “All you need to be part of CityHack is a passionate heart”.
               </p>
-
               <p>
-                Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Nam
-                commodo suscipit quam. In consectetuer turpis ut velit. Sed cursus turpis vitae tortor. Aliquam eu nunc.
-              </p>
-
-              <p>
-                Etiam ut purus mattis mauris sodales aliquam. Ut varius tincidunt libero. Aenean viverra rhoncus pede.
-                Duis leo. Fusce fermentum odio nec arcu.
-              </p>
-
-              <p class="mb-0">
-                Donec venenatis vulputate lorem. Aenean viverra rhoncus pede. In dui magna, posuere eget, vestibulum et,
-                tempor auctor, justo. Fusce commodo aliquam arcu. Suspendisse enim turpis, dictum sed, iaculis a,
-                condimentum nec, nisi.
+                The event will be a fulfilling experience for individuals hailing from all sorts of backgrounds. Various workshops will be provided and held in parallel during CityHack to allow newcomers to pick up new skills, whilst allowing experienced participants to hone their abilities.
               </p>
             </v-card-text>
           </v-card>
@@ -92,17 +63,46 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <p>
-                Fusce a quam. Phasellus nec sem in justo pellentesque facilisis. Nam eget dui. Proin viverra, ligula sit
-                amet ultrices semper, ligula arcu tristique sapien, a accumsan nisi mauris ac eros. In dui magna,
-                posuere eget, vestibulum et, tempor auctor, justo.
-              </p>
+              <h4>Basic Information</h4>
+              <p>Name: CityHack 2021</p>
+              <p>Time: 30 January 2021 - 30 January 2021</p>
+              <p>Format: Virtual + Physical</p>
+              <p>Participants: More than 120 students from different universities in Hong Kong</p>
 
-              <p class="mb-0">
-                Cras sagittis. Phasellus nec sem in justo pellentesque facilisis. Proin sapien ipsum, porta a, auctor
-                quis, euismod ut, mi. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nam at tortor
-                in tellus interdum sagittis.
+              <h4>Cooperation with Corporation</h4>
+              <ol class="ml-3">
+                <li>Provide resources or products (e.g., hardware, API) for the participants.</li>
+                <li>Provide workshops or talks on related topics.</li>
+                <li>Assign one technician to assist during the competition.</li>
+                <li>Assign an IT specialist as judge of the competition and present prizes on behalf of the corporation.</li>
+                <li>Provide additional support or references for the participants, if necessary.</li>
+              </ol>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text>
+              <p>
+                This year we will have open-ended tasks. Participants can think of possible solutions or ideas to improve the situation caused by Covid19. Below are the four main aspects that they can consider in their solutions:
               </p>
+              <ol class="ml-3">
+                <li>WFH, online meeting, online learning</li>
+                <li>Resource allocation</li>
+                <li>Reduce direct contact and promote social distancing </li>
+                <li>Safety precautions</li>
+              </ol>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text>
+              <ul class="ml-3">
+                <li>Team Lead: Su Jin -  <a href = "mailto: sjyeap2-c@my.cityu.edu.hk">sjyeap2-c@my.cityu.edu.hk</a></li>
+                <li>Google DSC Lead: Ryan Yen – <a href = "mailto: ryanyen2-c@my.cityu.edu.hk">ryanyen2-c@my.cityu.edu.hk</a></li>
+                <li>Public Relation Lead: Ivan MUSHKIN - <a href = "mailto: imashkin2-c@my.cityu.edu.hk">imashkin2-c@my.cityu.edu.hk</a></li>
+              </ul>
             </v-card-text>
           </v-card>
         </v-tab-item>

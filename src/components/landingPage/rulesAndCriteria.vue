@@ -14,10 +14,10 @@
         <thead>
         <tr>
           <th class="text-left">
-            Name
+            Judging Criteria
           </th>
           <th class="text-left">
-            Calories
+            Percentage
           </th>
         </tr>
         </thead>
@@ -45,44 +45,24 @@ export default {
     return {
       desserts: [
         {
-          name: 'Frozen Yogurt',
-          calories: 159,
+          name: 'Originality and creativity',
+          calories: "30%",
         },
         {
-          name: 'Ice cream sandwich',
-          calories: 237,
+          name: 'Content / topic',
+          calories: "20%",
         },
         {
-          name: 'Eclair',
-          calories: 262,
+          name: 'Practicality ',
+          calories: "20%",
         },
         {
-          name: 'Cupcake',
-          calories: 305,
+          name: 'Design and aesthetics',
+          calories: "15%",
         },
         {
-          name: 'Gingerbread',
-          calories: 356,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
+          name: 'Technical complexity',
+          calories: "15%",
         },
       ],
     }
