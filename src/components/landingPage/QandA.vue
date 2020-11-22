@@ -1,9 +1,3 @@
-
-<!-- TODO: modify  
-1. choose arrow or delimiter 
-2. make sure mobile looks ok.
-https://vuetifyjs.com/en/api/v-carousel/
-https://vuetifyjs.com/en/components/carousels/ -->
 <template>
 	<v-container>
 		<v-toolbar flat class="mb-5">
@@ -16,8 +10,7 @@ https://vuetifyjs.com/en/components/carousels/ -->
 		<v-carousel v-if='isOverviewPage'
 			:continuous="false"
 			:cycle="true"
-			:show-arrows="true"
-      show-arrows-on-hover
+			:show-arrows="false"
 		>
 			<v-carousel-item v-for="qa in qas" :key="qa.id" width='100%' height='100%'>
 				<!-- <v-sheet :color="colors[i]" height="100%" tile>
@@ -89,17 +82,7 @@ https://vuetifyjs.com/en/components/carousels/ -->
 						question: 'Do we have to attend the event physically?',
 						answer:
 							"Considering this year's special pandemic case, CityHack2021 will be held completely online. \
-                    Ceremonies and meetings will be conducted on online conference platform. And stay safe!",
-					},
-					{
-						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample9.jpg',
-						question:
-							'What are the topics about and expected deliverables for this competition?',
-						answer:
-							'The competition will be AI-related, though detailed information will be announced during the opening ceremony. \
-                  Expected outcomes for the competition can range from a product (e.g. Website, Mobile App), \
-                  a solution (e.g. a predictive model, a pipeline) for the provided problems to beyond the universe.',
+							Ceremonies and meetings will be conducted on online conference platform. And stay safe!",
 					},
 					{
 						img:
@@ -107,8 +90,8 @@ https://vuetifyjs.com/en/components/carousels/ -->
 						question: 'What support will be offered during the competition?',
 						answer:
 							'Workshops will be provided to walk you through the topic background, accompanied by tutorials to get you started \
-                  in using the recommended software tools, e.g. AI Developing Kit. There will also have staffs on the spot\
-                  during the event to answer your enquiries regarding the technical issues.',
+							in using the recommended software tools, e.g. AI Developing Kit. There will also have staffs on the spot\
+							during the event to answer your enquiries regarding the technical issues.',
 					},
 					{
 						img:
@@ -122,13 +105,8 @@ https://vuetifyjs.com/en/components/carousels/ -->
 							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample7.jpg',
 						question: 'How will teams be judged?',
 						answer:
-							'We will have preliminary round for selection, followed by a second round, a third round, a forth round, etc...',
-					},
-					{
-						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample8.jpg',
-						question: 'How do we present our project?',
-						answer: 'Get to the top of Burj Khalifa and livestream there.',
+							'Generally speaking, we evaluate your project on \'Originality and creativity\', \'Content\', \'Practicality\', \
+							\'Design and aesthetics\', \'Technical complexity\', \'Business model and pitching skills\', etc.',
 					},
 				],
 			};
