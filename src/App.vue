@@ -17,7 +17,11 @@
 </script>
 
 <style>
-	#app {
-		font-family: Bahnschrift, serif;
-	}
+#app {
+  font-family: Bahnschrift,serif;
+}
+
+.v-window__next{
+  right:0;  
+}
 </style>
