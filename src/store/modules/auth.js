@@ -21,7 +21,8 @@ export default {
             state.isLoggedIn = status;
         },
         clearUserData(state){
-            state.currentUser = state.currentUserToken = null;
+            state.currentUser = null;
+            state.currentUserToken = null;
             state.isLoggedIn = false;
         },
     },
