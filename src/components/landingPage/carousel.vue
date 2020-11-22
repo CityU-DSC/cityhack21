@@ -41,15 +41,15 @@
     <div v-if="selectedSlideId===3">
       <TimeLine v-model="openDetail" @close="closeDetail"/>
     </div>
-    <div v-if="selectedSlideId===4">
-      <Prizes v-model="openDetail" @close="closeDetail"/>
-    </div>
+<!--    <div v-if="selectedSlideId===4">-->
+<!--      <Prizes v-model="openDetail" @close="closeDetail"/>-->
+<!--    </div>-->
     <div v-if="selectedSlideId===5">
       <QandA v-model="openDetail" @close="closeDetail"/>
     </div>
-    <div v-if="selectedSlideId === 6">
-      <Judges v-model="openDetail" @close="closeDetail"/>
-    </div>
+<!--    <div v-if="selectedSlideId === 6">-->
+<!--      <Judges v-model="openDetail" @close="closeDetail"/>-->
+<!--    </div>-->
     <div v-if="selectedSlideId===7">
       <Sponsors v-model="openDetail" @close="closeDetail"/>
     </div>
@@ -60,15 +60,15 @@
 import imageOne from "../../assets/image/slides/1.jpg";
 import imageTwo from "../../assets/image/slides/2.jpg";
 import imageThree from "../../assets/image/slides/3.jpg";
-import imageFour from "../../assets/image/slides/4.jpg";
+// import imageFour from "../../assets/image/slides/4.jpg";
 import imageFive from "../../assets/image/slides/5.jpg";
-import imageSix from "../../assets/image/slides/6.jpg";
+// import imageSix from "../../assets/image/slides/6.jpg";
 import imageSeven from "../../assets/image/slides/7.jpg";
 
 import AboutUs from "./aboutUs";
 import TimeLine from "./timeLine";
-import Judges from "./judges";
-import Prizes from "./prizes";
+// import Judges from "./judges";
+// import Prizes from "./prizes";
 import RulesAndCriteria from "./rulesAndCriteria";
 import Sponsors from './sponsors';
 import QandA from "./QandA";
@@ -78,8 +78,8 @@ export default {
   components: {
     AboutUs,
     TimeLine,
-    Judges,
-    Prizes,
+    // Judges,
+    // Prizes,
     RulesAndCriteria,
     Sponsors,
     QandA,
@@ -90,18 +90,18 @@ export default {
         {id: 1, text: 'About CityHack'},
         {id: 2, text: 'Rules & Judging Criteria'},
         {id: 3, text: 'TimeLine'},
-        {id: 4, text: 'Prizes'},
+        // {id: 4, text: 'Prizes'},
         {id: 5, text: 'Q&As'},
-        {id: 6, text: 'Judges'},
+        // {id: 6, text: 'Judges'},
         {id: 7, text: 'Sponsors'},
       ],
       slides: [
         {id: 1, name: "About CityHack", img: imageOne},
         {id: 2, name: "Rules & Judging Criteria", img: imageThree},
         {id: 3, name: "TimeLine", img: imageTwo},
-        {id: 4, name: "Prizes", img: imageFour},
+        // {id: 4, name: "Prizes", img: imageFour},
         {id: 5, name: "Q&As", img: imageFive},
-        {id: 6, name: "Judges", img: imageSix},
+        // {id: 6, name: "Judges", img: imageSix},
         {id: 7, name: "Sponsors", img: imageSeven},
       ],
       count: null,
