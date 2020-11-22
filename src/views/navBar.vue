@@ -119,8 +119,7 @@ padding: 0px;;
     position: relative;
     z-index: 6;
     background: white;
-    -webkit-box-shadow: 0px 13px 14px 0px rgba(138, 138, 138, 0.92);
-    box-shadow: 0px 13px 14px 0px rgba(138, 138, 138, 0.92);
+    box-shadow: -1px 2px 8px 3px rgba(158,158,158,0.55);
   }
 
   .title {
