@@ -133,12 +133,12 @@ export default {
     return {
       diamondSponsors: [
         {
-          name: 'CityU CS',
-          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample49.jpg',
-          brandLogo: 'https://www.cityu.edu.hk/cityu30/img/favicon.ico',
-          brandUrl: '',
-          info: 'rhtithr ihttruo htoteo rwjojwo jer ewoijo jwo jrr ee',
-          websiteUrl: '',
+          name: 'Huawei',
+          img: 'https://ichef.bbci.co.uk/news/640/cpsprodpb/9C22/production/_113407993_5ff189dc-c134-4906-8935-a40a13a906d1.jpg',
+          brandLogo: 'https://cdn.iconscout.com/icon/free/png-256/huawei-226443.png',
+          brandUrl: 'https://consumer.huawei.com/hk/phones/',
+          info: 'Huawei is a leading global provider of ICT infrastructure and smart devices.',
+          websiteUrl: 'https://consumer.huawei.com/hk/phones/',
           socialMediaUrl: ''
         },
         {
