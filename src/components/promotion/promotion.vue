@@ -4,9 +4,9 @@
         <h3>#CityHack21 is comming!</h3>
         <!-- Place the image in here -->
         <!-- Maybe add some links to subpages? -->
-        <a href="../landingPage/aboutUs.vue">
+        <div id="img_container">
             <img src="../../assets/image/promotion_poster/img1.jpg"/>
-        </a>
+        </div>
     </div>
 </template>
 <script>
@@ -17,5 +17,8 @@
 
 </script>
 <style>
+#img_container img{
+    width:100%;
+}
 
 </style>
