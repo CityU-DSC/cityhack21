@@ -1,5 +1,12 @@
 <template>
 	<div id="app">
+			<b-modal ref="my-modal" hide-footer>
+			<div class="d-block text-center">
+			<!-- The template is placed here -->
+			<PromotionMaterial/>
+			</div>
+			<b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close</b-button>
+			</b-modal>
 		<NavBar />
 		<router-view />
 	</div>
@@ -7,13 +14,26 @@
 
 <script>
 	import NavBar from './views/navBar.vue';
+	import PromotionMaterial from './components/promotion/promotion.vue';
 
-	export default {
-		name: 'App',
-		components: {
-			NavBar,
-		},
-	};
+		export default {
+			name: 'App',
+			methods: {
+			showModal() {
+				this.$refs['my-modal'].show()
+			},
+			hideModal() {
+				this.$refs['my-modal'].hide()
+			}
+			},
+			mounted() {
+				this.showModal();
+			},
+			components: {
+				NavBar,
+				PromotionMaterial
+			},
+		};
 </script>
 
 <style>

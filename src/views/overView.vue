@@ -46,7 +46,8 @@
 				<RulesAndCriteria />
 			</div>
 			<div id="timeLine" class="section">
-				<TimeLine />
+				<!-- <TimeLine /> -->
+				<MyTimeLine />
 			</div>
 <!--			<div id="prizes" class="section">-->
 <!--				<Prizes />-->
@@ -66,19 +67,22 @@
 
 <script>
 	import AboutUs from '../components/landingPage/aboutUs';
-	import TimeLine from '../components/landingPage/timeLine';
+	// import TimeLine from '../components/landingPage/timeLine';
+	import MyTimeLine from '../components/landingPage/myTimeLine';
 	// import Judges from '../components/landingPage/judges';
 	// import Prizes from '../components/landingPage/prizes';
 	import RulesAndCriteria from '../components/landingPage/rulesAndCriteria';
 	import Sponsors from '../components/landingPage/sponsors';
 	import QandA from '../components/landingPage/QandA';
 	import { mapGetters, mapMutations } from 'vuex';
+	import "../../node_modules/timeline-vuejs/dist/timeline-vuejs.css";
 
 	export default {
 		name: 'overView',
 		components: {
 			AboutUs,
-			TimeLine,
+			// TimeLine,
+			MyTimeLine,
 			// Judges,
 			// Prizes,
 			RulesAndCriteria,
