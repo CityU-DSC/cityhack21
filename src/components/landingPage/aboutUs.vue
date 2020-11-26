@@ -1,9 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-toolbar
-          flat
-      >
+      <v-toolbar flat>
         <v-toolbar-title>About CityHack</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon @click.stop="close">
