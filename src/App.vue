@@ -15,7 +15,7 @@
 
 <script>
 import NavBar from './views/navBar.vue';
-import PromotionMaterial from './components/promotion/promotion.vue';
+// import PromotionMaterial from './components/promotion/promotion.vue';
 
 export default {
   name: 'App',
@@ -37,7 +37,7 @@ export default {
   },
   components: {
     NavBar,
-    PromotionMaterial
+    // PromotionMaterial
   },
 };
 </script>
@@ -49,7 +49,11 @@ export default {
   font-family: "Space Mono", serif;
 }
 
-a:hover {
+#app a {
+  color: black;
+}
+
+#app a:hover {
   color: #ebad00;
   text-decoration: none;
 }
