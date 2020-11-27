@@ -1,8 +1,6 @@
 <template>
   <v-container>
-    <v-toolbar
-        flat
-    >
+    <v-toolbar flat>
       <v-toolbar-title>CityHack 2021 Rules and Criteria</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click.stop="close">
