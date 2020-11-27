@@ -5,4 +5,7 @@ module.exports = {
       openAnalyzer: false,
     },
   },
+  devServer: {
+    disableHostCheck: true,
+  },
 };
