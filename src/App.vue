@@ -1,14 +1,16 @@
 <template>
-  <div id="app">
-    <b-modal ref="my-modal" hide-footer>
-      <div class="d-block text-center">
-        <PromotionMaterial/>
-      </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close</b-button>
-    </b-modal>
+  <v-app>
+    <v-dialog v-model="showDialog" max-width='500px' close>
+      <v-card>
+        <div class="d-block text-center">
+          <PromotionMaterial/>
+        </div>
+        <!-- <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close</b-button> -->
+      </v-card>
+    </v-dialog>
     <NavBar/>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -17,16 +19,21 @@ import PromotionMaterial from './components/promotion/promotion.vue';
 
 export default {
   name: 'App',
-  methods: {
-    showModal() {
-      this.$refs['my-modal'].show()
-    },
-    hideModal() {
-      this.$refs['my-modal'].hide()
+  // methods: {
+  //   showModal() {
+  //     this.$refs['my-modal'].show()
+  //   },
+  //   hideModal() {
+  //     this.$refs['my-modal'].hide()
+  //   }
+  // },
+  // mounted() {
+  //   this.showModal();
+  // },
+  data(){
+    return {
+      showDialog: true
     }
-  },
-  mounted() {
-    this.showModal();
   },
   components: {
     NavBar,
@@ -38,7 +45,7 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-#app {
+* {
   font-family: "Space Mono", serif;
 }
 
