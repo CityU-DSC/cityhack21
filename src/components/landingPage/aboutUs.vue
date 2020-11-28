@@ -9,7 +9,7 @@
         </v-btn>
       </v-toolbar>
 
-      <v-tabs vertical>
+      <v-tabs vertical color="#ebad00">
         <v-tab>
           <v-icon left> mdi-information </v-icon>
         </v-tab>
@@ -29,7 +29,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1>What is Hackathon</h1>
+              <h1 class="mb-5">What is Hackathon</h1>
               <p>
                 The word “hackathon” is a portmanteau of “hacking marathon”.
               </p>
@@ -42,7 +42,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1>What is CityHack</h1>
+              <h1 class="mb-5">What is CityHack</h1>
               <p>
                 CityHack is CityU’s largest Hackathon event. We aim to break away from conventional education and provide students with a unique opportunity to create a “hack” through a collaborative effort.
               </p>
@@ -58,7 +58,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1>Events Outline</h1>
+              <h1 class="mb-5">Events Outline</h1>
               <h4>Basic Information</h4>
               <p>Name: CityHack 2021</p>
               <p>Time: 30 January 2021 - 30 January 2021</p>
@@ -79,7 +79,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1>
+              <h1 class="mb-5">
                 Themes
               </h1>
               <p>
@@ -97,7 +97,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1>
+              <h1 class="mb-5">
                 Contact Info
               </h1>
               <ul class="ml-3">

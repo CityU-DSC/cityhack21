@@ -12,12 +12,12 @@
           color="#b9f2ff"
           style="padding: 2rem 1.8rem 1.5rem 2rem; color: white;"
       >
-        <h1 style="font-weight: normal"> Diamond Sponsor</h1>
+        <h1 style="font-weight: normal; color: black;"> Diamond Sponsor</h1>
       </v-chip>
     </div>
     <v-row>
       <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">
-        <figure class="sponsorCard yellow">
+        <figure class="sponsorCard">
           <img :src="sponsor.img" alt="sponsor img"/>
           <figcaption>
             <div class="sponsorName">
@@ -30,7 +30,7 @@
             </div>
           </figcaption>
           <div class="reverse">
-            <div class="icons" style="color: black">
+            <div class="icons" style="color: #000000;">
               <h5>{{ sponsor.name }}</h5>
               <p>{{ sponsor.info }} </p>
               <a :href="sponsor.websiteUrl">
@@ -152,10 +152,10 @@ export default {
         },
         {
           name: 'Sense Time',
-          img: 'https://cdn.i-scmp.com/sites/default/files/styles/og_image_scmp_series/public/d8/images/methode/2020/08/20/bac2aa1c-e19d-11ea-8e8d-92e5de2d33e5_image_hires_153204.jpg?itok=VwLBPP3u&v=1597908734',
+          img: 'https://www.dsxhub.org/wp-content/uploads/2020/10/sensetime-tout-savoir-678x381.jpg',
           brandLogo: 'https://s3-us-west-1.amazonaws.com/welcome.ai/attachments/attachments/000/001/588/original/22780528_1132381643558413_1252524198112219533_n_sensetime_welcome_ai.jpg?1517767743',
           brandUrl: 'https://www.sensetime.com/hmt-en?gclid=CjwKCAiAtej9BRAvEiwA0UAWXpe2JrYBEdizIR7TMM09yZtNtiUohK6xd-89tdoqyJhXQBygEW635xoCDg8QAvD_BwE',
-          info: 'SenseTime aims to develop AI technologies that advance the world’s economies, society and humanity for a better tomorrow.',
+          info: 'SenseTime aims to develop AI technologies that advance the world for a better tomorrow.',
           websiteUrl: 'https://www.sensetime.com/hmt-en?gclid=CjwKCAiAtej9BRAvEiwA0UAWXpe2JrYBEdizIR7TMM09yZtNtiUohK6xd-89tdoqyJhXQBygEW635xoCDg8QAvD_BwE',
           socialMediaUrl: ''
         },
@@ -268,7 +268,7 @@ figure.sponsorCard {
   background: #000000;
 }
 
-figure.sponsorCard.yellow figcaption {
+figure.sponsorCard figcaption {
   background: rgba(235, 173, 0, 0);
 }
 

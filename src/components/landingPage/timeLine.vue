@@ -8,29 +8,13 @@
       </v-btn>
     </v-toolbar>
 
-    <v-expansion-panels accordion class="d-md-none">
-      <v-expansion-panel
-        v-for="timeLine in timeLines"
-        :key="timeLine.id"
-       
-      >
-        <v-expansion-panel-header disable-icon-rotate>{{ timeLine.time }}
-          <template v-slot:actions>
-            <v-icon color="#1867c0">
-              $expand
-            </v-icon>
-          </template></v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <h1>{{ timeLine.title }}</h1>{{timeLine.content}}
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+    <vue-horizontal-timeline class="d-md-none" :items="horizontalItems" />
 
     <v-timeline class="d-none d-md-block">
       <v-timeline-item
           v-for="timeLine in timeLines"
           :key="timeLine.id"
-          color="red lighten-2"
+          color="#ebad00"
           large
       >
         <template v-slot:opposite>
@@ -46,10 +30,14 @@
 </template>
 
 <script>
+import { VueHorizontalTimeline } from "vue-horizontal-timeline";
 export default {
 name: "timeLine",
   props: {
     value: Boolean
+  },
+  components: {
+    VueHorizontalTimeline,
   },
   data(){
     return {
@@ -58,6 +46,12 @@ name: "timeLine",
         {time: "22 December 2020 - 23 December 2020", title: "Workshop", content: "A two-day workshop will be held, ensuring participants have better preparation for the competition."},
         {time: "28 December 2020", title: "Registration", content: "Starts the formal registration period until a week before CityHack 2021."},
         {time: "30 January 2021 - 31 January 2021", title: "CityHack21", content: "Let’s start Hacking for two days!"},
+      ],
+      horizontalItems: [
+        {title: "30 Nov. 2020", content: "Pre Pre-registration for workshops. It will be our first round of promotion for the event."},
+        {title: "22-23 Dec. 2020", content: "A two-day workshop will be held, ensuring participants have better preparation for the competition."},
+        {title: "28 Dec. 2020", content: "Starts the formal registration period until a week before CityHack 2021."},
+        {title: "30-31 Jan. 2021", content: "Let’s start Hacking for two days!"}
       ]
     }
   },
