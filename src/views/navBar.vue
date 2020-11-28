@@ -35,7 +35,7 @@
         ></v-app-bar-nav-icon>
         <router-link to="/overview">Overview</router-link>
       </v-col>
-      <!-- <v-col cols="12" sm="1"><router-link to="/overview">Resources</router-link></v-col>
+      <v-col cols="12" sm="1"><router-link to="/overview">Resources</router-link></v-col>
       <v-col v-if="isLoggedIn" cols="12" sm="1">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
@@ -61,7 +61,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-      </v-col> -->
+      </v-col>
       <v-spacer />
     </v-row>
   </div>
