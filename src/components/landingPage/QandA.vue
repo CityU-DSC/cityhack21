@@ -20,11 +20,6 @@
 				width="100%"
 				height="100%"
 			>
-				<!-- <v-sheet :color="colors[i]" height="100%" tile>
-					<v-row class="fill-height" align="center" justify="center">
-						<div class="display-3">{{ slide }} Slide</div>
-					</v-row>
-				</v-sheet> -->
 				<figure class="qaCard">
 					<div class="profile-image">
 						<img :src="qa.img" alt="qa profile" />
@@ -69,15 +64,14 @@
 			return {
 				qas: [
 					{
-						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample1.jpg',
+						img: 'https://i.pinimg.com/originals/d3/9e/10/d39e10a4c240194c788c2a9463bac286.gif',
 						question: "I'm not a CityU student, can I register?",
 						answer:
 							'Why not? We welcome all Hong Kong undergraduate and postgraduate students.',
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample4.jpg',
+							'https://www.pngkey.com/png/full/357-3577496_discord-profile.png',
 						question: 'Do I have to form a group? May I work by myself?',
 						answer:
 							'Students are encouraged to apply in a group with 3 to 5 persons. \
@@ -85,7 +79,7 @@
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample5.jpg',
+							'https://www.storm.mg/images/election2020/game_people2.png',
 						question: 'Do we have to attend the event physically?',
 						answer:
 							"Considering this year's special pandemic case, CityHack2021 will be held completely online. \
@@ -93,7 +87,7 @@
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg',
+							'https://upload.wikimedia.org/wikipedia/en/2/25/KyleBroflovski.png',
 						question: 'What support will be offered during the competition?',
 						answer:
 							'Workshops will be provided to walk you through the topic background, accompanied by tutorials to get you started \
@@ -102,14 +96,14 @@
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample6.jpg',
+							'https://i.pinimg.com/originals/e9/77/da/e977da83b4bc48e3272a36f33430490a.png',
 						question:
 							'May I develop on and present some projects I already have done before?',
 						answer: 'No. Your project must be built during the competition.',
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample7.jpg',
+							'https://cdn.pixabay.com/photo/2017/01/31/19/14/cartoon-2026568__340.png',
 						question: 'How will teams be judged?',
 						answer:
 							'Generally speaking, we evaluate your project on \'Originality and creativity\', \'Content\', \'Practicality\', \

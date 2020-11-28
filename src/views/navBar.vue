@@ -5,15 +5,13 @@
         <v-col class="d-flex p-0">
           <v-icon class="mr-2">mdi-instagram</v-icon>
           <v-icon class="mr-2">mdi-facebook</v-icon>
-          <v-icon class=" mr-auto">mdi-twitter</v-icon>
+          <v-spacer />
           <a
             href="https://cityu-dsc.github.io/dsc-web/"
             target="_blank"
             class="mr-md-2 mr-1"
           >
-            <v-chip pill dark class="v-chip--clickable color-black"
-              >CityU DSC</v-chip
-            >
+            <v-chip pill dark class="v-chip--clickable color-black">CityU DSC</v-chip>
           </a>
           <a href="https://cityu-hall2.github.io/" target="_blank">
             <v-chip pill dark class="v-chip--clickable">Hall2 IT Team</v-chip>
@@ -22,12 +20,13 @@
       </v-row>
     </v-container>
     <div class="d-flex justify-center">
-      <img :src="CityHackLogo" width="60px" />
-      <router-link class="pl-3" to="/" style="font-size: 40px; font-weight: bold;">#CityHack 2021</router-link>
+      <img :src="CityHackLogo" style="max-width: 60px; max-height: 60px;" alt="cityHack-logo"/>
+      <router-link class="pl-3 d-none d-md-block" to="/" style="font-size: 40px; font-weight: bold;">#CityHack 2021</router-link>
+      <router-link class="d-md-none pl-3" to="/" style="font-size: 25px; font-weight: bold;">#CityHack 2021</router-link>
     </div>
     <v-row align="center" no-gutters>
       <v-spacer></v-spacer>
-      <v-col cols="12" sm="1">
+      <v-col cols="12" sm="2">
         <v-app-bar-nav-icon
           v-if="isOverviewPage"
           class="overviewNavButton"
