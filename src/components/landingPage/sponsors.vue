@@ -5,15 +5,15 @@
       <v-spacer></v-spacer>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="nextPage"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
-        </template>
-        <span>Next Page</span>
-      </v-tooltip>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
           <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="lastPage"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
         </template>
         <span>Last Page</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="nextPage"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+        </template>
+        <span>Next Page</span>
       </v-tooltip>
     </v-toolbar>
     <div class="text-center">
