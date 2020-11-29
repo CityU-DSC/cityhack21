@@ -11,19 +11,19 @@
       >
         <h2 class="navCityHacktitle">City Hack 2021</h2>
 
-        <v-divider></v-divider>
+        <v-divider class="mt-5 mb-5"></v-divider>
         <ul>
-          <li @click="$refs.fullpage.api.moveTo(1)">
+          <li @click="navigateTo(1)">
             About CityHack
           </li>
-          <li @click="$refs.fullpage.api.moveTo(2)">
+          <li @click="navigateTo(2)">
             Rules & Judging Criteria
           </li>
-          <li @click="$refs.fullpage.api.moveTo(3)">TimeLine</li>
+          <li @click="navigateTo(3)">TimeLine</li>
           <!--					<li @click="$refs.fullpage.api.moveTo(4)">Prizes</li>-->
-          <li @click="$refs.fullpage.api.moveTo(4)">Q&As</li>
+          <li @click="navigateTo(4)">Q&As</li>
           <!--					<li @click="$refs.fullpage.api.moveTo(6)">Judges</li>-->
-          <li @click="$refs.fullpage.api.moveTo(5)">Sponsors</li>
+          <li @click="navigateTo(5)">Sponsors</li>
         </ul>
         <!-- <v-list dense nav>
           <v-list-item v-for="item in items" :key="item.title" link>
@@ -40,25 +40,25 @@
     </div>
     <full-page :options="options" id="fullpage" ref="fullpage">
       <div id="aboutUs" class="section">
-        <AboutUs/>
+        <AboutUs :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
       <div id="rulesAndCriteria" class="section">
-        <RulesAndCriteria/>
+        <RulesAndCriteria :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
       <div id="timeLine" class="section">
-        <TimeLine/>
+        <TimeLine :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
       <!--			<div id="prizes" class="section">-->
-      <!--				<Prizes />-->
+      <!--				<Prizes :isOverView="true" @next="nextPage" @last=lastPage/>-->
       <!--			</div>-->
       <div id="QandA" class="section">
-        <QandA/>
+        <QandA :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
       <!--			<div id="judges" class="section">-->
-      <!--				<Judges />-->
+      <!--				<Judges :isOverView="true" @next="nextPage" @last=lastPage/>-->
       <!--			</div>-->
       <div id="sponsors" class="section fp-auto-height-responsive">
-        <Sponsors/>
+        <Sponsors :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
     </full-page>
   </div>
@@ -106,6 +106,15 @@ export default {
   },
   methods: {
     ...mapMutations('menu', ['toggleDrawer']),
+    nextPage(){
+      this.$refs.fullpage.api.moveSectionDown();
+    },
+    lastPage() {
+      this.$refs.fullpage.api.moveSectionUp();
+    },
+    navigateTo(e){
+      this.$refs.fullpage.api.moveTo(e);
+    }
   },
 };
 </script>

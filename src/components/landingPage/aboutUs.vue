@@ -4,12 +4,21 @@
       <v-toolbar flat>
         <v-toolbar-title>About CityHack</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon @click.stop="close">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="nextPage"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+          </template>
+          <span>Next Page</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="lastPage"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
+          </template>
+          <span>Last Page</span>
+        </v-tooltip>
       </v-toolbar>
 
-      <v-tabs vertical color="#ebad00">
+      <v-tabs color="#ebad00" next-icon="mdi-chevron-right"  prev-icon="mdi-chevron-left" show-arrows>
         <v-tab>
           <v-icon left> mdi-information </v-icon>
         </v-tab>
@@ -29,7 +38,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1 class="mb-5">What is Hackathon</h1>
+              <h2 class="mb-5">What is Hackathon</h2>
               <p>
                 The word “hackathon” is a portmanteau of “hacking marathon”.
               </p>
@@ -42,15 +51,12 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1 class="mb-5">What is CityHack</h1>
+              <h2 class="mb-5">What is CityHack</h2>
               <p>
                 CityHack is CityU’s largest Hackathon event. We aim to break away from conventional education and provide students with a unique opportunity to create a “hack” through a collaborative effort.
               </p>
               <p>
                 For us, a hackathon means creative and innovative problem-solving. CityHack is open to everyone, be it designers, curious individuals, geeks, or even technophobes. Even if you have never been to a hackathon before, believe us when we say: “All you need to be part of CityHack is a passionate heart”.
-              </p>
-              <p>
-                The event will be a fulfilling experience for individuals hailing from all sorts of backgrounds. Various workshops will be provided and held in parallel during CityHack to allow newcomers to pick up new skills, whilst allowing experienced participants to hone their abilities.
               </p>
             </v-card-text>
           </v-card>
@@ -58,12 +64,14 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1 class="mb-5">Events Outline</h1>
+              <h2 class="mb-5">Events Outline</h2>
               <h4>Basic Information</h4>
-              <p>Name: CityHack 2021</p>
-              <p>Time: 30 January 2021 - 30 January 2021</p>
-              <p>Format: Virtual + Physical</p>
-              <p>Participants: More than 120 students from different universities in Hong Kong</p>
+              <ul>
+                <li>Name: CityHack 2021</li>
+                <li>Time: 30/JAN/2021 - 30/JAN/2021</li>
+                <li>Format: Virtual + Physical</li>
+                <li>Participants: > 120 students</li>
+              </ul>
 
               <h4>Cooperation with Corporation</h4>
               <ol class="ml-3">
@@ -79,9 +87,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1 class="mb-5">
-                Themes
-              </h1>
+              <h2 class="mb-5">Themes</h2>
               <p>
                 This year we will have open-ended tasks. Participants can think of possible solutions or ideas to improve the situation caused by Covid19. Below are the four main aspects that they can consider in their solutions:
               </p>
@@ -97,9 +103,9 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h1 class="mb-5">
+              <h2 class="mb-5">
                 Contact Info
-              </h1>
+              </h2>
               <ul class="ml-3">
                 <li>Team Lead: Su Jin -  <a href = "mailto: sjyeap2-c@my.cityu.edu.hk">sjyeap2-c@my.cityu.edu.hk</a></li>
                 <li>Google DSC Lead: Ryan Yen – <a href = "mailto: ryanyen2-c@my.cityu.edu.hk">ryanyen2-c@my.cityu.edu.hk</a></li>
@@ -117,7 +123,11 @@
 export default {
   name: "aboutUs",
   props: {
-    value: Boolean
+    value: Boolean,
+    isOverView: {
+      default: false,
+      type: Boolean
+    }
   },
   computed: {
     show: {
@@ -130,8 +140,11 @@ export default {
     }
   },
   methods: {
-    close() {
-      this.$emit('close');
+    nextPage() {
+      this.$emit('next');
+    },
+    lastPage() {
+      this.$emit('last');
     }
   }
 }

@@ -38,15 +38,6 @@ export default {
   font-family: "Space Mono", serif;
 }
 
-#app a {
-  color: black;
-}
-
-#app a:hover {
-  color: #ebad00;
-  text-decoration: none;
-}
-
 .v-window__next {
   right: 0;
 }

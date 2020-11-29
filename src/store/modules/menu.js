@@ -10,5 +10,5 @@ export default {
     toggleDrawer: state => {
       state.drawerOpen = !state.drawerOpen;
     }
-  }
+  },
 };
