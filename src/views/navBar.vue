@@ -30,7 +30,7 @@
         <v-app-bar-nav-icon
           v-if="isOverviewPage"
           class="overviewNavButton"
-          @click.stop="toggleDrawer"
+          @click.stop="setDrawer(true)"
           width
         ></v-app-bar-nav-icon>
         <router-link to="/overview">Overview</router-link>
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logOutUser"]),
-    ...mapMutations("menu", ["toggleDrawer"]),
+    ...mapMutations("menu", ["setDrawer"]),
     logOut() {
       localStorage.removeItem("jwt");
       this.logOutUser();

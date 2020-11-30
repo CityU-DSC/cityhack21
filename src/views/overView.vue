@@ -6,24 +6,24 @@
           :value="drawer"
           absolute
           temporary
-          @input="(opened) => (opened?null:toggleDrawer())"
+          @input="setDrawer"
           width="325"
       >
         <h2 class="navCityHacktitle">City Hack 2021</h2>
 
         <v-divider class="mt-5 mb-5"></v-divider>
         <ul>
-          <li @click="navigateTo(1)">
+          <li @click="navigateTo(1);">
             About CityHack
           </li>
-          <li @click="navigateTo(2)">
+          <li @click="navigateTo(2);">
             Rules & Judging Criteria
           </li>
-          <li @click="navigateTo(3)">TimeLine</li>
+          <li @click="navigateTo(3);">TimeLine</li>
           <!--					<li @click="$refs.fullpage.api.moveTo(4)">Prizes</li>-->
-          <li @click="navigateTo(4)">Q&As</li>
+          <li @click="navigateTo(4);">Q&As</li>
           <!--					<li @click="$refs.fullpage.api.moveTo(6)">Judges</li>-->
-          <li @click="navigateTo(5)">Sponsors</li>
+          <li @click="navigateTo(5);">Sponsors</li>
         </ul>
         <!-- <v-list dense nav>
           <v-list-item v-for="item in items" :key="item.title" link>
@@ -101,11 +101,11 @@ export default {
       items: [
         {title: 'About CityHack', icon: 'mdi-view-dashboard'},
         {title: 'About', icon: 'mdi-forum'},
-      ],
+      ]
     };
   },
   methods: {
-    ...mapMutations('menu', ['toggleDrawer']),
+    ...mapMutations('menu', ['setDrawer']),
     nextPage(){
       this.$refs.fullpage.api.moveSectionDown();
     },
@@ -114,7 +114,9 @@ export default {
     },
     navigateTo(e){
       this.$refs.fullpage.api.moveTo(e);
-    }
+      this.pressedMenuItems = true;
+      this.setDrawer(false);
+    },
   },
 };
 </script>
