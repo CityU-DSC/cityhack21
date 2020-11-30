@@ -91,7 +91,7 @@ export default {
 
 <style>
 .next[data-v-05517ad0], .prev[data-v-05517ad0] {
-  color: white;
+  color: white !important;
 }
 
 .carousel-3d-container figure {
@@ -109,7 +109,7 @@ export default {
 }
 
 .carousel-3d-slide {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.9) !important;
   border-color: aliceblue;
 }
 
