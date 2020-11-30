@@ -35,7 +35,7 @@
         ></v-app-bar-nav-icon>
         <router-link to="/overview">Overview</router-link>
       </v-col>
-      <v-col cols="3" lg="1"><router-link to="/">Resources</router-link></v-col>
+<!--      <v-col cols="3" lg="1"><router-link to="/">Resources</router-link></v-col>-->
       <v-col v-if="isLoggedIn" cols="3" lg="1">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
