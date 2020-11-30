@@ -1,11 +1,20 @@
 <template>
   <v-container>
     <v-toolbar flat class="mb-3">
-      <v-toolbar-title>CityHack 2021 Sponsors</v-toolbar-title>
+      <v-toolbar-title>Sponsors</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click.stop="close">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="lastPage"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
+        </template>
+        <span>Last Page</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="nextPage"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+        </template>
+        <span>Next Page</span>
+      </v-tooltip>
     </v-toolbar>
     <div class="text-center">
       <v-chip
@@ -127,7 +136,11 @@
 export default {
   name: "sponsors",
   props: {
-    value: Boolean
+    value: Boolean,
+    isOverView: {
+      default: false,
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -173,8 +186,11 @@ export default {
     }
   },
   methods: {
-    close() {
-      this.$emit('close');
+    nextPage() {
+      this.$emit('next');
+    },
+    lastPage() {
+      this.$emit('last');
     }
   }
 }

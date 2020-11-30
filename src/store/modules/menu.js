@@ -7,8 +7,8 @@ export default {
     drawer: state => state.drawerOpen
   },
   mutations: {
-    toggleDrawer: state => {
-      state.drawerOpen = !state.drawerOpen;
+    setDrawer: (state, drawerState) => {
+      state.drawerOpen = drawerState;
     }
-  }
+  },
 };

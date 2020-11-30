@@ -26,20 +26,20 @@
     </div>
     <v-row align="center" no-gutters>
       <v-spacer></v-spacer>
-      <v-col cols="12" sm="2">
+      <v-col cols="4" lg="2">
         <v-app-bar-nav-icon
           v-if="isOverviewPage"
           class="overviewNavButton"
-          @click.stop="toggleDrawer"
+          @click.stop="setDrawer(true)"
           width
         ></v-app-bar-nav-icon>
         <router-link to="/overview">Overview</router-link>
       </v-col>
-      <!-- <v-col cols="12" sm="1"><router-link to="/overview">Resources</router-link></v-col>
-      <v-col v-if="isLoggedIn" cols="12" sm="1">
-        <v-menu>
+      <v-col cols="3" lg="1"><router-link to="/">Resources</router-link></v-col>
+      <v-col v-if="isLoggedIn" cols="3" lg="1">
+        <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn dark v-bind="attrs" v-on="on"> Hello {{ currentUserName }} </v-btn>
+            <v-btn text v-bind="attrs" v-on="on"> Hello {{ currentUserName }} </v-btn>
           </template>
           <v-list>
             <v-list-item>
@@ -49,19 +49,21 @@
           </v-list>
         </v-menu>
       </v-col>
-      <v-col v-else cols="12" sm="1">
-        <v-menu>
+      <v-col v-else cols="3" lg="1">
+        <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn dark v-bind="attrs" v-on="on"> Log In </v-btn>
+            <v-btn text v-bind="attrs" v-on="on"> Log In </v-btn>
           </template>
           <v-list>
             <v-list-item>
               <v-list-item-title><router-link to="/login">Log In</router-link></v-list-item-title>
+            </v-list-item>
+            <v-list-item>
               <v-list-item-title><router-link to="/register">Register</router-link></v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
-      </v-col> -->
+      </v-col>
       <v-spacer />
     </v-row>
   </div>
@@ -86,7 +88,7 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logOutUser"]),
-    ...mapMutations("menu", ["toggleDrawer"]),
+    ...mapMutations("menu", ["setDrawer"]),
     logOut() {
       localStorage.removeItem("jwt");
       this.logOutUser();
@@ -101,11 +103,14 @@ export default {
   background: #222 !important;
 }
 
-a {
+#app a {
   text-decoration: none;
   color: black;
 }
-
+#app a:hover {
+  color: #ebad00;
+  text-decoration: none;
+}
 .navBarNav {
   height: 36px;
 }
