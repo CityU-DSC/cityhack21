@@ -16,14 +16,6 @@
         <span>Next Page</span>
       </v-tooltip>
     </v-toolbar>
-    <div class="text-center">
-      <v-chip
-          color="#b9f2ff"
-          style="padding: 2rem 1.8rem 1.5rem 2rem; color: white;"
-      >
-        <h1 style="font-weight: normal; color: black;"> Diamond Sponsor</h1>
-      </v-chip>
-    </div>
     <v-row>
       <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">
         <figure class="sponsorCard">

@@ -2,41 +2,30 @@
   <div>
     <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
     <div class="my-nav ml-5 v-chip--clickable">
-      <v-navigation-drawer
-          :value="drawer"
-          absolute
-          temporary
-          @input="setDrawer"
-          width="325"
-      >
-        <h2 class="navCityHacktitle">City Hack 2021</h2>
-
-        <v-divider class="mt-5 mb-5"></v-divider>
-        <ul>
-          <li @click="navigateTo(1);">
-            About CityHack
-          </li>
-          <li @click="navigateTo(2);">
-            Rules & Judging Criteria
-          </li>
-          <li @click="navigateTo(3);">TimeLine</li>
-          <!--					<li @click="$refs.fullpage.api.moveTo(4)">Prizes</li>-->
-          <li @click="navigateTo(4);">Q&As</li>
-          <!--					<li @click="$refs.fullpage.api.moveTo(6)">Judges</li>-->
-          <li @click="navigateTo(5);">Sponsors</li>
-        </ul>
-        <!-- <v-list dense nav>
-          <v-list-item v-for="item in items" :key="item.title" link>
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-
+      <v-card>
+        <v-navigation-drawer
+            :value="drawer"
+            :permanent="$vuetify.breakpoint.lgAndUp"
+            :expand-on-hover="$vuetify.breakpoint.lgAndUp"
+            app
+            @input="setDrawer"
+            width="325"
+        >
+          <v-list-item>
             <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title class="title navCityHacktitle"> City Hack 2021 </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </v-list> -->
-      </v-navigation-drawer>
+
+          <v-divider class="mt-5 mb-5"></v-divider>
+          <v-list>
+            <v-list-item v-for="item in menu" :key="item.id" @click="navigateTo(item.id);">
+              <v-list-item-icon><v-icon>{{item.icon}}</v-icon></v-list-item-icon>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+      </v-card>
     </div>
     <full-page :options="options" id="fullpage" ref="fullpage">
       <div id="aboutUs" class="section">
@@ -98,10 +87,13 @@ export default {
         autoScrolling: true,
         fitToSection: true,
       },
-      items: [
-        {title: 'About CityHack', icon: 'mdi-view-dashboard'},
-        {title: 'About', icon: 'mdi-forum'},
-      ]
+      menu: [
+        {id: 1, title: "About CityHack", icon: 'mdi-information'},
+        {id: 2, title: "Rules & Judging Criteria", icon: 'mdi-gavel'},
+        {id: 3, title: "Timeline", icon: 'mdi-chart-timeline-variant-shimmer'},
+        {id: 4, title: "Q&As", icon: 'mdi-frequently-asked-questions'},
+        {id: 5, title: "Sponsors", icon: 'mdi-account-group-outline'},
+      ],
     };
   },
   methods: {
@@ -114,7 +106,6 @@ export default {
     },
     navigateTo(e){
       this.$refs.fullpage.api.moveTo(e);
-      this.pressedMenuItems = true;
       this.setDrawer(false);
     },
   },
@@ -126,23 +117,13 @@ export default {
   color: #ebad00;
 }
 
-ul {
-  display: flex;
-  position: fixed;
+.v-list {
   flex-direction: column;
   align-items: start;
   list-style-type: none;
-  // z-index: 100;
-  padding-left: 20px;
 
-  li {
-    padding: 6px 0;
-
-    position: relative;
-    display: block;
+  .v-list-item {
     font-size: larger;
-    padding: 4px 0;
-    font-family: Lato, sans-serif;
     color: #000000;
     text-decoration: none;
     text-transform: uppercase;
@@ -151,11 +132,11 @@ ul {
     &::after {
       position: absolute;
       content: '';
-      top: 100%;
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: 3px;
-      background: #e74d08;
+      min-height: 3px;
+      background: #ebad00;
       transform: scaleX(0);
       transform-origin: right;
       transition: transform 0.5s;
