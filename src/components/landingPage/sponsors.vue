@@ -125,6 +125,8 @@
 </template>
 
 <script>
+
+import awsImage from "../../assets/image/sponsors/AWS.jpg";
 export default {
   name: "sponsors",
   props: {
@@ -148,7 +150,7 @@ export default {
         },
         {
           name: 'AWS',
-          img: 'https://inews.gtimg.com/newsapp_bt/0/10193044096/641',
+          img: awsImage,
           brandLogo: 'https://www.shareicon.net/data/256x256/2016/06/21/607538_aws_4096x4096.png',
           brandUrl: 'https://aws.amazon.com/?nc2=h_lg',
           info: 'AWS is the world’s most comprehensive and broadly adopted cloud platform',
@@ -157,7 +159,7 @@ export default {
         },
         {
           name: 'Sense Time',
-          img: 'https://www.dsxhub.org/wp-content/uploads/2020/10/sensetime-tout-savoir-678x381.jpg',
+          img: 'https://inews.gtimg.com/newsapp_bt/0/10193044096/641',
           brandLogo: 'https://s3-us-west-1.amazonaws.com/welcome.ai/attachments/attachments/000/001/588/original/22780528_1132381643558413_1252524198112219533_n_sensetime_welcome_ai.jpg?1517767743',
           brandUrl: 'https://www.sensetime.com/hmt-en?gclid=CjwKCAiAtej9BRAvEiwA0UAWXpe2JrYBEdizIR7TMM09yZtNtiUohK6xd-89tdoqyJhXQBygEW635xoCDg8QAvD_BwE',
           info: 'SenseTime aims to develop AI technologies that advance the world for a better tomorrow.',
