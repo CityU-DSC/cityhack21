@@ -20,4 +20,8 @@ export default {
 #app {
   font-family: Bahnschrift,serif;
 }
+
+.v-window__next{
+  right:0;  
+}
 </style>
