@@ -1,85 +1,146 @@
 <template>
   <div class="navigation">
-    <v-row class="iconLink">
-      <v-col align="left">
-        <v-icon class="mr-2 ml-2">
-          mdi-instagram
-        </v-icon>
-        <v-icon class="mr-2">
-          mdi-facebook
-        </v-icon>
-        <v-icon class="mr-2">
-          mdi-twitter
-        </v-icon>
+    <v-container class="pb-0">
+      <v-row class="iconLink mt-md-3 mb-md-3 mx-0 mb-1 mt-1">
+        <v-col class="d-flex p-0">
+          <v-icon class="mr-2">mdi-instagram</v-icon>
+          <v-icon class="mr-2">mdi-facebook</v-icon>
+          <v-spacer />
+          <a
+            href="https://cityu-dsc.github.io/dsc-web/"
+            target="_blank"
+            class="mr-md-2 mr-1"
+          >
+            <v-chip pill dark class="v-chip--clickable color-black">CityU DSC</v-chip>
+          </a>
+          <a href="https://cityu-hall2.github.io/" target="_blank">
+            <v-chip pill dark class="v-chip--clickable">Hall2 IT Team</v-chip>
+          </a>
+        </v-col>
+      </v-row>
+    </v-container>
+    <div class="d-flex justify-center">
+      <img :src="CityHackLogo" style="max-width: 60px; max-height: 60px;" alt="cityHack-logo"/>
+      <router-link class="pl-3 d-none d-md-block" to="/" style="font-size: 40px; font-weight: bold;">#CityHack 2021</router-link>
+      <router-link class="d-md-none pl-3" to="/" style="font-size: 25px; font-weight: bold;">#CityHack 2021</router-link>
+    </div>
+    <v-row align="center" no-gutters>
+      <v-spacer></v-spacer>
+      <v-col cols="4" lg="1">
+        <v-app-bar-nav-icon
+          v-if="isOverviewPage"
+          class="overviewNavButton d-md-none"
+          @click.stop="setDrawer(true)"
+          width
+        ></v-app-bar-nav-icon>
+        <router-link to="/overview">Overview</router-link>
       </v-col>
-      <v-col align="right">
-        <a href="https://cityu-dsc.github.io/dsc-web/" target="_blank">
-          <v-chip pill dark class="mr-2 v-chip--clickable">
-            CityU DSC
-          </v-chip>
-        </a>
-        <a href="https://cityu-hall2.github.io/" target="_blank">
-          <v-chip pill dark class="v-chip--clickable">
-            Hall2 IT Team
-          </v-chip>
-        </a>
+<!--      <v-col cols="3" lg="1"><router-link to="/">Resources</router-link></v-col>-->
+      <v-col v-if="isLoggedIn" cols="3" lg="1">
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text v-bind="attrs" v-on="on"> Hello {{ currentUserName }} </v-btn>
+          </template>
+          <v-list>
+            <v-list-item>
+              <v-list-item-title @click="logOut">Log Out</v-list-item-title>
+              <v-list-item-title><router-link to="/login">Switch Account</router-link></v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-col>
+<!--      <v-col v-else cols="3" lg="1">-->
+<!--        <v-menu offset-y>-->
+<!--          <template v-slot:activator="{ on, attrs }">-->
+<!--            <v-btn text v-bind="attrs" v-on="on"> Log In </v-btn>-->
+<!--          </template>-->
+<!--          <v-list>-->
+<!--            <v-list-item>-->
+<!--              <v-list-item-title><router-link to="/login">Log In</router-link></v-list-item-title>-->
+<!--            </v-list-item>-->
+<!--            <v-list-item>-->
+<!--              <v-list-item-title><router-link to="/register">Register</router-link></v-list-item-title>-->
+<!--            </v-list-item>-->
+<!--          </v-list>-->
+<!--        </v-menu>-->
+<!--      </v-col>-->
+      <v-spacer />
     </v-row>
-    <div class="title"><router-link to="/">#CityHack 2021</router-link></div>
-    <b-nav align="center">
-      <b-nav-item active><router-link to="/overview">Overview</router-link></b-nav-item>
-      <b-nav-item>Resources</b-nav-item>
-      <b-nav-item-dropdown v-if="isLoggedIn">
-        <template #button-content>
-          <em>Hello {{currentUserName}}</em>
-        </template>
-        <b-dropdown-item @click="logOut">Log Out</b-dropdown-item>
-        <b-dropdown-item><router-link to="/login">Switch Account</router-link></b-dropdown-item>
-      </b-nav-item-dropdown>
-      <b-nav-item-dropdown v-else>
-        <template #button-content>
-          <em>Log In</em>
-        </template>
-        <b-dropdown-item><router-link to="/login">Log In</router-link></b-dropdown-item>
-        <b-dropdown-item><router-link to="/register">Register</router-link></b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-nav>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
+import CityHackLogo from "../assets/logo/city_hack_logo.png";
+import { mapMutations, mapGetters, mapActions } from "vuex";
+
 export default {
   name: "navBar",
-  computed: { ...mapGetters('auth', ['isLoggedIn', 'currentUserName']) },
+  data() {
+    return {
+      CityHackLogo,
+    };
+  },
+  computed: {
+    isOverviewPage() {
+      return this.$route.name === "overview";
+    },
+    ...mapGetters("auth", ["isLoggedIn", "currentUserName"]),
+  },
   methods: {
-    ...mapActions('auth', ['logOutUser']),
-    logOut(){
+    ...mapActions("auth", ["logOutUser"]),
+    ...mapMutations("menu", ["setDrawer"]),
+    logOut() {
       localStorage.removeItem("jwt");
       this.logOutUser();
       this.$router.push("/");
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-a {
+.theme--dark {
+  background: #222 !important;
+}
+
+#app a {
   text-decoration: none;
   color: black;
 }
+#app a:hover {
+  color: #ebad00;
+  text-decoration: none;
+}
+.navBarNav {
+  height: 36px;
+}
+
+.nav-link {
+  height: 24px;
+  /* padding: 0px; */
+  display: flex;
+  align-items: center;
+}
+
+/* .nav-item .nav-link, .nav-link {
+padding: 0px;;
+} */
 
 .iconLink {
-  margin: 1rem 0 2rem 0;
+  /* margin: 1rem 0 2rem 0; */
+}
+
+a:hover {
+  color: #ebad00;
+  text-decoration: none;
 }
 
 .navigation {
-  height: 20vh;
+  /* height: 20vh; */
   text-align: center;
-}
-
-.title {
-  font-size: 40px;
-  font-weight: bold;
+  position: relative;
+  z-index: 6;
+  background: white;
+  box-shadow: -1px 2px 8px 3px rgba(158, 158, 158, 0.55);
 }
 </style>

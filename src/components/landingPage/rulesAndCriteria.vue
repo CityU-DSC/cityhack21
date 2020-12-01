@@ -1,23 +1,30 @@
 <template>
   <v-container>
-    <v-toolbar
-        flat
-    >
-      <v-toolbar-title>CityHack 2021 Rules and Criteria</v-toolbar-title>
+    <v-toolbar flat>
+      <v-toolbar-title>Rules and Criteria</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click.stop="close">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="lastPage"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
+        </template>
+        <span>Last Page</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="nextPage"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+        </template>
+        <span>Next Page</span>
+      </v-tooltip>
     </v-toolbar>
     <v-simple-table>
       <template v-slot:default>
         <thead>
         <tr>
           <th class="text-left">
-            Name
+            Judging Criteria
           </th>
           <th class="text-left">
-            Calories
+            Percentage
           </th>
         </tr>
         </thead>
@@ -39,50 +46,34 @@
 export default {
   name: "rulesAndCriteria",
   props: {
-    value: Boolean
+    value: Boolean,
+    isOverView: {
+      default: false,
+      type: Boolean
+    }
   },
   data() {
     return {
       desserts: [
         {
-          name: 'Frozen Yogurt',
-          calories: 159,
+          name: 'Originality and creativity',
+          calories: "30%",
         },
         {
-          name: 'Ice cream sandwich',
-          calories: 237,
+          name: 'Content / topic',
+          calories: "20%",
         },
         {
-          name: 'Eclair',
-          calories: 262,
+          name: 'Practicality ',
+          calories: "20%",
         },
         {
-          name: 'Cupcake',
-          calories: 305,
+          name: 'Design and aesthetics',
+          calories: "15%",
         },
         {
-          name: 'Gingerbread',
-          calories: 356,
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
+          name: 'Technical complexity',
+          calories: "15%",
         },
       ],
     }
@@ -98,8 +89,11 @@ export default {
     }
   },
   methods: {
-    close() {
-      this.$emit('close');
+    nextPage() {
+      this.$emit('next');
+    },
+    lastPage() {
+      this.$emit('last');
     }
   }
 }

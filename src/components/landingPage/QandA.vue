@@ -1,24 +1,35 @@
 <template>
 	<v-container>
 		<v-toolbar flat class="mb-5">
-			<v-toolbar-title>CityHack 2021 Q&A</v-toolbar-title>
+			<v-toolbar-title>Q&A</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<v-btn icon @click.stop="close">
-				<v-icon>mdi-close</v-icon>
-			</v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="lastPage"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
+        </template>
+        <span>Last Page</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="nextPage"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+        </template>
+        <span>Next Page</span>
+      </v-tooltip>
 		</v-toolbar>
-		<v-carousel v-if='isOverviewPage'
+		<v-carousel
+			v-if="isOverviewPage"
 			:continuous="false"
 			:cycle="true"
-			:show-arrows="false"
+			:show-arrows="true"
+			show-arrows-on-hover
 		>
-			<v-carousel-item v-for="qa in qas" :key="qa.id" width='100%' height='100%'>
-				<!-- <v-sheet :color="colors[i]" height="100%" tile>
-					<v-row class="fill-height" align="center" justify="center">
-						<div class="display-3">{{ slide }} Slide</div>
-					</v-row>
-				</v-sheet> -->
-        <figure class="qaCard">
+			<v-carousel-item
+				v-for="qa in qas"
+				:key="qa.id"
+				width="100%"
+				height="100%"
+			>
+				<figure class="qaCard">
 					<div class="profile-image">
 						<img :src="qa.img" alt="qa profile" />
 						<div class="icons">
@@ -33,7 +44,7 @@
 			</v-carousel-item>
 		</v-carousel>
 
-		<v-row v-if='!isOverviewPage'>
+		<v-row v-if="!isOverviewPage">
 			<v-col cols="12" sm="12" md="12" lg="6" v-for="qa in qas" :key="qa.id">
 				<figure class="qaCard">
 					<div class="profile-image">
@@ -56,21 +67,24 @@
 	export default {
 		name: 'QandA',
 		props: {
-      value: Boolean,
+			value: Boolean,
+      isOverView: {
+        default: false,
+        type: Boolean
+      }
 		},
 		data() {
 			return {
 				qas: [
 					{
-						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample1.jpg',
+						img: 'https://i.pinimg.com/originals/d3/9e/10/d39e10a4c240194c788c2a9463bac286.gif',
 						question: "I'm not a CityU student, can I register?",
 						answer:
 							'Why not? We welcome all Hong Kong undergraduate and postgraduate students.',
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample4.jpg',
+							'https://www.pngkey.com/png/full/357-3577496_discord-profile.png',
 						question: 'Do I have to form a group? May I work by myself?',
 						answer:
 							'Students are encouraged to apply in a group with 3 to 5 persons. \
@@ -78,7 +92,7 @@
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample5.jpg',
+							'https://www.storm.mg/images/election2020/game_people2.png',
 						question: 'Do we have to attend the event physically?',
 						answer:
 							"Considering this year's special pandemic case, CityHack2021 will be held completely online. \
@@ -86,7 +100,7 @@
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg',
+							'https://upload.wikimedia.org/wikipedia/en/2/25/KyleBroflovski.png',
 						question: 'What support will be offered during the competition?',
 						answer:
 							'Workshops will be provided to walk you through the topic background, accompanied by tutorials to get you started \
@@ -95,14 +109,14 @@
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample6.jpg',
+							'https://i.pinimg.com/originals/e9/77/da/e977da83b4bc48e3272a36f33430490a.png',
 						question:
 							'May I develop on and present some projects I already have done before?',
 						answer: 'No. Your project must be built during the competition.',
 					},
 					{
 						img:
-							'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample7.jpg',
+							'https://cdn.pixabay.com/photo/2017/01/31/19/14/cartoon-2026568__340.png',
 						question: 'How will teams be judged?',
 						answer:
 							'Generally speaking, we evaluate your project on \'Originality and creativity\', \'Content\', \'Practicality\', \
@@ -119,14 +133,19 @@
 				set(value) {
 					this.$emit('input', value);
 				},
-      },
-      isOverviewPage: () => true
+			},
+			isOverviewPage() {
+				return this.$route.name === 'overview';
+			},
 		},
 		methods: {
-			close() {
-				this.$emit('close');
-			},
-    },
+      nextPage() {
+        this.$emit('next');
+      },
+      lastPage() {
+        this.$emit('last');
+      }
+		},
 	};
 </script>
 

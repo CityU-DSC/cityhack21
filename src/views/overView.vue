@@ -1,74 +1,115 @@
 <template>
   <div>
+    <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
     <div class="my-nav ml-5 v-chip--clickable">
-      <ul>
-        <li @click="$refs.fullpage.api.moveTo(1)">About CityHack</li>
-        <li @click="$refs.fullpage.api.moveTo(2)">Rules & Judging Criteria</li>
-        <li @click="$refs.fullpage.api.moveTo(3)">TimeLine</li>
-        <li @click="$refs.fullpage.api.moveTo(4)">Prizes</li>
-        <li @click="$refs.fullpage.api.moveTo(5)">Q&As</li>
-        <li @click="$refs.fullpage.api.moveTo(6)">Judges</li>
-        <li @click="$refs.fullpage.api.moveTo(7)">Sponsors</li>
-      </ul>
+      <v-card>
+        <v-navigation-drawer
+            :value="drawer"
+            :permanent="$vuetify.breakpoint.lgAndUp"
+            :expand-on-hover="$vuetify.breakpoint.lgAndUp"
+            app
+            @input="setDrawer"
+            width="325"
+        >
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="title navCityHacktitle"> City Hack 2021 </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider class="mt-5 mb-5"></v-divider>
+          <v-list>
+            <v-list-item v-for="item in menu" :key="item.id" @click="navigateTo(item.id);">
+              <v-list-item-icon><v-icon>{{item.icon}}</v-icon></v-list-item-icon>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+      </v-card>
     </div>
-    <full-page :options='options' id="fullpage" ref="fullpage">
+    <full-page :options="options" id="fullpage" ref="fullpage">
       <div id="aboutUs" class="section">
-        <AboutUs/>
+        <AboutUs :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
       <div id="rulesAndCriteria" class="section">
-        <RulesAndCriteria/>
+        <RulesAndCriteria :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
       <div id="timeLine" class="section">
-        <TimeLine/>
+        <TimeLine :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
-      <div id="prizes" class="section">
-        <Prizes/>
-      </div>
+      <!--			<div id="prizes" class="section">-->
+      <!--				<Prizes :isOverView="true" @next="nextPage" @last=lastPage/>-->
+      <!--			</div>-->
       <div id="QandA" class="section">
-        <QandA/>
+        <QandA :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
-      <div id="judges" class="section">
-        <Judges/>
-      </div>
+      <!--			<div id="judges" class="section">-->
+      <!--				<Judges :isOverView="true" @next="nextPage" @last=lastPage/>-->
+      <!--			</div>-->
       <div id="sponsors" class="section fp-auto-height-responsive">
-        <Sponsors/>
+        <Sponsors :isOverView="true" @next="nextPage" @last="lastPage"/>
       </div>
     </full-page>
   </div>
 </template>
 
 <script>
-import AboutUs from "../components/landingPage/aboutUs";
-import TimeLine from "../components/landingPage/timeLine";
-import Judges from "../components/landingPage/judges";
-import Prizes from "../components/landingPage/prizes";
-import RulesAndCriteria from "../components/landingPage/rulesAndCriteria";
-import Sponsors from "../components/landingPage/sponsors";
-import QandA from "../components/landingPage/QandA";
+import AboutUs from '../components/landingPage/aboutUs';
+import TimeLine from '../components/landingPage/timeLine';
+// import Judges from '../components/landingPage/judges';
+// import Prizes from '../components/landingPage/prizes';
+import RulesAndCriteria from '../components/landingPage/rulesAndCriteria';
+import Sponsors from '../components/landingPage/sponsors';
+import QandA from '../components/landingPage/QandA';
+import {mapGetters, mapMutations} from 'vuex';
+import "../../node_modules/timeline-vuejs/dist/timeline-vuejs.css";
 
 export default {
-  name: "overView",
+  name: 'overView',
   components: {
     AboutUs,
     TimeLine,
-    Judges,
-    Prizes,
+    // Judges,
+    // Prizes,
     RulesAndCriteria,
     Sponsors,
     QandA,
   },
+  computed: {
+    // eslint-disable-next-line no-mixed-spaces-and-tabs
+    ...mapGetters('menu', ['drawer']),
+  },
   data() {
     return {
       options: {
-        licenseKey: '',
+        licenseKey: 'YOUR_KEY_HEERE',
         menu: '#menu',
         autoScrolling: true,
         fitToSection: true,
       },
-    }
+      menu: [
+        {id: 1, title: "About CityHack", icon: 'mdi-information'},
+        {id: 2, title: "Rules & Judging Criteria", icon: 'mdi-gavel'},
+        {id: 3, title: "Timeline", icon: 'mdi-chart-timeline-variant-shimmer'},
+        {id: 4, title: "Q&As", icon: 'mdi-frequently-asked-questions'},
+        {id: 5, title: "Sponsors", icon: 'mdi-account-group-outline'},
+      ],
+    };
   },
-  methods: {},
-}
+  methods: {
+    ...mapMutations('menu', ['setDrawer']),
+    nextPage(){
+      this.$refs.fullpage.api.moveSectionDown();
+    },
+    lastPage() {
+      this.$refs.fullpage.api.moveSectionUp();
+    },
+    navigateTo(e){
+      this.$refs.fullpage.api.moveTo(e);
+      this.setDrawer(false);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -76,22 +117,13 @@ export default {
   color: #ebad00;
 }
 
-ul {
-  display: flex;
-  position: fixed;
+.v-list {
   flex-direction: column;
   align-items: start;
   list-style-type: none;
-  z-index: 100;
 
-  li {
-    padding: 6px 0;
-
-    position: relative;
-    display: block;
+  .v-list-item {
     font-size: larger;
-    padding: 4px 0;
-    font-family: Lato, sans-serif;
     color: #000000;
     text-decoration: none;
     text-transform: uppercase;
@@ -99,12 +131,12 @@ ul {
 
     &::after {
       position: absolute;
-      content: "";
-      top: 100%;
+      content: '';
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: 3px;
-      background: #e74d08;
+      min-height: 3px;
+      background: #ebad00;
       transform: scaleX(0);
       transform-origin: right;
       transition: transform 0.5s;
@@ -120,4 +152,15 @@ ul {
     }
   }
 }
+
+.navCityHacktitle {
+  text-align: center;
+
+  h2 {
+    margin-bottom: 0;
+  }
+
+  margin-top: 20px;
+}
+
 </style>

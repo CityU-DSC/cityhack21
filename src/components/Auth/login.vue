@@ -1,38 +1,39 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1">
-        <form
-            class="text-center border border-primary p-5"
-            style="margin-top:70px;height:auto;padding-top:100px !important;"
-            @submit.prevent="loginUser"
-        >
-          <input
-              type="text"
-              id="email"
-              class="form-control mb-5"
-              placeholder="Email"
-              v-model="login.email"
-          />
-          <!-- Password -->
-          <input
-              type="password"
-              id="password"
-              class="form-control mb-5"
-              placeholder="Password"
-              v-model="login.password"
-          />
-          <p>Dont have an account?<router-link to="/register">click here</router-link></p>
-            <button class="btn btn-primary btn-block w-75 my-4" type="submit">
-              Sign in
-            </button>
-        </form>
-      </div>
-    </div>
+    <v-form v-model="valid">
+      <v-container>
+        <v-layout>
+          <v-flex xs12 md4>
+            <v-text-field
+                v-model="login.email"
+                :rules="emailRules"
+                label="E-mail"
+                required
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md4>
+            <v-text-field
+                v-model="login.password"
+                label="Password"
+                required
+            ></v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-layout class="d-flex flex-row">
+          <p>Dont have an account?</p>
+          <v-btn class="ml-5">
+            <router-link to="/register">click here</router-link>
+          </v-btn>
+          <v-btn type="submit" class="ml-5">
+            Sign in
+          </v-btn>
+        </v-layout>
+      </v-container>
+    </v-form>
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 import swal from "sweetalert";
 
 export default {
@@ -42,10 +43,14 @@ export default {
       login: {
         email: "",
         password: ""
-      }
+      },
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ]
     };
   },
-  computed: { ...mapGetters('adminList', ['adminList']) },
+  computed: {...mapGetters('adminList', ['adminList'])},
   methods: {
     ...mapActions('auth', ['loginByEmailPassword']),
     async loginUser() {
@@ -54,7 +59,7 @@ export default {
           localStorage.setItem("jwt", res.token);
           if (res.token) {
             swal("Success", "Login Successful", "success");
-            this.adminList.includes(res.user.email)? this.$router.push("/admin") : this.$router.push("/");
+            this.adminList.includes(res.user.email) ? this.$router.push("/admin") : this.$router.push("/");
           }
         })
       } catch (err) {

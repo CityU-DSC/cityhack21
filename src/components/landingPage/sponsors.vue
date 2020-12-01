@@ -1,23 +1,24 @@
 <template>
   <v-container>
     <v-toolbar flat class="mb-3">
-      <v-toolbar-title>CityHack 2021 Sponsors</v-toolbar-title>
+      <v-toolbar-title>Sponsors</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click.stop="close">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="lastPage"><v-icon>mdi-chevron-double-up</v-icon></v-btn>
+        </template>
+        <span>Last Page</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-if="isOverView" v-bind="attrs" v-on="on" icon @click.stop="nextPage"><v-icon>mdi-chevron-double-down</v-icon></v-btn>
+        </template>
+        <span>Next Page</span>
+      </v-tooltip>
     </v-toolbar>
-    <div class="text-center">
-      <v-chip
-          color="#b9f2ff"
-          style="padding: 2rem 1.8rem 1.5rem 2rem; color: white;"
-      >
-        <h1 style="font-weight: normal"> Diamond Sponsor</h1>
-      </v-chip>
-    </div>
     <v-row>
       <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">
-        <figure class="sponsorCard yellow">
+        <figure class="sponsorCard">
           <img :src="sponsor.img" alt="sponsor img"/>
           <figcaption>
             <div class="sponsorName">
@@ -30,7 +31,7 @@
             </div>
           </figcaption>
           <div class="reverse">
-            <div class="icons">
+            <div class="icons" style="color: #000000;">
               <h5>{{ sponsor.name }}</h5>
               <p>{{ sponsor.info }} </p>
               <a :href="sponsor.websiteUrl">
@@ -44,82 +45,82 @@
         </figure>
       </v-col>
     </v-row>
-    <div class="text-center">
-      <v-chip
-          class="mt-5"
-          color="#ebad00"
-          style="padding: 2rem 1.8rem 1rem 2rem; color: white;"
-      >
-        <h3 style="font-weight: normal"> Golden Sponsor</h3>
-      </v-chip>
-    </div>
-    <v-row>
-      <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">
-        <figure class="sponsorCard yellow">
-          <img :src="sponsor.img" alt="sponsor img"/>
-          <figcaption>
-            <div class="sponsorName">
-              <img
-                  :src="sponsor.brandLogo"
-                  alt="brand logo"
-                  width="100"
-              >
-              <a :href="sponsor.brandUrl" target="_blank"/>
-            </div>
-          </figcaption>
-          <div class="reverse">
-            <div class="icons">
-              <h5>{{ sponsor.name }}</h5>
-              <p>{{ sponsor.info }} </p>
-              <a :href="sponsor.websiteUrl">
-                <v-icon>mdi-web</v-icon>
-              </a>
-              <a :href="sponsor.socialMediaUrl">
-                <v-icon>mdi-facebook</v-icon>
-              </a>
-            </div>
-          </div>
-        </figure>
-      </v-col>
-    </v-row>
-    <div class="text-center">
-      <v-chip
-          class="mt-5"
-          color="#c0c0c0"
-          style="padding: 1.8rem 1.8rem 1rem 2rem; color: white;"
-      >
-        <h5 style="font-weight: normal"> Silver Sponsor</h5>
-      </v-chip>
-    </div>
-    <v-row>
-      <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">
-        <figure class="sponsorCard yellow">
-          <img :src="sponsor.img" alt="sponsor img"/>
-          <figcaption>
-            <div class="sponsorName">
-              <img
-                  :src="sponsor.brandLogo"
-                  alt="brand logo"
-                  width="100"
-              >
-              <a :href="sponsor.brandUrl" target="_blank"/>
-            </div>
-          </figcaption>
-          <div class="reverse">
-            <div class="icons">
-              <h5>{{ sponsor.name }}</h5>
-              <p>{{ sponsor.info }} </p>
-              <a :href="sponsor.websiteUrl">
-                <v-icon>mdi-web</v-icon>
-              </a>
-              <a :href="sponsor.socialMediaUrl">
-                <v-icon>mdi-facebook</v-icon>
-              </a>
-            </div>
-          </div>
-        </figure>
-      </v-col>
-    </v-row>
+<!--    <div class="text-center">-->
+<!--      <v-chip-->
+<!--          class="mt-5"-->
+<!--          color="#ebad00"-->
+<!--          style="padding: 2rem 1.8rem 1rem 2rem; color: white;"-->
+<!--      >-->
+<!--        <h3 style="font-weight: normal"> Golden Sponsor</h3>-->
+<!--      </v-chip>-->
+<!--    </div>-->
+<!--    <v-row>-->
+<!--      <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">-->
+<!--        <figure class="sponsorCard yellow">-->
+<!--          <img :src="sponsor.img" alt="sponsor img"/>-->
+<!--          <figcaption>-->
+<!--            <div class="sponsorName">-->
+<!--              <img-->
+<!--                  :src="sponsor.brandLogo"-->
+<!--                  alt="brand logo"-->
+<!--                  width="100"-->
+<!--              >-->
+<!--              <a :href="sponsor.brandUrl" target="_blank"/>-->
+<!--            </div>-->
+<!--          </figcaption>-->
+<!--          <div class="reverse">-->
+<!--            <div class="icons">-->
+<!--              <h5>{{ sponsor.name }}</h5>-->
+<!--              <p>{{ sponsor.info }} </p>-->
+<!--              <a :href="sponsor.websiteUrl">-->
+<!--                <v-icon>mdi-web</v-icon>-->
+<!--              </a>-->
+<!--              <a :href="sponsor.socialMediaUrl">-->
+<!--                <v-icon>mdi-facebook</v-icon>-->
+<!--              </a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </figure>-->
+<!--      </v-col>-->
+<!--    </v-row>-->
+<!--    <div class="text-center">-->
+<!--      <v-chip-->
+<!--          class="mt-5"-->
+<!--          color="#c0c0c0"-->
+<!--          style="padding: 1.8rem 1.8rem 1rem 2rem; color: white;"-->
+<!--      >-->
+<!--        <h5 style="font-weight: normal"> Silver Sponsor</h5>-->
+<!--      </v-chip>-->
+<!--    </div>-->
+<!--    <v-row>-->
+<!--      <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">-->
+<!--        <figure class="sponsorCard yellow">-->
+<!--          <img :src="sponsor.img" width="200" alt="sponsor img"/>-->
+<!--          <figcaption>-->
+<!--            <div class="sponsorName">-->
+<!--              <img-->
+<!--                  :src="sponsor.brandLogo"-->
+<!--                  alt="brand logo"-->
+<!--                  width="100"-->
+<!--              >-->
+<!--              <a :href="sponsor.brandUrl" target="_blank"/>-->
+<!--            </div>-->
+<!--          </figcaption>-->
+<!--          <div class="reverse">-->
+<!--            <div class="icons">-->
+<!--              <h5>{{ sponsor.name }}</h5>-->
+<!--              <p>{{ sponsor.info }} </p>-->
+<!--              <a :href="sponsor.websiteUrl">-->
+<!--                <v-icon>mdi-web</v-icon>-->
+<!--              </a>-->
+<!--              <a :href="sponsor.socialMediaUrl">-->
+<!--                <v-icon>mdi-facebook</v-icon>-->
+<!--              </a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </figure>-->
+<!--      </v-col>-->
+<!--    </v-row>-->
   </v-container>
 </template>
 
@@ -127,36 +128,40 @@
 export default {
   name: "sponsors",
   props: {
-    value: Boolean
+    value: Boolean,
+    isOverView: {
+      default: false,
+      type: Boolean
+    }
   },
   data() {
     return {
       diamondSponsors: [
         {
-          name: 'CityU CS',
-          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample49.jpg',
-          brandLogo: 'https://www.cityu.edu.hk/cityu30/img/favicon.ico',
-          brandUrl: '',
-          info: 'rhtithr ihttruo htoteo rwjojwo jer ewoijo jwo jrr ee',
-          websiteUrl: '',
+          name: 'Huawei',
+          img: 'https://ichef.bbci.co.uk/news/640/cpsprodpb/9C22/production/_113407993_5ff189dc-c134-4906-8935-a40a13a906d1.jpg',
+          brandLogo: 'https://mobilelux.al/wp-content/uploads/2018/03/Huawei.png',
+          brandUrl: 'https://consumer.huawei.com/hk/phones/',
+          info: 'Huawei is a leading global provider of ICT infrastructure and smart devices.',
+          websiteUrl: 'https://consumer.huawei.com/hk/phones/',
           socialMediaUrl: ''
         },
         {
-          name: 'CityU CS',
-          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample54.jpg',
-          brandLogo: 'https://www.cityu.edu.hk/cityu30/img/favicon.ico',
-          brandUrl: '',
-          info: 'rhtithr ihttruo htoteo rwjojwo jer ewoijo jwo jrr ee',
-          websiteUrl: '',
+          name: 'AWS',
+          img: 'https://inews.gtimg.com/newsapp_bt/0/10193044096/641',
+          brandLogo: 'https://www.shareicon.net/data/256x256/2016/06/21/607538_aws_4096x4096.png',
+          brandUrl: 'https://aws.amazon.com/?nc2=h_lg',
+          info: 'AWS is the world’s most comprehensive and broadly adopted cloud platform',
+          websiteUrl: 'https://aws.amazon.com/?nc2=h_lg',
           socialMediaUrl: ''
         },
         {
-          name: 'CityU CS',
-          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample8.jpg',
-          brandLogo: 'https://www.cityu.edu.hk/cityu30/img/favicon.ico',
-          brandUrl: '',
-          info: 'rhtithr ihttruo htoteo rwjojwo jer ewoijo jwo jrr ee',
-          websiteUrl: '',
+          name: 'Sense Time',
+          img: 'https://www.dsxhub.org/wp-content/uploads/2020/10/sensetime-tout-savoir-678x381.jpg',
+          brandLogo: 'https://s3-us-west-1.amazonaws.com/welcome.ai/attachments/attachments/000/001/588/original/22780528_1132381643558413_1252524198112219533_n_sensetime_welcome_ai.jpg?1517767743',
+          brandUrl: 'https://www.sensetime.com/hmt-en?gclid=CjwKCAiAtej9BRAvEiwA0UAWXpe2JrYBEdizIR7TMM09yZtNtiUohK6xd-89tdoqyJhXQBygEW635xoCDg8QAvD_BwE',
+          info: 'SenseTime aims to develop AI technologies that advance the world for a better tomorrow.',
+          websiteUrl: 'https://www.sensetime.com/hmt-en?gclid=CjwKCAiAtej9BRAvEiwA0UAWXpe2JrYBEdizIR7TMM09yZtNtiUohK6xd-89tdoqyJhXQBygEW635xoCDg8QAvD_BwE',
           socialMediaUrl: ''
         },
       ],
@@ -173,8 +178,11 @@ export default {
     }
   },
   methods: {
-    close() {
-      this.$emit('close');
+    nextPage() {
+      this.$emit('next');
+    },
+    lastPage() {
+      this.$emit('last');
     }
   }
 }
@@ -188,6 +196,7 @@ figure.sponsorCard {
   min-width: 260px;
   max-width: 360px;
   max-height: 220px;
+  min-height: 200px;
   width: 100%;
   overflow: hidden;
   text-align: center;
@@ -267,7 +276,7 @@ figure.sponsorCard {
   background: #000000;
 }
 
-figure.sponsorCard.yellow figcaption {
+figure.sponsorCard figcaption {
   background: rgba(235, 173, 0, 0);
 }
 
