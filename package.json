@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "dayjs": "^1.9.6",
     "sweetalert": "^2.1.2",
     "timeline-vuejs": "^1.1.7",
     "vue": "^2.6.12",
