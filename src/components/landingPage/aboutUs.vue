@@ -18,7 +18,7 @@
         </v-tooltip>
       </v-toolbar>
 
-      <v-tabs color="#ebad00" next-icon="mdi-chevron-right"  prev-icon="mdi-chevron-left" show-arrows>
+      <v-tabs color="#ff9900" next-icon="mdi-chevron-right"  prev-icon="mdi-chevron-left" show-arrows>
         <v-tab>
           <v-icon left> mdi-information </v-icon>
         </v-tab>

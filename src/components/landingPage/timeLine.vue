@@ -23,7 +23,7 @@
       <v-timeline-item
           v-for="timeLine in timeLines"
           :key="timeLine.id"
-          color="#ebad00"
+          color="#ff9900"
           large
       >
         <template v-slot:opposite>

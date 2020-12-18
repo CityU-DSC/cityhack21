@@ -21,7 +21,7 @@
     </v-container>
     <div class="d-flex justify-center">
       <img :src="CityHackLogo" style="max-width: 60px; max-height: 60px;" alt="cityHack-logo"/>
-      <router-link class="pl-3 d-none d-md-block" to="/" style="font-size: 40px; font-weight: bold;">#CityHack 2021</router-link>
+      <router-link class="pl-3 d-none d-md-block" to="/" style="font-size: 40px; font-weight: bold;">CityHack 20<span style="color:#ff9900;">21</span></router-link>
       <router-link class="d-md-none pl-3" to="/" style="font-size: 25px; font-weight: bold;">#CityHack 2021</router-link>
     </div>
     <v-row align="center" no-gutters>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import CityHackLogo from "../assets/logo/city_hack_logo.png";
+import CityHackLogo from "../assets/logo/logo_w.png";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 
 export default {
@@ -107,10 +107,10 @@ export default {
 
 #app a {
   text-decoration: none;
-  color: black;
+  color: #ffffff;
 }
 #app a:hover {
-  color: #ebad00;
+  color: #ff9900;
   text-decoration: none;
 }
 .navBarNav {
@@ -133,7 +133,7 @@ padding: 0px;;
 }
 
 a:hover {
-  color: #ebad00;
+  color: #ff9900;
   text-decoration: none;
 }
 
@@ -142,7 +142,6 @@ a:hover {
   text-align: center;
   position: relative;
   z-index: 6;
-  background: white;
-  box-shadow: -1px 2px 8px 3px rgba(158, 158, 158, 0.55);
+  background: #121212;
 }
 </style>

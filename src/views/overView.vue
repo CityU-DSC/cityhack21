@@ -114,7 +114,7 @@ export default {
 
 <style lang="scss" scoped>
 .active {
-  color: #ebad00;
+  color: #ff9900;
 }
 
 .v-list {
@@ -136,14 +136,14 @@ export default {
       left: 0;
       width: 100%;
       min-height: 3px;
-      background: #ebad00;
+      background: #ff9900;
       transform: scaleX(0);
       transform-origin: right;
       transition: transform 0.5s;
     }
 
     &:hover {
-      color: #e74d08;
+      color: #ff9900;
     }
 
     &:hover::after {
