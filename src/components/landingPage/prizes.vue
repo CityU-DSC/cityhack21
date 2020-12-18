@@ -106,7 +106,7 @@ export default {
 }
 
 .prizeCard:after {
-  background-color: #ebad00;
+  background-color: #ff9900;
   height: 150%;
   bottom: -145%;
   content: '';

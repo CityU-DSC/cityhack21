@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-tabs
-        background-color="#ebad00"
+        background-color="#ff9900"
         color="white"
         v-model="tab"
         show-arrows
