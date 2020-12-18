@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <v-form v-model="valid">
+    <v-form>
       <v-container>
         <v-layout>
           <v-flex xs12 md4>
@@ -24,7 +24,7 @@
           <v-btn class="ml-5">
             <router-link to="/register">click here</router-link>
           </v-btn>
-          <v-btn type="submit" class="ml-5">
+          <v-btn @click="loginUser" class="ml-5">
             Sign in
           </v-btn>
         </v-layout>
