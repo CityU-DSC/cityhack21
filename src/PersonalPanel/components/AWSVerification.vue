@@ -16,25 +16,45 @@
             </v-card-text>
           </v-card>
     </v-tab-item>
-</div>
+    <h2>lol</h2>
+    <nav-drawer @direct="directTo"/>
+    <dashboard :uppy="uppy" :plugins="['Webcam']"/>
+
+  </div>
+
 </template>
 
 <script>
-import navDrawer from "@/PersonalPanel/components/navDrawer";
+// uppy
+import { Dashboard } from '@uppy/vue'
 
+import '@uppy/core/dist/style.css'
+import '@uppy/dashboard/dist/style.css'
+
+import Uppy from '@uppy/core'
+import Webcam from '@uppy/webcam'
+
+// end uppy
+
+import navDrawer from "@/PersonalPanel/components/navDrawer";
 export default {
   name: "AWSVerification",
   components: {
     navDrawer,
+    Dashboard
   },
   methods: {
-    directTo(page) {
+    directTo(page){
       this.$router.push(page);
     }
+  },
+  computed: {
+    uppy: () => new Uppy().use(Webcam)
+  },
+  beforeDestroy () {
+    this.uppy.close()
   }
 }
 </script>
-
-<style scoped>
-
+<style lang="scss" scoped>
 </style>
