@@ -3,11 +3,9 @@
     <div class="my-nav ml-5 v-chip--clickable">
       <v-card>
         <v-navigation-drawer
-            :value="drawer"
             permanent
             expand-on-hover
             app
-            @input="setDrawer"
             width="325"
         >
           <v-list>
@@ -50,6 +48,9 @@ import {mapGetters, mapMutations} from 'vuex';
 
 export default {
   name: "navDrawer",
+  props: {
+    pathName: String,
+  },
   computed: {
     // eslint-disable-next-line no-mixed-spaces-and-tabs
     ...mapGetters('menu', ['drawer']),
@@ -67,9 +68,9 @@ export default {
         }
       ],
       menu: [
-        {id: 1, title: "Home Page", icon: 'mdi-home', page: 'personal'},
-        {id: 2, title: "Profile Page", icon: 'mdi-account', page: 'personal/profile'},
-        {id: 3, title: "AWS Educate Verification", icon: 'mdi-aws', page: 'personal/verification'},
+        {id: 1, title: "Home Page", icon: 'mdi-home', page: '/personal'},
+        {id: 2, title: "Profile Page", icon: 'mdi-account', page: '/personal/profile'},
+        {id: 3, title: "AWS Educate Verification", icon: 'mdi-aws', page: '/personal/verification'},
         {id: 4, title: "Group", icon: 'mdi-account-group'},
         {id: 5, title: "File", icon: 'mdi-upload'},
       ],
