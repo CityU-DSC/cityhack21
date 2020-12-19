@@ -11,6 +11,8 @@ import vuetify from "./plugins/vuetify";
 import VueFullPage from "vue-fullpage.js";
 import dayjs from "dayjs";
 
+import { firestorePlugin } from 'vuefire';
+
 const dayjsPlugin = {
   install(Vue) {
     Vue.prototype.$dayjs = dayjs
@@ -24,6 +26,8 @@ Vue.use(VueFullPage);
 Vue.config.productionTip = false;
 Vue.use(Carousel3d);
 Vue.use(Vuex);
+
+Vue.use(firestorePlugin);
 
 new Vue({
   store,
