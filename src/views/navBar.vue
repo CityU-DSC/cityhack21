@@ -1,6 +1,6 @@
 <template>
-  <div class="navigation">
-    <v-container class="pb-0">
+  <div class="navigation" v-if="!isPersonalPage">
+    <v-container class="pb-0" >
       <v-row class="iconLink mt-md-3 mb-md-3 mx-0 mb-1 mt-1">
         <v-col class="d-flex p-0">
           <v-icon class="mr-2">mdi-instagram</v-icon>
@@ -21,8 +21,8 @@
     </v-container>
     <div class="d-flex justify-center">
       <img :src="CityHackLogo" style="max-width: 60px; max-height: 60px;" alt="cityHack-logo"/>
-      <router-link class="pl-3 d-none d-md-block" to="/" style="font-size: 40px; font-weight: bold;">CityHack 20<span style="color:#ff9900;">21</span></router-link>
-      <router-link class="d-md-none pl-3" to="/" style="font-size: 25px; font-weight: bold;">#CityHack 2021</router-link>
+      <router-link class="pl-3 d-none d-md-block" to="/" style="font-size: 40px; font-weight: bold;">#CityHack 20<span style="color:#ff9900;">21</span></router-link>
+      <router-link class="d-md-none pl-3" to="/" style="font-size: 25px; font-weight: bold;">#CityHack 20<span style="color:#ff9900;">21</span></router-link>
     </div>
     <v-row align="center" no-gutters>
       <v-spacer></v-spacer>
@@ -35,7 +35,7 @@
         ></v-app-bar-nav-icon>
         <router-link to="/overview">Overview</router-link>
       </v-col>
-      <v-col cols="3" lg="1"><router-link to="/">Resources</router-link></v-col>
+      <v-col cols="3" lg="1"><router-link to="/personal">Personal</router-link></v-col>
       <v-col v-if="isLoggedIn" cols="3" lg="1">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -85,6 +85,9 @@ export default {
   computed: {
     isOverviewPage() {
       return this.$route.name === "overview";
+    },
+    isPersonalPage() {
+      return this.$route.name.includes('personal');
     },
     ...mapGetters("auth", ["isLoggedIn", "currentUserName"]),
   },
