@@ -8,7 +8,7 @@
 <script>
 // set the competition date and time in here.
 // default is (just for testing) Jan 11 2021, 9:00 am
-const competitionDate = "2021-01-11T16:00:00.003Z";
+const competitionDate = "2021-01-11T09:00:00.003Z";
 const MILLISECONDS_SECOND = 1000;
 const MILLISECONDS_MINUTE = 60 * MILLISECONDS_SECOND;
 const MILLISECONDS_HOUR = 60 * MILLISECONDS_MINUTE;
