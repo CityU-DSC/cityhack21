@@ -21,7 +21,6 @@ const routes = [
     {path: "/personal", component: PersonalPanel, name: "personal"},
     {path: "/personal/profile", component: PersonalProfile, name: "personal_profile"},
     {path: "/personal/verification", component: AWSVerification, name: "personal_verification"},
-
 ];
 
 const router = new VueRouter({
