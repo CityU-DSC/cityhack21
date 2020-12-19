@@ -5,7 +5,6 @@
         <div class="d-block text-center">
           <PromotionMaterial/>
         </div>
-        <!-- <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close</b-button> -->
       </v-card>
     </v-dialog>
     <NavBar/>
@@ -34,8 +33,14 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+
 * {
   font-family: "Space Mono", serif;
+}
+
+#data-app {
+  background-color: black;
+  color: white;
 }
 
 .v-window__next {

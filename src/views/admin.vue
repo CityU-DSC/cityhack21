@@ -1,10 +1,16 @@
 <template>
-<div></div>
+  <v-container>
+    <admin-nav-bar/>
+  </v-container>
 </template>
 
 <script>
+import adminNavBar from "@/components/Admin/adminNavBar";
 export default {
-name: "admin"
+  name: "admin",
+  components: {
+    adminNavBar
+  }
 }
 </script>
 

@@ -109,13 +109,13 @@ export default {
 }
 
 .carousel-3d-slide {
-  background-color: rgba(0, 0, 0, 0.9) !important;
-  border-color: aliceblue;
+  background-color: #272727 !important;
+  color: #121212;
 }
 
 .slide-header {
   padding-top: .5rem;
-  color: aliceblue;
+  color: #ffffff;
 }
 
 .carousel-3d-container figcaption {

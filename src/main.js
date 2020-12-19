@@ -9,6 +9,15 @@ import Carousel3d from "vue-carousel-3d";
 import vuetify from "./plugins/vuetify";
 
 import VueFullPage from "vue-fullpage.js";
+import dayjs from "dayjs";
+
+const dayjsPlugin = {
+  install(Vue) {
+    Vue.prototype.$dayjs = dayjs
+  }
+};
+
+Vue.use(dayjsPlugin);
 
 Vue.use(VueFullPage);
 
