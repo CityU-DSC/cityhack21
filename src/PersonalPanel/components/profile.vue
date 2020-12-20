@@ -2,88 +2,94 @@
   <div>
     <nav-drawer @direct="directTo" :current="pathName" />
     <div class="content">
-      <div class="col-md-4 order-1">
-        <card type="user">
-          <p class="card-text">
-          </p>
-          <div class="author">
-            <div>
-              <img class="avatar" src="https://randomuser.me/api/portraits/men/1.jpg" alt="...">
-              <h5 class="title">{{model.nickname}}</h5>
-            </div>
-            <p class="description">
-              {{model.teamname}} (Team 0{{teamid}})
-            </p>
-            <p class="description">
-              {{model.university}}
-            </p>
-            <p class="description">
-              {{model.email}}
-            </p>
-          </div>
-          <!-- <p></p>
-          <p class="card-description">
-            {{model.about}}
-          </p> -->
-        </card>
-      </div>
-      <div class="col-md-8 order-2">
-        <card>
-          <h5 slot="header" class="title">Edit Profile</h5>
+      <div class="row">
+        <div class="col-md-4 pl-12 ml-12">
           <div class="row">
-            <div class="col-md-4">
-              <label for="teamname" >Team Name: </label>
-              <input
-                id="teamname"
-                placeholder="Team"
-                v-model="model.teamname"
-              >
-            </div>
-            <div class="col-md-4">
-              <label for="nickname"> Nickname: </label>
-              <input
-                id="nickname"
-                placeholder="Nickname"
-                v-model="model.nickname"
-              >
-            </div>
-            <div class="col-md-4">
-              <label for="email"> Email: </label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Email"
-                v-model="model.email"
-              >
-            </div>
+            <card type="user">
+              <p class="card-text">
+              </p>
+              <div class="author">
+                <div>
+                  <img class="avatar" src="https://randomuser.me/api/portraits/men/1.jpg" alt="...">
+                  <h5 class="title">{{model.nickname}}</h5>
+                </div>
+                <p class="description">
+                  {{model.teamname}} (Team 0{{teamid}})
+                </p>
+                <p class="description">
+                  {{model.university}}
+                </p>
+                <p class="description">
+                  {{model.email}}
+                </p>
+              </div>
+              <!-- <p></p>
+              <p class="card-description">
+                {{model.about}}
+              </p> -->
+            </card>
           </div>
+        </div>
+        <div class="col-md-8 pl-12 ml-12">
           <div class="row">
-            <div class="col-md-4">
-              <label for="university" >University: </label>
-              <input
-                id="university"
-                placeholder="University"
-                v-model="model.university"
-              >
-            </div>
-            <div class="col-md-8">
-              <!-- <label for="about">About Me: </label>
-              <textarea
-                id="about"
-                class="form-control"
-                placeholder="Here can be your description"
-                v-model="model.about"
-              >
-              </textarea>
-              <input
-                id="about"
-                placeholder="About"
-                v-model="model.about"
-              > -->
-            </div>
+            <card>
+              <h5 slot="header" class="title">Edit Profile</h5>
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="teamname" >Team Name: </label>
+                  <input
+                    id="teamname"
+                    placeholder="Team"
+                    v-model="model.teamname"
+                  >
+                </div>
+                <div class="col-md-4">
+                  <label for="nickname"> Nickname: </label>
+                  <input
+                    id="nickname"
+                    placeholder="Nickname"
+                    v-model="model.nickname"
+                  >
+                </div>
+                <div class="col-md-4">
+                  <label for="email"> Email: </label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    v-model="model.email"
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="university" >University: </label>
+                  <input
+                    id="university"
+                    placeholder="University"
+                    v-model="model.university"
+                  >
+                </div>
+                <div class="col-md-8">
+                  <!-- <label for="about">About Me: </label>
+                  <textarea
+                    id="about"
+                    class="form-control"
+                    placeholder="Here can be your description"
+                    v-model="model.about"
+                  >
+                  </textarea>
+                  <input
+                    id="about"
+                    placeholder="About"
+                    v-model="model.about"
+                  > -->
+                </div>
+              </div>
+              <button @click="save">Save</button>
+            </card>
           </div>
-          <button @click="save">Save</button>
-        </card>
+        </div>
       </div>
     </div>
   </div>
@@ -131,9 +137,9 @@ export default {
 </script>
 
 <style scoped>
-.content {
+/* .content {
   padding-left: 70px;
-}
+} */
 input {
   color: #fff;
 }
