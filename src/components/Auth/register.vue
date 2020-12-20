@@ -260,23 +260,33 @@
         <v-btn text> Cancel</v-btn>
       </v-stepper-content>
 
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1"></div>
+
+
+      <v-stepper-step :complete="e6 > 4" step="4">
+        Email Verification
+        <small>The Verification code has been sent to your personal email</small>
+      </v-stepper-step>
+
+      <v-stepper-content step="2">
+        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 3">
+          Continue
+        </v-btn>
+        <v-btn text> Cancel</v-btn>
+      </v-stepper-content>
+      <div class="mt-5 mr-5">
+        <v-row>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            style="margin-right: 2rem; margin-left: 5rem;"
+            @click="registerNewUser"
+        >Submit
+        </v-btn>
+          <v-btn text @click="reset">Reset</v-btn>
+        </v-row>
+
       </div>
-
-      <v-btn
-          color="primary"
-          style="margin-right: 2rem; margin-left: 5rem;"
-          @click="registerNewUser"
-      >Submit
-      </v-btn
-      >
-      <v-btn text @click="reset">Reset</v-btn>
     </v-stepper>
-
-    <div class="row">
-      <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1"></div>
-    </div>
   </div>
 </template>
 
