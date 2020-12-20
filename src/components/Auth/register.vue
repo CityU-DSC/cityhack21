@@ -7,7 +7,7 @@
       </v-stepper-step>
 
       <v-stepper-content step="1">
-        <v-form ref="form">
+        <v-form ref="basicForm" lazy-validation>
           <v-container>
             <v-row>
               <v-col>
@@ -72,7 +72,7 @@
                 <v-row class="mt-5 mb-5">
                   <vue-tel-input-vuetify
                       label="Phone Number"
-                      :rules="[rules.required, rules.length]"
+                      :rules="[rules.required]"
                       v-model="submission.number"
                       type="number"
                       class="mx-2 mr-5"
@@ -81,10 +81,11 @@
                   ></vue-tel-input-vuetify>
                   <v-text-field
                       label="CityU SID (if applicable)"
-                      v-mode="submission.sid"
-                      :rules="[rules.numeric, rules.length]"
+                      v-model="submission.sid"
+                      :rules="[rules.numeric, rules.counter]"
                       class="ml-5 mx-2"
                       counter
+                      maxlength="8"
                       prepend-inner-icon="mdi-card"
                       single-line
                   ></v-text-field>
@@ -153,10 +154,10 @@
             </v-row>
           </v-container>
         </v-form>
-        <v-btn color="primary" style="margin-right: 2rem" @click="e6 = 2">
+        <v-btn color="primary" style="margin-right: 2rem;" @click="doneBasicForm">
           Continue
         </v-btn>
-        <v-btn text> Cancel</v-btn>
+        <v-btn color="warning" @click="resetBasicInfoForm"> Reset Form</v-btn>
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 2" step="2">
@@ -164,7 +165,7 @@
         <small>Please set up your password for entering CityHack21 personal panel</small>
       </v-stepper-step>
       <v-stepper-content step="2">
-        <v-form ref="form">
+        <v-form ref="accountForm" lazy-validation>
           <v-container>
             <v-row>
 
@@ -199,17 +200,15 @@
                 class="mx-2 mt-5"
                 clearable
                 prepend-inner-icon="mdi-account-circle"
-                loading
                 outlined
             >
-              <template v-slot:progress>
-                <v-progress-linear
-                    v-if="custom"
-                    :value="progress"
-                    absolute
-                    height="7"
-                ></v-progress-linear>
-              </template>
+<!--              <template v-slot:progress>-->
+<!--                <v-progress-linear-->
+<!--                    :value="progress"-->
+<!--                    absolute-->
+<!--                    height="7"-->
+<!--                ></v-progress-linear>-->
+<!--              </template>-->
             </v-text-field>
             <v-row class="mt-2">
               <v-text-field
@@ -240,10 +239,11 @@
 
           </v-container>
         </v-form>
-        <v-btn color="primary" style="margin-right: 2rem;" @click="registerNewUser()">
-          Continue
+        <v-btn color="primary" class="mr-3" @click="registerNewUser()">
+          Send Verify Email
         </v-btn>
-        <v-btn text> Cancel</v-btn>
+        <v-btn @click="e6 = 1" class="mr-3"> Previous </v-btn>
+        <v-btn color="warning" @click="resetAccountForm"> Reset Form</v-btn>
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 3" step="3">
@@ -264,7 +264,7 @@
         <v-btn color="primary" style="margin-right: 2rem;" @click="verifyPassword()">
           Continue
         </v-btn>
-        <v-btn text> Cancel</v-btn>
+        <v-btn color="warning" @click="registerNewUser()"> Re-send Email</v-btn>
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 4" step="4">
@@ -272,36 +272,38 @@
         <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified student job seekers with the AWS Educate Job Board.</small>
       </v-stepper-step>
       <v-stepper-content step="4">
-        <v-radio-group
-            label="Have you finished all the credits of AWS Educate?"
-            v-model="AWSPreference.needAWSExtraCredit"
-            row
-        >
-          <v-radio
-              class="ml-5"
-              label="Yes"
-              value="false"
-          ></v-radio>
-          <v-radio
-              label="No"
-              value="true"
-          ></v-radio>
-        </v-radio-group>
-        <v-radio-group
-            label="Do you have AWS Educate Account?"
-            v-model="AWSPreference.hasAWSAccount"
-            row
-        >
-          <v-radio
-              class="ml-5"
-              label="Yes"
-              value="true"
-          ></v-radio>
-          <v-radio
-              label="No"
-              value="false"
-          ></v-radio>
-        </v-radio-group>
+        <v-form ref="AWSForm" lazy-validation>
+          <v-radio-group
+              label="Have you finished all the credits of AWS Educate?"
+              v-model="AWSPreference.needAWSExtraCredit"
+              row
+          >
+            <v-radio
+                class="ml-5"
+                label="Yes"
+                value="true"
+            ></v-radio>
+            <v-radio
+                label="No"
+                value="false"
+            ></v-radio>
+          </v-radio-group>
+          <v-radio-group
+              label="Do you have AWS Educate Account?"
+              v-model="AWSPreference.hasAWSAccount"
+              row
+          >
+            <v-radio
+                class="ml-5"
+                label="Yes"
+                value="true"
+            ></v-radio>
+            <v-radio
+                label="No"
+                value="false"
+            ></v-radio>
+          </v-radio-group>
+        </v-form>
         <v-btn
             color="primary"
             class="mt-5"
@@ -317,7 +319,6 @@
 import swal from "sweetalert";
 import Swal from 'sweetalert2';
 import {mapActions} from "vuex";
-import discordReg from "../../assets/image/pre-registration/discord.png";
 
 export default {
   name: "register",
@@ -345,8 +346,8 @@ export default {
       verificationCode: "",
 
       AWSPreference: {
-        hasAWSAccount: false,
-        needAWSExtraCredit: false,
+        hasAWSAccount: "false",
+        needAWSExtraCredit: "false",
       },
       avatarImg: null,
       verifiedPassword: null,
@@ -480,7 +481,7 @@ export default {
               "At least one capital letter, and a number."
           );
         },
-        nameRules: value => value.length <= 15 || "Maximum 12 characters",
+        nameRules: value => !value || value.length <= 15 || "Maximum 12 characters",
         numAndAlpha: value => {
           const pattern = /^[A-Za-z0-9]+$/;
           return pattern.test(value) || "Only Alphabet";
@@ -489,9 +490,8 @@ export default {
           const pattern = /.+@.+\..+/;
           return pattern.test(value) || 'Invalid e-mail.';
         },
-        min: v => v.length >= 8 || 'Min 8 characters',
-        length: (value) =>
-            !value.length || value.length === 8 || "Should be 8 numbers",
+        min: v => !v || v.length >= 8 || 'Min 8 characters',
+        counter: v => !v || v.length === 8 || "Should be 8 numbers",
         avatarSize: (value) => !value || value.size <= 1000000 || 'Avatar size should be less than 1 MB!',
       },
       validation: {
@@ -518,40 +518,42 @@ export default {
     //   this.submission.address = addressData;
     // },
     async registerNewUser() {
-      await this.registerUser({...this.submission, ...this.accountDetails })
-      .then(
-        ({ err }) => {
-          // res.err
-          if (err) {
-            swal("Error", "Something Went Wrong", "error");
-          } else {
-            swal("Success", "Registration Was successful", "success");
-          }
-          // let token = res.token;
-          // if (token) {
-          //   localStorage.setItem("jwt", token);
-          //   this.$router.push("/login");
-          //   swal("Success", "Registration Was successful", "success");
-          // } else {
-          //   swal("Error", "Something Went Wrong", "error");
-          // }
-          this.e6 = 3;
-        }
-      )
-      .catch(err => {
-        console.log(err);
-        if (err.err) {
-          swal("Error", err.message, "error");
-        } else {
-          swal("Error", "Something Went Wrong", "error");
-        }
-        // let error = err.response;
-        // if (error.status && error.status === 409) {
-        //   swal("Error", error.data.message, "error");
-        // } else {
-        //   swal("Error", error.data.err.message, "error");
-        // }
-      });
+      if (this.$refs.accountForm.validate()) {
+        await this.registerUser({...this.submission, ...this.accountDetails })
+            .then(
+                ({ err }) => {
+                  // res.err
+                  if (err) {
+                    swal("Error", "Something Went Wrong", "error");
+                  } else {
+                    swal("Success", "Registration Was successful", "success");
+                  }
+                  // let token = res.token;
+                  // if (token) {
+                  //   localStorage.setItem("jwt", token);
+                  //   this.$router.push("/login");
+                  //   swal("Success", "Registration Was successful", "success");
+                  // } else {
+                  //   swal("Error", "Something Went Wrong", "error");
+                  // }
+                  this.e6 = 3;
+                }
+            )
+            .catch(err => {
+              console.log(err);
+              if (err.err) {
+                swal("Error", err.message, "error");
+              } else {
+                swal("Error", "Something Went Wrong", "error");
+              }
+              // let error = err.response;
+              // if (error.status && error.status === 409) {
+              //   swal("Error", error.data.message, "error");
+              // } else {
+              //   swal("Error", error.data.err.message, "error");
+              // }
+            });
+      }
     },
 
     async verifyPassword() {
@@ -575,63 +577,72 @@ export default {
 
       }
     },
-    reset() {
-
+    doneBasicForm(){
+      if (this.$refs.basicForm.validate()) {
+        this.e6 = 2;
+      }
+    },
+    resetBasicInfoForm(){
+      this.$refs.basicForm.reset();
+    },
+    resetAccountForm(){
+      this.$refs.accountForm.reset();
     },
     avatarImgtoUrl() {
       this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
     },
     finishAllSteps() {
-      if(this.AWSPreference.hasAWSAccount === "true") {
-        Swal.fire({
-          title: 'Successfully Registered!',
-          html: '<ul><li>Please Upload AWS Educate Account Verification to personal email </li>' +
-              '<li><a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>',
-          text: '',
-          padding: '3em',
-          imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
-          imageWidth: 200,
-          imageHeight: 200,
-          imageAlt: 'Custom image',
-          backdrop: `
+      if(this.$refs.AWSForm.validate()){
+        if(this.AWSPreference.hasAWSAccount === "true") {
+          Swal.fire({
+            title: 'Successfully Registered!',
+            html: '<ul><li>Please Upload AWS Educate Account Verification to personal email </li>' +
+                '<li><a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>',
+            text: '',
+            padding: '3em',
+            imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            backdrop: `
           rgba(0,0,0,0.4)
           url("https://thumbs.gfycat.com/BouncyWelcomeGrassspider-max-1mb.gif")
-          left top
+          right bottom
           no-repeat
         `,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.$router.push({name: "login"});
-          }
-        })
-      } else {
-        Swal.fire({
-          title: 'Almost Done!!',
-          html: '<ul><li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>' +
-              '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>',
-          text: '',
-          padding: '3em',
-          imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
-          imageWidth: 200,
-          imageHeight: 200,
-          imageAlt: 'Custom image',
-          backdrop: `
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.$router.push({name: "login"});
+            }
+          })
+        } else {
+          Swal.fire({
+            title: 'Almost Done!!',
+            html: '<ul><li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>' +
+                '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>',
+            text: '',
+            padding: '3em',
+            imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            backdrop: `
           rgba(0,0,0,0.4)
           url("https://thumbs.gfycat.com/BouncyWelcomeGrassspider-max-1mb.gif")
-          left top
+          right top
           no-repeat
         `,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.open("https://www.awseducate.com/Registration?promoCode=CityHack2021");
-          }
-        })
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.open("https://www.awseducate.com/Registration?promoCode=CityHack2021");
+            }
+          })
+        }
       }
     },
   },
   mounted() {
-    this.$refs.address.focus();
-    this.discordImgUrl = URL.createObjectURL(discordReg);
+    // this.$refs.address.focus();
   },
 };
 </script>
