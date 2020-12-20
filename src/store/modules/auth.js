@@ -36,15 +36,23 @@ export default {
         return res;
       });
     },
-    registerUser({ commit }, params) {
+    registerUser(garbage, params) {
       return auth.registerUser(params).then(res => {
         console.log(`[*]AuthApi:: Register Success, ${res}`);
-        commit("setCurrentUser", res.data, res.token);
+        // commit("setCurrentUser", res.data, res.token);
         return res;
       });
     },
     logOutUser({ commit }) {
       commit("clearUserData");
+    },
+    verifyUser({ commit }, params) {
+      return auth.verifyUser(params).then(
+        res => {
+          commit("setCurrentUser", res.user, res.token);
+          return res;
+        }
+      )
     }
   }
 };
