@@ -24,5 +24,10 @@ export default {
       .post("/user/register", params)
       .then(res => res)
       .catch(err => console.log(err));
+  },
+  verifyUser(params) {
+    return axios
+      .post("/user/verifyEmail", params)
+      .catch(err => console.log(err));
   }
 };
