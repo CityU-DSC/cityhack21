@@ -19,6 +19,8 @@ import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
 //   apiKey: 'AIzaSyBcXjtpzqcHsrNJRSbJXIDRsS2wjf9bx08',
 // });
 
+import { firestorePlugin } from 'vuefire';
+
 const dayjsPlugin = {
   install(Vue) {
     Vue.prototype.$dayjs = dayjs
@@ -32,6 +34,8 @@ Vue.use(VueFullPage);
 Vue.config.productionTip = false;
 Vue.use(Carousel3d);
 Vue.use(Vuex);
+
+Vue.use(firestorePlugin);
 
 Vue.use(VueTelInputVuetify, {
   vuetify,

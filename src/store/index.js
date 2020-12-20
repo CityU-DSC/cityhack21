@@ -5,7 +5,8 @@ import auth from "./modules/auth";
 import adminList from "./modules/adminList";
 import menu from "./modules/menu";
 import util from "./modules/util";
-import users from "./modules/users"
+import users from "./modules/users";
+import aws_verify from "./modules/aws_verify"
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ const store = () =>
             menu,
             util,
             users,
+            aws_verify
         }
     });
 
