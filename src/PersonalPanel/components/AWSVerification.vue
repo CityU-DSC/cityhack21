@@ -84,6 +84,8 @@ import firebase from 'firebase'
 import { db } from "../../config/firebaseConfig.js"
 import swal from "sweetalert"
 
+import { mapActions } from "vuex";
+
 export default {
   name: "AWSVerification",
   components: {
@@ -107,6 +109,7 @@ export default {
     this.getImages();
   },
   methods: {
+    ...mapActions('aws_verify', ['awsVerify']),
     directTo(page) {
       this.$router.push(page);
     },
@@ -153,7 +156,6 @@ export default {
       console.log(">>>>> imageFile: ", this.imageFile);
       console.log(">>>>> imageUrl: ", this.imageUrl);
     },
-    
     upload: function() {
       // ストレージオブジェクト作成
       var storageRef = firebase.storage().ref();
@@ -181,6 +183,7 @@ export default {
                 swal("Success", "Verification Image Was successful", "success");
                 this.submissionDetail.imageUrl=downloadURL;
                 console.log(">>>submissionDetail: imageUrl",this.submissionDetail.imageUrl);
+                this.awsVerifyUrl();
               }
             );
             this.getImages();
@@ -194,6 +197,22 @@ export default {
         });
       });
       //this.getImages();
+    },
+    async awsVerifyUrl(){
+      try{
+        await this.awsVerify(
+          this.submissionDetail.imageUrl, 
+          localStorage.getItem("jwt")
+          )
+        .then(res =>{
+          console.log("awsVerification: ");
+          console.log(res);
+        })
+      } 
+      catch(err){
+        swal("Error", "Something Went Wrong", "error");
+        console.log(err.response);
+      }
     }
   }
 }
