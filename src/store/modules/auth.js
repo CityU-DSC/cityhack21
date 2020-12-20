@@ -36,7 +36,7 @@ export default {
         return res;
       });
     },
-    registerUser({ commit }, params) {
+    registerUser(garbage, params) {
       return auth.registerUser(params).then(res => {
         console.log(`[*]AuthApi:: Register Success, ${res}`);
         // commit("setCurrentUser", res.data, res.token);
@@ -50,6 +50,7 @@ export default {
       return auth.verifyUser(params).then(
         res => {
           commit("setCurrentUser", res.user, res.token);
+          return res;
         }
       )
     }

@@ -20,14 +20,9 @@ export default {
       .catch(err => console.log(err));
   },
   registerUser(params) {
-    return axios
-      .post("/user/register", params)
-      .then(res => res)
-      .catch(err => console.log(err));
+    return axios.post("/user/register", params, { timeout: 10*1000 });
   },
   verifyUser(params) {
-    return axios
-      .post("/user/verifyEmail", params)
-      .catch(err => console.log(err));
+    return axios.post("/user/verifyEmail", params);
   }
 };

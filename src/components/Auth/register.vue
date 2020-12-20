@@ -72,7 +72,7 @@
                 <v-row class="mt-5 mb-5">
                   <vue-tel-input-vuetify
                       label="Phone Number"
-                      :rules="[rules.required, rules.numeric, rules.length]"
+                      :rules="[rules.required, rules.length]"
                       v-model="submission.number"
                       type="number"
                       class="mx-2 mr-5"
@@ -240,7 +240,7 @@
 
           </v-container>
         </v-form>
-        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 3">
+        <v-btn color="primary" style="margin-right: 2rem;" @click="registerNewUser()">
           Continue
         </v-btn>
         <v-btn text> Cancel</v-btn>
@@ -252,7 +252,16 @@
       </v-stepper-step>
 
       <v-stepper-content step="3">
-        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 4">
+        <v-text-field
+            label="Verification Code"
+            v-model="verificationCode"
+            :rules="[rules.required]"
+            class="mx-2"
+            counter
+            prepend-inner-icon="mdi-key"
+            outlined
+        ></v-text-field>
+        <v-btn color="primary" style="margin-right: 2rem;" @click="verifyPassword()">
           Continue
         </v-btn>
         <v-btn text> Cancel</v-btn>
@@ -328,22 +337,24 @@ export default {
   data() {
     return {
       submission: {
-        firstName: "",
-        lastName: "",
-        nickName: "",
-        university: "",
-        sid: "",
-        year: "",
-        majorProgram: "",
-        number: "",
-        schoolEmail: "",
-        personalEmail: "",
+        firstName: "asdasd",
+        lastName: "asdasd",
+        nickName: "asdasd",
+        university: "City University of Hong Kong",
+        sid: 54924670,
+        year: "Year 1",
+        majorProgram: "Architecture",
+        number: "67230014",
+        schoolEmail: "lowzhao@gmail.com",
+        personalEmail: "lowzhao@gmail.com",
       },
       accountDetails: {
-        accountId: "",
-        password: "",
+        accountId: "asdasdasd",
+        password: "asdasdasd",
         avatarUrl: null,
       },
+      verificationCode: "",
+
       AWSPreference: {
         hasAWSAccount: false,
         needAWSExtraCredit: false,
@@ -356,10 +367,10 @@ export default {
       universities: [
         "City University of Hong Kong",
         "Hong Kong Baptist University",
-        "The Chinese University of Hong Kong",
-        "The Hong Kong Polytechnic University",
-        "The Hong Kong University of Science and Technology",
-        "The University of Hong Kong",
+        "Chinese University of Hong Kong",
+        "Hong Kong Polytechnic University",
+        "Hong Kong University of Science and Technology",
+        "University of Hong Kong",
       ],
       majors: [
         "Architecture",
@@ -513,30 +524,66 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", ["registerUser"]),
+    ...mapActions("auth", ["registerUser", "verifyUser"]),
     // getAddressData(addressData) {
     //   this.submission.address = addressData;
     // },
     async registerNewUser() {
-      try {
-        await this.registerUser({...this.submission, ...this.accountDetails }).then((res) => {
-          let token = res.token;
-          if (token) {
-            localStorage.setItem("jwt", token);
-            this.$router.push("/login");
-            swal("Success", "Registration Was successful", "success");
-          } else {
+      await this.registerUser({...this.submission, ...this.accountDetails })
+      .then(
+        ({ err }) => {
+          // res.err
+          if (err) {
             swal("Error", "Something Went Wrong", "error");
+          } else {
+            swal("Success", "Registration Was successful", "success");
           }
-        });
+          // let token = res.token;
+          // if (token) {
+          //   localStorage.setItem("jwt", token);
+          //   this.$router.push("/login");
+          //   swal("Success", "Registration Was successful", "success");
+          // } else {
+          //   swal("Error", "Something Went Wrong", "error");
+          // }
+          this.e6 = 3;
+        }
+      )
+      .catch(err => {
+        console.log(err);
+        if (err.err) {
+          swal("Error", err.message, "error");
+        } else {
+          swal("Error", "Something Went Wrong", "error");
+        }
+        // let error = err.response;
+        // if (error.status && error.status === 409) {
+        //   swal("Error", error.data.message, "error");
+        // } else {
+        //   swal("Error", error.data.err.message, "error");
+        // }
+      });
+    },
+
+    async verifyPassword() {
+      try {
+        const { token } = await this.verifyUser({ verificationCode: this.verificationCode, email: this.submission.personalEmail });
+
+        if (token) {
+          localStorage.setItem("jwt", token);
+          swal("Success", "Registration Was successful", "success");
+        } else {
+          swal("Error", "Something Went Wrong", "error");
+        }
+
       } catch (err) {
         console.log(err);
-        let error = err.response;
-        if (error.status && error.status === 409) {
-          swal("Error", error.data.message, "error");
+        if (err.err && err.message) {
+          swal("Error", err.message, "error");
         } else {
-          swal("Error", error.data.err.message, "error");
+          swal("Error", "Something Went Wrong", "error");
         }
+
       }
     },
     reset() {
