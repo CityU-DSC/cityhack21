@@ -556,7 +556,7 @@ export default {
 
     async verifyPassword() {
       try {
-        const { token } = await this.verifyUser({ verificationCode: this.verificationCode, email: this.submission.personalEmail });
+        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.submission.personalEmail });
 
         if (token) {
           localStorage.setItem("jwt", token);
@@ -564,7 +564,7 @@ export default {
         } else {
           swal("Error", "Something Went Wrong", "error");
         }
-
+        this.e6 = 4;
       } catch (err) {
         console.log(err);
         if (err.err && err.message) {
