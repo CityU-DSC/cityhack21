@@ -273,21 +273,6 @@
       </v-stepper-step>
       <v-stepper-content step="4">
         <v-radio-group
-            label="Have you had AWS Educate Account?"
-            v-model="AWSPreference.hasAWSAccount"
-            row
-        >
-          <v-radio
-              class="ml-5"
-              label="Yes"
-              value="true"
-          ></v-radio>
-          <v-radio
-              label="No"
-              value="false"
-          ></v-radio>
-        </v-radio-group>
-        <v-radio-group
             label="Have you finished all the credits of AWS Educate?"
             v-model="AWSPreference.needAWSExtraCredit"
             row
@@ -302,40 +287,44 @@
               value="true"
           ></v-radio>
         </v-radio-group>
-
-
-
-        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 1">
-          Continue
-        </v-btn>
-        <v-btn text> Cancel</v-btn>
-      </v-stepper-content>
-      <div class="mt-5 mr-5">
-        <v-row>
-          <v-spacer />
-          <v-btn
+        <v-radio-group
+            label="Do you have AWS Educate Account?"
+            v-model="AWSPreference.hasAWSAccount"
+            row
+        >
+          <v-radio
+              class="ml-5"
+              label="Yes"
+              value="true"
+          ></v-radio>
+          <v-radio
+              label="No"
+              value="false"
+          ></v-radio>
+        </v-radio-group>
+        <v-btn
             color="primary"
-            style="margin-right: 2rem; margin-left: 5rem;"
-            @click="registerNewUser"
+            class="mt-5"
+            @click="finishAllSteps"
         >Submit
         </v-btn>
-          <v-btn text @click="reset">Reset</v-btn>
-        </v-row>
-
-      </div>
+      </v-stepper-content>
     </v-stepper>
   </div>
 </template>
 
 <script>
 import swal from "sweetalert";
+import Swal from 'sweetalert2';
 import {mapActions} from "vuex";
+import discordReg from "../../assets/image/pre-registration/discord.png";
 
 export default {
   name: "register",
   components: {},
   data() {
     return {
+      discordImgUrl: "",
       submission: {
         firstName: "asdasd",
         lastName: "asdasd",
@@ -591,10 +580,58 @@ export default {
     },
     avatarImgtoUrl() {
       this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
-    }
+    },
+    finishAllSteps() {
+      if(this.AWSPreference.hasAWSAccount === "true") {
+        Swal.fire({
+          title: 'Successfully Registered!',
+          html: '<ul><li>Please Upload AWS Educate Account Verification to personal email </li>' +
+              '<li><a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>',
+          text: '',
+          padding: '3em',
+          imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
+          imageWidth: 200,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          backdrop: `
+          rgba(0,0,0,0.4)
+          url("https://thumbs.gfycat.com/BouncyWelcomeGrassspider-max-1mb.gif")
+          left top
+          no-repeat
+        `,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.$router.push({name: "login"});
+          }
+        })
+      } else {
+        Swal.fire({
+          title: 'Almost Done!!',
+          html: '<ul><li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>' +
+              '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>',
+          text: '',
+          padding: '3em',
+          imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
+          imageWidth: 200,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          backdrop: `
+          rgba(0,0,0,0.4)
+          url("https://thumbs.gfycat.com/BouncyWelcomeGrassspider-max-1mb.gif")
+          left top
+          no-repeat
+        `,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.open("https://www.awseducate.com/Registration?promoCode=CityHack2021");
+          }
+        })
+      }
+    },
   },
   mounted() {
     this.$refs.address.focus();
+    this.discordImgUrl = URL.createObjectURL(discordReg);
   },
 };
 </script>
