@@ -92,7 +92,7 @@
                 <v-row class="mt-5 mb-5">
                   <v-text-field
                       label="School Email Address"
-                      :rules="[rules.required, rules.emailRules]"
+                      :rules="[rules.required, rules.blank, rules.emailRules]"
                       v-model="submission.schoolEmail"
                       class="mx-2 mr-5"
                       prepend-icon="mdi-email"
@@ -109,11 +109,10 @@
                 <v-row class="mt-5 mb-5">
                   <v-text-field
                       label="Personal Email Address"
-                      :rules="[rules.required, rules.blank]"
+                      :rules="[rules.required, rules.blank, rules.emailRules]"
                       v-model="submission.personalEmail"
                       class="mx-2 mr-5"
                       prepend-icon="mdi-at"
-                      suffix="@gmail.com"
                       single-line
                   ></v-text-field>
                   <v-text-field
@@ -121,7 +120,6 @@
                       :rules="[rules.required, validation.personalEmail]"
                       class="mx-2 ml-5"
                       prepend-icon="mdi-email-check"
-                      suffix="@gmail.com"
                       single-line
                   ></v-text-field>
                 </v-row>
@@ -162,22 +160,10 @@
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 2" step="2">
-        Email Verification
-        <small>The Verification code has been sent to your personal email</small>
-      </v-stepper-step>
-
-      <v-stepper-content step="2">
-        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 3">
-          Continue
-        </v-btn>
-        <v-btn text> Cancel</v-btn>
-      </v-stepper-content>
-
-      <v-stepper-step :complete="e6 > 3" step="3">
         Account Setting
         <small>Please set up your password for entering CityHack21 personal panel</small>
       </v-stepper-step>
-      <v-stepper-content step="3">
+      <v-stepper-content step="2">
         <v-form ref="form">
           <v-container>
             <v-row>
@@ -254,20 +240,62 @@
 
           </v-container>
         </v-form>
+        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 3">
+          Continue
+        </v-btn>
+        <v-btn text> Cancel</v-btn>
+      </v-stepper-content>
+
+      <v-stepper-step :complete="e6 > 3" step="3">
+        Email Verification
+        <small>The Verification code has been sent to your personal email</small>
+      </v-stepper-step>
+
+      <v-stepper-content step="3">
         <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 4">
           Continue
         </v-btn>
         <v-btn text> Cancel</v-btn>
       </v-stepper-content>
 
-
-
       <v-stepper-step :complete="e6 > 4" step="4">
-        Email Verification
-        <small>The Verification code has been sent to your personal email</small>
+        AWS Educate Account?
+        <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified student job seekers with the AWS Educate Job Board.</small>
       </v-stepper-step>
-
       <v-stepper-content step="4">
+        <v-radio-group
+            label="Have you had AWS Educate Account?"
+            v-model="AWSPreference.hasAWSAccount"
+            row
+        >
+          <v-radio
+              class="ml-5"
+              label="Yes"
+              value="true"
+          ></v-radio>
+          <v-radio
+              label="No"
+              value="false"
+          ></v-radio>
+        </v-radio-group>
+        <v-radio-group
+            label="Have you finished all the credits of AWS Educate?"
+            v-model="AWSPreference.needAWSExtraCredit"
+            row
+        >
+          <v-radio
+              class="ml-5"
+              label="Yes"
+              value="false"
+          ></v-radio>
+          <v-radio
+              label="No"
+              value="true"
+          ></v-radio>
+        </v-radio-group>
+
+
+
         <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 1">
           Continue
         </v-btn>
@@ -314,8 +342,11 @@ export default {
       accountDetails: {
         accountId: "",
         password: "",
-
         avatarUrl: null,
+      },
+      AWSPreference: {
+        hasAWSAccount: false,
+        needAWSExtraCredit: false,
       },
       avatarImg: null,
       verifiedPassword: null,
