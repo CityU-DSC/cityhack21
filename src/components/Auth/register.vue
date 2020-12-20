@@ -11,90 +11,139 @@
           <v-container>
             <v-row>
               <v-col>
-                <v-text-field
-                  label="First Name"
-                  v-model="submission.firstName"
-                  :rules="[rules.required]"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-text-field
-                  label="Surname"
-                  v-model="submission.lastName"
-                  :rules="[rules.required]"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-text-field
-                  label="Nickname"
-                  v-model="submission.nickName"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-select
-                  label="University"
-                  v-model="submission.university"
-                  :items="universities"
-                  :rules="[rules.required]"
-                  shaped
-                  filled
-                ></v-select>
-                <v-text-field
-                  label="Your 8-digit CityU Student ID (if applicable)"
-                  v-mode="submission.eid"
-                  :rules="[rules.numeric, rules.length]"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-select label="Academic Year" :items="years" shaped filled>
-                </v-select>
-                <v-text-field
-                  label="Major/Programme"
-                  v-model="submission.majorProgram"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-text-field
-                  label="Phone Number"
-                  :rules="[rules.required]"
-                  v-model="submission.number"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-text-field
-                  label="School Email Address"
-                  :rules="[rules.required]"
-                  v-model="submission.schoolAddress"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-text-field
-                  label="Confirm School Email Address"
-                  :rules="[rules.required, validation.schoolAddress]"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-text-field
-                  label="Personal Email Address"
-                  :rules="[rules.required]"
-                  v-model="submission.personalAddress"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-text-field
-                  label="Confirm Personal Email Address"
-                  :rules="[rules.required, validation.personalAddress]"
-                  shaped
-                  filled
-                ></v-text-field>
-                <v-select
-                  label="Have you joined a team?"
-                  :items="options"
-                  :rules="[rules.required]"
-                  v-model="submission.joinedTeam"
-                  shaped
-                  filled
-                ></v-select>
+                <v-row>
+                  <v-text-field
+                      label="First Name"
+                      v-model="submission.firstName"
+                      :rules="[rules.required]"
+                      class="mx-2"
+                      prepend-inner-icon="mdi-alien"
+                      outlined
+                  ></v-text-field>
+                  <v-text-field
+                      label="Surname"
+                      v-model="submission.lastName"
+                      :rules="[rules.required]"
+                      prepend-inner-icon="mdi-alien-outline"
+                      class="mx-2"
+                      outlined
+                  ></v-text-field>
+                  <v-text-field
+                      label="Nickname"
+                      v-model="submission.nickName"
+                      class="mx-2"
+                      prepend-inner-icon="mdi-alpha-n-box-outline"
+                      outlined
+                  ></v-text-field>
+                </v-row>
+                <v-row class="mt-5 mb-5">
+                  <v-select
+                      label="University"
+                      v-model="submission.university"
+                      :items="universities"
+                      :rules="[rules.required]"
+                      class="mx-2"
+                      outlined
+                  ></v-select>
+                  <v-text-field
+                    label="Major/Programme"
+                    v-model="submission.majorProgram"
+                    class="mx-2"
+                    outlined
+                  ></v-text-field>
+                </v-row>
+                <v-slider
+                    label="Academic Year"
+                    v-model="submission.year"
+                    :tick-labels="years"
+                    :max="years.length - 1"
+                    class="mt-5 mb-5"
+                    prepend-icon="mdi-school-outline"
+                    step="1"
+                    ticks="always"
+                    tick-size="5"
+                ></v-slider>
+                <v-row class="mt-5 mb-5">
+                  <vue-tel-input-vuetify
+                      label="Phone Number"
+                      :rules="[rules.required, rules.numeric, rules.length]"
+                      v-model="submission.number"
+                      type="number"
+                      class="mx-2 mr-5"
+                      blur
+                      prepend-icon="mdi-cellphone"
+                  ></vue-tel-input-vuetify>
+                  <v-text-field
+                      label="CityU SID (if applicable)"
+                      v-mode="submission.eid"
+                      :rules="[rules.numeric, rules.length]"
+                      class="ml-5 mx-2"
+                      prepend-inner-icon="mdi-card"
+                      single-line
+                  ></v-text-field>
+                </v-row>
+                <v-row class="mt-5 mb-5">
+                  <v-text-field
+                      label="School Email Address"
+                      :rules="[rules.required]"
+                      v-model="submission.schoolAddress"
+                      class="mx-2 mr-5"
+                      prepend-icon="mdi-email"
+                      single-line
+                  ></v-text-field>
+                  <v-text-field
+                      label="Confirm School Email Address"
+                      :rules="[rules.required, validation.schoolAddress]"
+                      class="mx-2 ml-5"
+                      prepend-icon="mdi-email-check-outline"
+                      single-line
+                  ></v-text-field>
+                </v-row>
+                <v-row class="mt-5 mb-5">
+                  <v-text-field
+                      label="Personal Email Address"
+                      :rules="[rules.required]"
+                      v-model="submission.personalAddress"
+                      class="mx-2 mr-5"
+                      prepend-icon="mdi-at"
+                      suffix="@gmail.com"
+                      single-line
+                  ></v-text-field>
+                  <v-text-field
+                      label="Confirm Personal Email Address"
+                      :rules="[rules.required, validation.personalAddress]"
+                      class="mx-2 ml-5"
+                      prepend-icon="mdi-email-check"
+                      suffix="@gmail.com"
+                      single-line
+                  ></v-text-field>
+                </v-row>
+<!--                <v-radio-group-->
+<!--                    label="Have you joined a team?"-->
+<!--                    v-model="submission.joinedTeam"-->
+<!--                    row-->
+<!--                    :rules="[rules.required]"-->
+<!--                >-->
+<!--                  <v-radio-->
+<!--                      class="ml-5"-->
+<!--                      label="Yes"-->
+<!--                      value="true"-->
+<!--                  ></v-radio>-->
+<!--                  <v-radio-->
+<!--                      label="No"-->
+<!--                      value="false"-->
+<!--                  ></v-radio>-->
+<!--                </v-radio-group>-->
+<!--                <vuetify-google-autocomplete-->
+<!--                    ref="submission.address"-->
+<!--                    id="map"-->
+<!--                    append-icon="mdi-search"-->
+<!--                    classname="form-control"-->
+<!--                    country="hk"-->
+<!--                    placeholder="Please type your address"-->
+<!--                    v-on:placechanged="getAddressData"-->
+<!--                >-->
+<!--                </vuetify-google-autocomplete>-->
               </v-col>
             </v-row>
           </v-container>
@@ -106,8 +155,8 @@
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 2" step="2">
-        Team Information
-        <small>Please write down your team information here</small>
+        Email Verification
+        <small>The Verification code has been sent to your personal email</small>
       </v-stepper-step>
 
       <v-stepper-content step="2">
@@ -118,15 +167,12 @@
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 3" step="3">
-        Team Information (Preference)
-        <small
-          >Since you have not joined a team, please choose your ideal positions
-          in the team which best fits your knowledge and skills!
-        </small>
+        Account Setting
+        <small>Please set up your password for entering CityHack21 personal panel, AccountId is same as your NickName</small>
       </v-stepper-step>
 
       <v-stepper-content step="3">
-        <v-btn color="primary" style="margin-right: 2rem" @click="e6 = 1">
+        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 1">
           Continue
         </v-btn>
         <v-btn text> Cancel </v-btn>
@@ -139,7 +185,7 @@
       <v-btn
         color="primary"
         style="margin-right: 2rem; margin-left: 5rem"
-        @click="submit"
+        @click="registerNewUser"
         >Submit</v-btn
       >
       <v-btn text @click="reset">Reset</v-btn>
@@ -157,6 +203,8 @@ import { mapActions } from "vuex";
 
 export default {
   name: "register",
+  components: {
+  },
   data() {
     return {
       submission: {
@@ -171,6 +219,7 @@ export default {
         schoolAddress: "",
         personalAddress: "",
         joinedTeam: "",
+        address: "",
       },
       universities: [
         "City University of Hong Kong",
@@ -180,7 +229,7 @@ export default {
         "The Hong Kong University of Science and Technology",
         "The University of Hong Kong",
       ],
-      years: ["Year 1", "Year 2", "Year 3", "Year 4"],
+      years: ["Year 1", "Year 2", "Year 3", "Year 4", "> Year 4", "Graduated", "Postgrad"],
       options: ["Yes", "No"],
       rules: {
         required: (value) => !!value || "Required.",
@@ -205,6 +254,9 @@ export default {
 
   methods: {
     ...mapActions("auth", ["registerUser"]),
+    // getAddressData(addressData) {
+    //   this.submission.address = addressData;
+    // },
     async registerNewUser() {
       try {
         await this.registerUser(this.register).then((res) => {
@@ -227,6 +279,12 @@ export default {
         }
       }
     },
+    reset() {
+
+    },
+  },
+  mounted() {
+    this.$refs.address.focus();
   },
 };
 </script>
