@@ -1,29 +1,63 @@
 <template>
+<div>
+  <nav-drawer @direct="directTo" :current="pathName"/>
+
+  <br>
+
+  <div>
+    <v-row justify="space-around">
+      <v-card width="400">
+        <v-img
+          height="200px"
+          :src="submissionDetail.imageUrl"
+        >
+          <v-app-bar
+            flat
+            color="rgba(0, 0, 0, 0)"
+          >
+            <v-app-bar-nav-icon color="white"></v-app-bar-nav-icon>
+
+            <v-spacer></v-spacer>
+
+            <v-btn
+              color="white"
+              icon
+            >
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </v-app-bar>
+        </v-img>
+
+        <v-card-text v-if="submissionDetail.imageUrl">
+          <div class="font-weight-bold ml-8 mb-2">
+            Status: Upload Completed
+          </div>
+        </v-card-text>
+
+        <v-card-text v-else>
+          <div class="font-weight-bold ml-8 mb-2">
+            Status: Upload incomplete
+          </div>
+        </v-card-text>
+
+      </v-card>
+    </v-row>
+  </div>
   <div id="uploader">
-    <v-app-bar app color="indigo" dark>
-      <v-toolbar-title>Vue Firebase Image Upload</v-toolbar-title>
-    </v-app-bar>
     <v-app id="inspire">
       <v-content>
         <v-container fluid>
           <v-layout align-center justify-center>
             <v-flex xs12 sm8 md4>
               <img :src="imageUrl" height="150" v-if="imageUrl">
-              <v-text-field
+              <v-file-input
                 label="Select Image"
-                @click="pickFile"
-                v-model="imageName"
-                prepend-icon="attach_file"
-              ></v-text-field>
-              <input
-                type="file"
-                style="display: none"
-                ref="image"
                 accept="image/*"
+                ref="image"
                 @change="onFilePicked"
               >
-
-              <v-btn color="primary" @click="upload">アップロード</v-btn>
+              </v-file-input>
+              <v-btn color="primary" @click="upload">Upload</v-btn>
             </v-flex>
           </v-layout>
 
@@ -41,30 +75,41 @@
       </v-content>
     </v-app>
   </div>
+</div>
 </template>
 
 <script>
+import navDrawer from "@/PersonalPanel/components/navDrawer";
 import firebase from 'firebase'
 import { db } from "../../config/firebaseConfig.js"
+import swal from "sweetalert"
 
 export default {
   name: "AWSVerification",
+  components: {
+    navDrawer,
+  },
   data() {
     return {
-      photo: null,
-      photo_url: null,
+      pathName: "AWSVerification Page",
       dialog: false,
       imageName: "",
       imageUrl: "",
       imageFile: "",
       //image_src: require("imageUrl"),
-      imgUrls: []
+      imgUrls: [],
+      submissionDetail: {
+        imageUrl: null,
+      }
     };
   },
   created() {
     this.getImages();
   },
   methods: {
+    directTo(page) {
+      this.$router.push(page);
+    },
     getImages: function() {
       db.collection("images")
         .get()
@@ -83,20 +128,20 @@ export default {
     pickFile() {
       this.$refs.image.click();
     },
-
     onFilePicked(e) {
-      const files = e.target.files;
-      if (files[0] !== undefined) {
-        this.imageName = files[0].name;
+      console.log(">>>>>>", e);
+      const file = e;
+      if (file !== undefined) {
+        this.imageName = file.name;
         if (this.imageName.lastIndexOf(".") <= 0) {
           return;
         }
         const fr = new FileReader();
-        fr.readAsDataURL(files[0]);
+        fr.readAsDataURL(file);
         fr.addEventListener("load", () => {
           this.imageUrl = fr.result;
           //console.log("imageUrl");
-          this.imageFile = files[0]; // this is an image file that can be sent to server...
+          this.imageFile = file; // this is an image file that can be sent to server...
           //this.getImages();
         });
       } else {
@@ -104,27 +149,48 @@ export default {
         this.imageFile = "";
         this.imageUrl = "";
       }
+      console.log(">>>>> imageName: ", this.imageName);
+      console.log(">>>>> imageFile: ", this.imageFile);
+      console.log(">>>>> imageUrl: ", this.imageUrl);
     },
+    
     upload: function() {
       // ストレージオブジェクト作成
       var storageRef = firebase.storage().ref();
       // ファイルのパスを設定
       var mountainsRef = storageRef.child(`images/${this.imageName}`);
       // ファイルを適用してファイルアップロード開始
+      if(this.imageName==""){
+        swal("Error", "No image selected yet", "error");
+        return;
+      }
       mountainsRef.put(this.imageFile).then(snapshot => {
         snapshot.ref.getDownloadURL().then(downloadURL => {
           this.imageUrl = downloadURL;
           const bucketName = "cityhack21-6404b.appspot.com";
           const filePath = this.imageName;
-          db.collection("VerificationImages").add({
-            downloadURL,
-            downloadUrl:
-              `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` +
-              "%2F" +
-              `${encodeURIComponent(filePath)}?alt=media`,
-            timestamp: Date.now()
-          });
-          this.getImages();
+          try{
+            db.collection("VerificationImages").add({
+              downloadURL,
+              downloadUrl:
+                `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` +
+                "%2F" +
+                `${encodeURIComponent(filePath)}?alt=media`,
+              timestamp: Date.now()
+            }).then(()=>{
+                swal("Success", "Verification Image Was successful", "success");
+                this.submissionDetail.imageUrl=downloadURL;
+                console.log(">>>submissionDetail: imageUrl",this.submissionDetail.imageUrl);
+              }
+            );
+            this.getImages();
+
+          }
+          catch(err){
+            console.error(err);
+            swal("Error", "Something Went Wrong", "error");
+          }
+          
         });
       });
       //this.getImages();
