@@ -488,7 +488,7 @@ export default {
     // },
     async registerNewUser() {
       try {
-        await this.registerUser(this.register).then((res) => {
+        await this.registerUser({...this.submission, ...this.accountDetails }).then((res) => {
           let token = res.token;
           if (token) {
             localStorage.setItem("jwt", token);
