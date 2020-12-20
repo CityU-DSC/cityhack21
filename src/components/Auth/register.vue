@@ -195,7 +195,7 @@
                   prepend-icon="mdi-camera"
                   label="Profile Avatar"
                   class="mx-2 mt-2"
-                  v-model="accountDetails.avatarImg"
+                  v-model="avatarImg"
                   @change="avatarImgtoUrl"
               ></v-file-input>
 <!--              <v-btn class="mt-4 mx-5">-->
@@ -254,7 +254,7 @@
 
           </v-container>
         </v-form>
-        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 1">
+        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 4">
           Continue
         </v-btn>
         <v-btn text> Cancel</v-btn>
@@ -267,8 +267,8 @@
         <small>The Verification code has been sent to your personal email</small>
       </v-stepper-step>
 
-      <v-stepper-content step="2">
-        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 3">
+      <v-stepper-content step="4">
+        <v-btn color="primary" style="margin-right: 2rem;" @click="e6 = 1">
           Continue
         </v-btn>
         <v-btn text> Cancel</v-btn>
@@ -310,14 +310,14 @@ export default {
         number: "",
         schoolEmail: "",
         personalEmail: "",
-        address: "",
       },
       accountDetails: {
         accountId: "",
         password: "",
-        avatarImg: null,
+
         avatarUrl: null,
       },
+      avatarImg: null,
       verifiedPassword: null,
       showPassword: false,
       showVerifiedPassword: false,
@@ -512,7 +512,7 @@ export default {
 
     },
     avatarImgtoUrl() {
-      this.accountDetails.avatarUrl = URL.createObjectURL(this.accountDetails.avatarImg);
+      this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
     }
   },
   mounted() {
