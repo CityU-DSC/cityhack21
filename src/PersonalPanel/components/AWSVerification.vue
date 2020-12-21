@@ -160,7 +160,6 @@ export default {
       this.$refs.image.click();
     },
     onFilePicked(e) {
-      console.log(">>>>>>", e);
       const file = e;
       if (file !== undefined) {
         this.imageName = file.name;
@@ -180,16 +179,10 @@ export default {
         this.imageFile = "";
         this.imageUrl = "";
       }
-      console.log(">>>>> imageName: ", this.imageName);
-      console.log(">>>>> imageFile: ", this.imageFile);
-      console.log(">>>>> imageUrl: ", this.imageUrl);
     },
     upload: function() {
-      // ストレージオブジェクト作成
       var storageRef = firebase.storage().ref();
-      // ファイルのパスを設定
       var mountainsRef = storageRef.child(`images/${this.imageName}`);
-      // ファイルを適用してファイルアップロード開始
       if(this.imageName==""){
         swal("Error", "No image selected yet", "error");
         return;
