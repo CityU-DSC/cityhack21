@@ -59,22 +59,22 @@
                   ></v-autocomplete>
                 </v-row>
                 <v-slider
+                    v-if="$vuetify.breakpoint.mdAndUp"
                     label="Academic Year"
                     v-model="submission.year"
                     :tick-labels="years"
                     :max="years.length - 1"
-                    class="mt-5 mb-5 d-none d-md-block"
+                    class="mt-5 mb-5"
                     prepend-icon="mdi-school-outline"
                     step="1"
                     ticks="always"
                     tick-size="5"
                 ></v-slider>
                 <v-autocomplete
+                    v-else
                     label="Academic Year"
                     v-model="submission.year"
                     :items="years"
-                    :rules="[rules.required]"
-                    class="d-md-none"
                     outlined
                 ></v-autocomplete>
                 <v-row class="mt-5 mb-5">
