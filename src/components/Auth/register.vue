@@ -599,6 +599,16 @@ export default {
     },
     avatarImgtoUrl() {
       this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
+
+      const reader = new FileReader();
+
+      reader.addEventListener(
+        "load", () => {
+          this.accountDetails.avatarUrl = reader.result;
+        }
+      )
+      reader.readAsDataURL(this.avatarImg);
+
     },
     finishAllSteps() {
       if(this.$refs.AWSForm.validate()){

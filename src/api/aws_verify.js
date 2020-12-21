@@ -6,5 +6,8 @@ export default {
       {imgURL: params.imgURL},
       { headers: { Authorization: "Bearer " + token } }
       );
+  },
+  isAWSVerified(token){
+    return axios.get('/user/isAWSVerified', { headers: { Authorization: "Bearer " + token } });
   }
 };
