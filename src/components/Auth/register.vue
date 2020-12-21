@@ -506,10 +506,10 @@ export default {
       validation: {
         schoolEmail: (value) =>
             value == this.submission.schoolEmail ||
-            "Different Email Address from the previous field",
+            "Different Email Address",
         personalEmail: (value) =>
             value == this.submission.personalEmail ||
-            "Different Personal Email from the previous field",
+            "Are you sure it's the same?",
         confirmPassword: (value) => value === this.accountDetails.password ||
             "Password Mismatch"
       },
