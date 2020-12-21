@@ -2,13 +2,7 @@
   <div>
     <nav-drawer @direct="directTo"/>
     <clock/>
-    <!-- Just for testing now -->
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+    <div style="max-height: 20vh; min-height: 8vh;" />
     <AWSNotVerified/>
     <AWSVerified/>
     <AWSRejected/>

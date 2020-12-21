@@ -8,7 +8,7 @@
 <script>
 // set the competition date and time in here.
 // default is (just for testing) Jan 11 2021, 9:00 am
-const competitionDate = "2021-01-11T09:00:00.003Z";
+const competitionDate = "2021-01-29T15:59:59.003Z";
 const MILLISECONDS_SECOND = 1000;
 const MILLISECONDS_MINUTE = 60 * MILLISECONDS_SECOND;
 const MILLISECONDS_HOUR = 60 * MILLISECONDS_MINUTE;
@@ -112,7 +112,7 @@ export default {
       var endDate = new Date(competitionDate);
       this.totalMilliseconds = Math.abs(endDate.getTime() - cd.getTime());
       this.time =
-        this.days + " days " + 
+        this.days + " days " +
         this.hours + " hours " +
         this.minutes + " minutes " +
         this.seconds + " seconds ";
@@ -125,30 +125,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-html,
-body {
-  height: 100%;
-}
-body {
-  background: #0f3854;
-  background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
-  background-size: 100%;
-}
-p {
-  margin: 0;
-  padding: 0;
-}
 
 #clock {
-  font-family: "Share Tech Mono", monospace;
-  color: #ffffff;
-  text-align: center;
   position: relative;
+  display: block;
   left: 50%;
-  top: 50%;
+  top: 30%;
+  padding: 30px;
+  margin: 10px;
+  text-align: center;
   transform: translate(-50%, -50%);
-  color: #ff9900;
-  text-shadow: 0 0 10px rgb(121, 82, 0), 0 0 20px rgba(10, 175, 230, 0);
+  color: #daf6ff;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1),  0 0 20px rgba(10, 175, 230, 0);
   .time {
     letter-spacing: 0.03em;
     font-size: 40px;

@@ -1,97 +1,187 @@
 <template>
   <div>
-    <nav-drawer @direct="directTo" :current="pathName" />
-    <div class="content">
-      <div class="row">
-        <div class="col-md-4 pl-12 ml-12">
-          <div class="row">
-            <card type="user">
-              <p class="card-text">
-              </p>
-              <div class="author">
-                <div>
-                  <img class="avatar" src="https://randomuser.me/api/portraits/men/1.jpg" alt="...">
-                  <h5 class="title">{{model.nickname}}</h5>
-                </div>
-                <p class="description">
-                  {{model.teamname}} (Team 0{{teamid}})
-                </p>
-                <p class="description">
-                  {{model.university}}
-                </p>
-                <p class="description">
-                  {{model.email}}
-                </p>
-              </div>
-              <!-- <p></p>
-              <p class="card-description">
-                {{model.about}}
-              </p> -->
-            </card>
-          </div>
-        </div>
-        <div class="col-md-8 pl-12 ml-12">
-          <div class="row">
-            <card>
-              <h5 slot="header" class="title">Edit Profile</h5>
-              <div class="row">
-                <div class="col-md-4">
-                  <label for="teamname" >Team Name: </label>
-                  <input
-                    id="teamname"
-                    placeholder="Team"
-                    v-model="model.teamname"
-                  >
-                </div>
-                <div class="col-md-4">
-                  <label for="nickname"> Nickname: </label>
-                  <input
-                    id="nickname"
-                    placeholder="Nickname"
-                    v-model="model.nickname"
-                  >
-                </div>
-                <div class="col-md-4">
-                  <label for="email"> Email: </label>
-                  <input
-                    type="email"
-                    id="email"
-                    placeholder="Email"
-                    v-model="model.email"
-                  >
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <label for="university" >University: </label>
-                  <input
-                    id="university"
-                    placeholder="University"
-                    v-model="model.university"
-                  >
-                </div>
-                <div class="col-md-8">
-                  <!-- <label for="about">About Me: </label>
-                  <textarea
-                    id="about"
-                    class="form-control"
-                    placeholder="Here can be your description"
-                    v-model="model.about"
-                  >
-                  </textarea>
-                  <input
-                    id="about"
-                    placeholder="About"
-                    v-model="model.about"
-                  > -->
-                </div>
-              </div>
-              <button @click="save">Save</button>
-            </card>
-          </div>
-        </div>
+    <nav-drawer @direct="directTo" :current="pathName"/>
+    <v-card class="mx-auto" max-width="80%" tile>
+      <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"></v-img>
+      <v-col>
+        <v-avatar size="100" style="position:absolute; top: 130px">
+          <v-img :src="accountDetails.avatarUrl"></v-img>
+        </v-avatar>
+      </v-col>
+      <div class="px-4 mx-2">
+        <v-simple-table
+            fixed-header
+        >
+          <template v-slot:default>
+            <thead>
+            <tr>
+              <th class="text-left">Column</th>
+              <th class="text-left">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+                v-for="(item, key) in userInfo"
+                :key="item.id"
+            >
+              <td>{{ key }}</td>
+              <td>{{ item }}</td>
+            </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
       </div>
-    </div>
+      <v-col>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              @click="show = !show"
+              color="warning"
+              class="ma-2 white--text"
+          >
+            EDIT
+            <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+          </v-btn>
+        </v-card-actions>
+
+        <v-expand-transition>
+          <div v-show="show">
+            <v-file-input
+                :rules="[rules.avatarSize]"
+                accept="image/png, image/jpeg, image/bmp"
+                placeholder="Change Profile Avatar"
+                prepend-icon="mdi-camera"
+                label="Profile Avatar"
+                class="mx-2 mt-2"
+                v-model="avatarImg"
+                @change="avatarImgtoUrl"
+            ></v-file-input>
+            <v-col>
+              <v-row>
+                <v-text-field
+                    label="First Name"
+                    v-model="userInfo.firstName"
+                    :rules="[rules.nameRules]"
+                    class="mx-2"
+                    counter
+                    prepend-inner-icon="mdi-alien"
+                    outlined
+                ></v-text-field>
+                <v-text-field
+                    label="Surname"
+                    v-model="userInfo.lastName"
+                    :rules="[ rules.nameRules]"
+                    prepend-inner-icon="mdi-alien-outline"
+                    counter
+                    class="mx-2"
+                    outlined
+                ></v-text-field>
+                <v-text-field
+                    label="Nickname"
+                    :rules="[rules.numAndAlpha, rules.nameRules]"
+                    v-model="userInfo.nickName"
+                    class="mx-2"
+                    counter
+                    prepend-inner-icon="mdi-alpha-n-box-outline"
+                    outlined
+                ></v-text-field>
+              </v-row>
+              <v-row class="mt-5 mb-5">
+                <v-autocomplete
+                    label="University"
+                    v-model="userInfo.university"
+                    :items="universities"
+                    class="mx-2"
+                    outlined
+                ></v-autocomplete>
+                <v-autocomplete
+                    label="Major/Programme"
+                    v-model="userInfo.majorProgram"
+                    :items="majors"
+                    class="mx-2"
+                    outlined
+                ></v-autocomplete>
+              </v-row>
+              <v-slider
+                  v-if="$vuetify.breakpoint.mdAndUp"
+                  label="Academic Year"
+                  v-model="userInfo.academicYear"
+                  :tick-labels="years"
+                  :max="years.length - 1"
+                  class="mt-5 mb-5"
+                  prepend-icon="mdi-school-outline"
+                  step="1"
+                  ticks="always"
+                  tick-size="5"
+              ></v-slider>
+              <v-autocomplete
+                  v-else
+                  label="Academic Year"
+                  v-model="userInfo.academicYear"
+                  :items="years"
+                  outlined
+              ></v-autocomplete>
+              <v-row class="mt-5 mb-5">
+                <vue-tel-input-vuetify
+                    label="Phone Number"
+                    v-model="userInfo.phoneNumber"
+                    type="number"
+                    class="mx-2 mr-5"
+                    blur
+                    prepend-icon="mdi-cellphone"
+                ></vue-tel-input-vuetify>
+                <v-text-field
+                    label="CityU SID (if applicable)"
+                    v-model="userInfo.sid"
+                    :rules="[rules.numeric, rules.counter]"
+                    class="ml-5 mx-2"
+                    counter
+                    maxlength="8"
+                    prepend-inner-icon="mdi-card"
+                    single-line
+                ></v-text-field>
+              </v-row>
+              <v-row class="mt-5 mb-5">
+                <v-text-field
+                    label="Personal Email Address"
+                    :rules="[ rules.blank, rules.emailRules]"
+                    v-model="userInfo.personalEmail"
+                    class="mx-2 mr-5"
+                    prepend-icon="mdi-at"
+                    single-line
+                ></v-text-field>
+                <v-text-field
+                    label="Confirm Personal Email Address"
+                    :rules="[ validation.personalEmail]"
+                    class="mx-2 ml-5"
+                    prepend-icon="mdi-email-check"
+                    single-line
+                ></v-text-field>
+              </v-row>
+            </v-col>
+            <v-col>
+              <v-textarea
+                  outlined
+                  name="input-7-4"
+                  label="About"
+                  :value="userInfo.about"
+              ></v-textarea>
+            </v-col>
+            <v-row>
+              <v-spacer></v-spacer>
+              <v-btn
+                  class="ma-2 white--text"
+                  @click="alterProfile"
+              >
+                Submit
+                <v-icon>mdi-cloud-upload</v-icon>
+              </v-btn>
+            </v-row>
+          </div>
+        </v-expand-transition>
+      </v-col>
+      <v-divider class="mx-4"></v-divider>
+    </v-card>
   </div>
 </template>
 
@@ -101,46 +191,201 @@ import navDrawer from "@/PersonalPanel/components/navDrawer";
 export default {
   name: "personal_profile",
   props: {
-      // model: {
-      //   type: Object,
-      //   default: () => {
-      //     return {};
-      //   }
-      // }
   },
   components: {
     navDrawer,
   },
   data() {
     return {
+      show: false,
       pathName: "Profile Page",
-      model: {
-          teamname: 'teamname',
-          nickname: 'name',
-          email: 'address@email.com',
-          university: 'university',
-          about: 'Lamborghini Mercy, Your chick she so thirsty, I\'m in that two seat Lambo.'
+      userInfo: {
+        about: 'Lamborghini Mercy, Your chick she so thirsty, I\'m in that two seat Lambo.',
+        teamName: 'Team Function is not available yet',
+        nickName: 'Ryan',
+        firstName: 'Ryan',
+        lastName: 'yen',
+        personalEmail: 'address@email.com',
+        schoolEmail: 'ryanyen2-c#my.cuttu.edu.kl',
+        university: "City University of Hong Kong",
+        sid: 54924670,
+        majorProgram: "Architecture",
+        major: "Architecture",
+        academicYear: "Year 1",
+        phoneNumber: "66778888",
+      },
+      discordImgUrl: "",
+      accountDetails: {
+        accountId: "asdasdasd",
+        password: "asdasdasd",
+        avatarUrl: null,
+      },
+      avatarImg: null,
+
+      universities: [
+        "City University of Hong Kong",
+        "Hong Kong Baptist University",
+        "Chinese University of Hong Kong",
+        "Hong Kong Polytechnic University",
+        "Hong Kong University of Science and Technology",
+        "University of Hong Kong",
+        "Others"
+      ],
+      majors: [
+        "Architecture",
+        "Interior Architecture",
+        "Landscape Architecture",
+        "Art, General",
+        "Art History, Criticism & Conservation",
+        "Fine/Studio Arts",
+        "Cinema/Film",
+        "Dance",
+        "Design & Visual Communications, General",
+        "Graphic Design",
+        "Industrial Design",
+        "Interior Design",
+        "Music, General",
+        "Music, Theory & Composition",
+        "Photography",
+        "Accounting",
+        "Business Administration & Management, General",
+        "Hotel/Motel Management",
+        "Human Resources Management",
+        "International Business Management",
+        "Logistics & Materials Management",
+        "Marketing Management & Research",
+        "Operations Management & Supervision",
+        "Purchasing/Procurement/Contracts Management",
+        "Travel/Tourism Management",
+        "Business/Management Quantitative Methods, General",
+        "Finance, General",
+        "Insurance & Risk Management",
+        "Investments & Securities",
+        "Management Information Systems",
+        "Sales, Merchandising, & Marketing, General",
+        "Tourism & Travel Marketing",
+        "Communications, General",
+        "Advertising",
+        "Digital Communications/Media",
+        "Journalism, Broadcast",
+        "Computer Networking/Telecommunications",
+        "Computer Science & Programming",
+        "Data Management Technology",
+        "Mathematics, General",
+        "Applied Mathematics",
+        "Statistics",
+        "Counseling & Student Services",
+        "Educational Administration",
+        "Teacher Education, General",
+        "Aerospace/Aeronautical Engineering",
+        "Agricultural/Bioengineering",
+        "Architectural Engineering",
+        "Biomedical Engineering",
+        "Chemical Engineering",
+        "Civil Engineering",
+        "Computer Engineering",
+        "Construction Engineering/Management",
+        "Electrical, Electronics & Communications Engineering",
+        "Environmental Health Engineering",
+        "Industrial Engineering",
+        "Mechanical Engineering",
+        "Nuclear Engineering",
+        "Biology, General",
+        "Biochemistry & Biophysics",
+        "Zoology",
+        "Physical Sciences, General",
+        "Astronomy",
+        "Chemistry",
+        "Geological & Earth Sciences",
+        "Physics",
+        "Law",
+        "History",
+        "Social Sciences",
+        "Sociology",
+        "Philosophy",
+        "Chiropractic (Pre-Chiropractic)",
+        "Dental Hygiene",
+        "Dentistry (Pre-Dentistry)",
+        "Emergency Medical Technology",
+        "Health-Related Professions & Services, General*",
+        "Athletic Training",
+        "Communication Disorder Services (e.g., Speech Pathology)",
+        "Public Health",
+        "Health/Medical Technology, General",
+        "Medical Laboratory Technology",
+        "Medical Radiologic Technology",
+        "Nuclear Medicine Technology",
+        "Respiratory Therapy Technology",
+        "Surgical Technology",
+        "Medicine (Pre-Medicine)",
+        "Nursing, Practical/Vocational (LPN)",
+        "Nursing, Registered (BS/RN)",
+        "Optometry (Pre-Optometry)",
+        "Osteopathic Medicine",
+        "Pharmacy (Pre-Pharmacy)",
+        "Physician Assisting",
+        "Therapy & Rehabilitation, General",
+        "Alcohol/Drug Abuse Counseling",
+        "Massage Therapy",
+        "Mental Health Counseling",
+        "Occupational Therapy",
+        "Physical Therapy (Pre-Physical Therapy)",
+        "Psychiatric/Mental Health Technician",
+        "Rehabilitation Therapy",
+        "Vocational Rehabilitation Counseling",
+      ],
+      years: ["Year 1", "Year 2", "Year 3", "Year 4", "> Year 4", "Graduated", "Postgrad"],
+      rules: {
+        blank: v => (v || '').indexOf(' ') < 0 || 'No spaces are allowed',
+        numeric: (value) => {
+          const pattern = /^[0-9]*$/;
+          return pattern.test(value) || "Only Number.";
         },
-        // user: {
-        //   fullName: 'Mike Andrew',
-        //   title: 'Ceo/Co-Founder',
-        //   description: `Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...`,
-        // }
+        password: value => {
+          const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
+          return (
+              pattern.test(value) ||
+              "At least one capital letter, and a number."
+          );
+        },
+        nameRules: value => !value || value.length <= 15 || "Maximum 12 characters",
+        numAndAlpha: value => {
+          const pattern = /^[A-Za-z0-9]+$/;
+          return pattern.test(value) || "Only Alphabet";
+        },
+        emailRules: value => {
+          const pattern = /.+@.+\..+/;
+          return pattern.test(value) || 'Invalid e-mail.';
+        },
+        min: v => !v || v.length >= 8 || 'Min 8 characters',
+        counter: v => !v || v.length === 8 || "Should be 8 numbers",
+        avatarSize: (value) => !value || value.size <= 1000000 || 'Avatar size should be less than 1 MB!',
+      },
+      validation: {
+        personalEmail: (value) =>
+            value == this.userInfo.personalEmail ||
+            "Different Personal Email from the previous field",
+        confirmPassword: (value) => value === this.accountDetails.password ||
+            "Password Mismatch"
+      },
     };
   },
   methods: {
     directTo(page) {
       this.$router.push(page);
     },
+    avatarImgtoUrl() {
+      this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
+    },
+    alterProfile(){
+
+    },
   },
+  mounted(){
+
+  }
 };
 </script>
 
 <style scoped>
-/* .content {
-  padding-left: 70px;
-} */
-input {
-  color: #fff;
-}
 </style>

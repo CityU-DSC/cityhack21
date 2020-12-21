@@ -1,27 +1,35 @@
 <template>
-    <v-alert 
+  <div class="v-chip--clickable" @click="toAWSVerifiedPage">
+    <v-alert
         transition="scale-transition"
-        dense 
-        text 
-        type="warning" 
-        id="alertAWSNotVerified">
-        AWS Educate Account has not yet been Verified
+        outlined
+        type="warning"
+        id="alertAWSNotVerified"
+    >
+      AWS Educate Account has not yet been Verified
     </v-alert>
+  </div>
+
 </template>
 
 <script>
-    export default {
-        name: "AWSNotVerified"
+export default {
+  name: "AWSNotVerified",
+  methods: {
+    toAWSVerifiedPage() {
+      this.$router.push({name: "personal_verification"})
     }
+  }
+}
 </script>
 <style lang="scss" scoped>
 #alertAWSNotVerified {
-    text-align: center;
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 600px;
+  text-align: center;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
 }
 
 </style>
