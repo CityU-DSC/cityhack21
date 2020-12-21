@@ -55,13 +55,13 @@ name: "timeLine",
   data(){
     return {
       timeLines: [
-        {time: "30 November 2020", title: "Pre Registration", content: "Pre-registration for workshops. It will be our first round of promotion for the event."},
+        {time: "22 December 2020", title: "Pre Registration", content: "Pre-registration for workshops. It will be our first round of promotion for the event."},
         {time: "22 December 2020 - 23 December 2020", title: "Workshop", content: "A two-day workshop will be held, ensuring participants have better preparation for the competition."},
         {time: "28 December 2020", title: "Registration", content: "Starts the formal registration period until a week before CityHack 2021."},
         {time: "30 January 2021 - 31 January 2021", title: "CityHack21", content: "Let’s start Hacking for two days!"},
       ],
       horizontalItems: [
-        {title: "30 Nov. 2020", content: "Pre Pre-registration for workshops. It will be our first round of promotion for the event."},
+        {title: "22 Dec. 2020", content: " Pre Registration for workshops. It will be our first round of promotion for the event."},
         {title: "22-23 Dec. 2020", content: "A two-day workshop will be held, ensuring participants have better preparation for the competition."},
         {title: "28 Dec. 2020", content: "Starts the formal registration period until a week before CityHack 2021."},
         {title: "30-31 Jan. 2021", content: "Let’s start Hacking for two days!"}
