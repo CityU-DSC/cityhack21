@@ -393,7 +393,6 @@ export default {
       if (this.$vuetify.breakpoint.mdAndUp){
         this.userInfo.academicYear = this.years[this.year_1];
       }
-      console.log(this.userInfo)
       this.updateMe(this.userInfo).then(
         res => {
           console.log(res);

@@ -555,7 +555,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", ["registerUser", "verifyUser", "resendVerification"]),
+    ...mapActions("auth", ["registerUser", "verifyUser", "resendVerification", "updateMe"]),
     // getAddressData(addressData) {
     //   this.submission.address = addressData;
     // },
@@ -646,7 +646,20 @@ export default {
       reader.readAsDataURL(this.avatarImg);
 
     },
-    finishAllSteps() {
+    async finishAllSteps() {
+      await this.updateMe({
+        awsEducateReason: this.selectedItem,
+        needAWSExtraCredit: this.AWSPreference.needAWSExtraCredit,
+        hasAWSAccount: this.AWSPreference.hasAWSAccount,
+      }).then(
+        res => {
+          console.log(res);
+        }
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      );
       if(this.$refs.AWSForm.validate()){
         if(this.AWSPreference.hasAWSAccount === "true") {
           Swal.fire({
