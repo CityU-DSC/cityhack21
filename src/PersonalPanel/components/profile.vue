@@ -164,7 +164,7 @@
                   outlined
                   name="input-7-4"
                   label="About"
-                  :value="userInfo.about"
+                  v-model="userInfo.about"
               ></v-textarea>
             </v-col>
             <v-row>
