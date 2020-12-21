@@ -63,12 +63,20 @@
                     v-model="submission.year"
                     :tick-labels="years"
                     :max="years.length - 1"
-                    class="mt-5 mb-5"
+                    class="mt-5 mb-5 d-none d-md-block"
                     prepend-icon="mdi-school-outline"
                     step="1"
                     ticks="always"
                     tick-size="5"
                 ></v-slider>
+                <v-autocomplete
+                    label="Academic Year"
+                    v-model="submission.year"
+                    :items="years"
+                    :rules="[rules.required]"
+                    class="d-md-none"
+                    outlined
+                ></v-autocomplete>
                 <v-row class="mt-5 mb-5">
                   <vue-tel-input-vuetify
                       label="Phone Number"
@@ -361,6 +369,7 @@ export default {
         "Hong Kong Polytechnic University",
         "Hong Kong University of Science and Technology",
         "University of Hong Kong",
+        "Others"
       ],
       majors: [
         "Architecture",
