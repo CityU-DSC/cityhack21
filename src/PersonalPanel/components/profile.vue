@@ -15,14 +15,14 @@
           <template v-slot:default>
             <thead>
             <tr>
-              <th class="text-left">Column</th>
-              <th class="text-left">Value</th>
+              <th class="text-left">KEY</th>
+              <th class="text-left">VALUE</th>
             </tr>
             </thead>
             <tbody>
             <tr
                 v-for="(item, key) in userInfo"
-                :key="item.id"
+                :key="key"
             >
               <td>{{ key }}</td>
               <td>{{ item }}</td>
@@ -105,7 +105,7 @@
               <v-slider
                   v-if="$vuetify.breakpoint.mdAndUp"
                   label="Academic Year"
-                  v-model="userInfo.academicYear"
+                  v-model="year_1"
                   :tick-labels="years"
                   :max="years.length - 1"
                   class="mt-5 mb-5"
@@ -187,10 +187,14 @@
 
 <script>
 import navDrawer from "@/PersonalPanel/components/navDrawer";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: "personal_profile",
   props: {
+  },
+  computed:{
+    ...mapGetters('auth', ['currentUser'])
   },
   components: {
     navDrawer,
@@ -210,7 +214,6 @@ export default {
         university: "City University of Hong Kong",
         sid: 54924670,
         majorProgram: "Architecture",
-        major: "Architecture",
         academicYear: "Year 1",
         phoneNumber: "66778888",
       },
@@ -221,7 +224,7 @@ export default {
         avatarUrl: null,
       },
       avatarImg: null,
-
+      year_1: 0,
       universities: [
         "City University of Hong Kong",
         "Hong Kong Baptist University",
@@ -376,13 +379,50 @@ export default {
     },
     avatarImgtoUrl() {
       this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
+
+      const reader = new FileReader();
+
+      reader.addEventListener(
+        "load", () => {
+          this.accountDetails.avatarUrl = reader.result;
+        }
+      )
+      reader.readAsDataURL(this.avatarImg);
     },
     alterProfile(){
-
+      if (this.$vuetify.breakpoint.mdAndUp){
+        this.userInfo.academicYear = this.years[this.year_1];
+      }
+      console.log(this.userInfo)
+      this.updateMe(this.userInfo).then(
+        res => {
+          console.log(res);
+        }
+      ).catch(
+        err => {
+          console.log(err)
+        }
+      );
     },
-  },
-  mounted(){
+    ...mapActions("auth", ["init", "updateMe"]),
 
+  },
+  async mounted(){
+    if (!await this.init()) {
+      this.$router.push('/');
+      return;
+    }
+    this.currentUser.schoolEmail = this.currentUser.email;
+    this.currentUser.academicYear = this.currentUser.year;
+    this.currentUser.phoneNumber = this.currentUser.number;
+    
+    for (let key in this.userInfo){
+      this.userInfo[key] = this.currentUser[key];
+    }
+
+    for (let key in this.accountDetails){
+      this.accountDetails[key] = this.currentUser[key];
+    }
   }
 };
 </script>

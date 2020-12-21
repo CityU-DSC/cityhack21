@@ -92,7 +92,7 @@ export default {
     ...mapGetters("auth", ["isLoggedIn", "currentUserName"]),
   },
   methods: {
-    ...mapActions("auth", ["logOutUser"]),
+    ...mapActions("auth", ["logOutUser", "me", "init"]),
     ...mapMutations("menu", ["setDrawer"]),
     logOut() {
       localStorage.removeItem("jwt");
@@ -100,6 +100,9 @@ export default {
       this.$router.push("/");
     },
   },
+  async mounted() {
+    this.init();
+  }
 };
 </script>
 

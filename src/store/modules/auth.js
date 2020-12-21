@@ -10,8 +10,7 @@ export default {
   getters: {
     isLoggedIn: state => state.isLoggedIn,
     currentUser: state => (state.currentUser ? state.currentUser : null),
-    currentUserName: state =>
-      state.currentUser ? state.currentUser.name : null
+    currentUserName: state => state.currentUser ? state.currentUser.nickName : null
   },
   mutations: {
     setCurrentUser(state, user, token) {
@@ -65,16 +64,39 @@ export default {
     me({ commit }, token){
       return auth.me(token).then(
         res => {
-          commit("setCurrentUser", res.user, token)
+          commit("updateLoginStatus", true)
+          commit("setCurrentUser", res, token)
         }
       );
     },
-    updateMe({ commit }, params, token) {
+    updateMe({ commit }, params) {
+      const token = localStorage.getItem('jwt');
       return auth.updateMe(params, token).then(
         () => {
           commit('updateCurrentUser', params);
         }
       )
+    },
+    async init({ commit, state }) {
+      if (!localStorage.getItem('jwt')){
+        return false;
+      } else if (state.currentUser) {
+        return true;
+      } else {
+        const token = localStorage.getItem('jwt');
+        try {
+          await auth.me(token).then(
+            res => {
+              commit("updateLoginStatus", true)
+              commit("setCurrentUser", res, token)
+            }
+          );
+          return true;
+        } catch (e) {
+          console.log(e);
+          return false
+        }
+      }
     }
   }
 };

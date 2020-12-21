@@ -61,7 +61,7 @@
                 <v-slider
                     v-if="$vuetify.breakpoint.mdAndUp"
                     label="Academic Year"
-                    v-model="submission.year"
+                    v-model="year_1"
                     :tick-labels="years"
                     :max="years.length - 1"
                     class="mt-5 mb-5 d-none d-md-block"
@@ -361,6 +361,7 @@ export default {
       verifiedPassword: null,
       showPassword: false,
       showVerifiedPassword: false,
+      year_1: 0,
 
       universities: [
         "City University of Hong Kong",
@@ -528,6 +529,9 @@ export default {
     // },
     async registerNewUser() {
       if (this.$refs.accountForm.validate()) {
+        if (this.$vuetify.breakpoint.mdAndUp){
+          this.submission.year = this.years[this.year_1];
+        }
         await this.registerUser({...this.submission, ...this.accountDetails })
             .then(
                 ({ err }) => {

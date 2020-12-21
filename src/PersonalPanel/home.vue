@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 import navDrawer from "@/PersonalPanel/components/navDrawer";
 import clock from "@/PersonalPanel/components/Timer";
 import AWSNotVerified from "@/PersonalPanel/components/AWSState/AWSStateNotVerified";
@@ -26,8 +28,15 @@ export default {
     AWSRejected,
   },
   methods: {
+    ...mapActions("auth", ["init"]),
     directTo(page){
       this.$router.push(page);
+    }
+  },
+  async mounted() {
+    if (!await this.init()) {
+      this.$router.push('/');
+      return;
     }
   }
 }
