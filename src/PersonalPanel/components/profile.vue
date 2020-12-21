@@ -4,7 +4,7 @@
     <v-card class="mx-auto" max-width="80%" tile>
       <v-img height="100%" src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2F1.jpg?alt=media&token=183fac76-6f53-4ca6-88f1-7bf080067780"></v-img>
       <v-col>
-        <v-avatar size="100" style="position:absolute; top: 130px">
+        <v-avatar size="100" style="position:absolute; top: 30rem;">
           <v-img :src="accountDetails.avatarUrl"></v-img>
         </v-avatar>
       </v-col>
@@ -188,6 +188,7 @@
 <script>
 import navDrawer from "@/PersonalPanel/components/navDrawer";
 import { mapActions, mapGetters } from 'vuex';
+import swal from "sweetalert";
 
 export default {
   name: "personal_profile",
@@ -386,7 +387,7 @@ export default {
         "load", () => {
           this.accountDetails.avatarUrl = reader.result;
         }
-      )
+      );
       reader.readAsDataURL(this.avatarImg);
     },
     alterProfile(){
@@ -395,11 +396,14 @@ export default {
       }
       this.updateMe(this.userInfo).then(
         res => {
+          swal("Success", "Update Profile Successfully", "success");
+          this.show=false;
           console.log(res);
         }
       ).catch(
         err => {
-          console.log(err)
+          console.log(err);
+          swal("Error", "Profile did not updated", "error");
         }
       );
     },
@@ -414,7 +418,7 @@ export default {
     this.currentUser.personalEmail = this.currentUser.email;
     this.currentUser.academicYear = this.currentUser.year;
     this.currentUser.phoneNumber = this.currentUser.number;
-    
+
     for (let key in this.userInfo){
       this.userInfo[key] = this.currentUser[key];
     }
