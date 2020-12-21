@@ -256,7 +256,7 @@
 
       <v-stepper-step :complete="e6 > 3" step="3">
         Email Verification
-        <small>The Verification code has been sent to your personal email</small>
+        <small>The Verification code has been sent to your school email</small>
       </v-stepper-step>
 
       <v-stepper-content step="3">
@@ -269,10 +269,10 @@
             prepend-inner-icon="mdi-key"
             outlined
         ></v-text-field>
-        <v-btn color="primary" style="margin-right: 2rem;" @click="verifyPassword()">
+        <v-btn color="primary" style="margin-right: 2rem;" @click="verifyCode()">
           Continue
         </v-btn>
-        <v-btn color="warning" @click="registerNewUser()"> Re-send Email</v-btn>
+        <v-btn color="warning" @click="resendVerification({email: submission.schoolEmail})"> Re-send Email</v-btn>
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 4" step="4">
@@ -522,7 +522,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", ["registerUser", "verifyUser"]),
+    ...mapActions("auth", ["registerUser", "verifyUser", "resendVerification"]),
     // getAddressData(addressData) {
     //   this.submission.address = addressData;
     // },
@@ -565,9 +565,9 @@ export default {
       }
     },
 
-    async verifyPassword() {
+    async verifyCode() {
       try {
-        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.submission.personalEmail });
+        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.submission.schoolEmail });
 
         if (token) {
           localStorage.setItem("jwt", token);

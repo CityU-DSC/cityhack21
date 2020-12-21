@@ -25,14 +25,19 @@ export default {
       state.currentUser = null;
       state.currentUserToken = null;
       state.isLoggedIn = false;
+    },
+    updateCurrentUser(state, user) {
+      state.currentUser = Object.assign(state.currentUser, user);
     }
   },
   actions: {
     loginByEmailPassword({ commit }, params) {
       return auth.loginByEmailPassword(params).then(res => {
         console.log(`[*]AuthApi:: Login Success, ${res}`);
-        commit("setCurrentUser", res.user, res.token);
-        commit("updateLoginStatus", true);
+        if (res.token){
+          commit("setCurrentUser", res.user, res.token);
+          commit("updateLoginStatus", true);  
+        }
         return res;
       });
     },
@@ -51,6 +56,23 @@ export default {
         res => {
           commit("setCurrentUser", res.user, res.token);
           return res;
+        }
+      )
+    },
+    resendVerification(garbage, params) {
+      return auth.resendVerification(params);
+    },
+    me({ commit }, token){
+      return auth.me(token).then(
+        res => {
+          commit("setCurrentUser", res.user, token)
+        }
+      );
+    },
+    updateMe({ commit }, params, token) {
+      return auth.updateMe(params, token).then(
+        () => {
+          commit('updateCurrentUser', params);
         }
       )
     }

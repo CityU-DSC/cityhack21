@@ -7,7 +7,7 @@
             <v-text-field
                 v-model="login.email"
                 :rules="emailRules"
-                label="E-mail"
+                label="School E-mail"
                 required
             ></v-text-field>
           </v-flex>
@@ -26,6 +26,22 @@
           </v-btn>
           <v-btn @click="loginUser" class="ml-5">
             Sign in
+          </v-btn>
+        </v-layout>
+        <v-layout v-if="reverify">
+          <v-btn class="ml-5" @click="resendVerification({ email: login.email })">
+            Send verification email again
+          </v-btn>
+          <v-text-field
+              label="Verification Code"
+              v-model="verificationCode"
+              class="mx-2"
+              counter
+              prepend-inner-icon="mdi-key"
+              outlined
+          ></v-text-field>
+          <v-btn color="primary" style="margin-right: 2rem;" @click="verifyCode()">
+            Continue
           </v-btn>
         </v-layout>
       </v-container>
@@ -47,24 +63,49 @@ export default {
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+/.test(v) || 'E-mail must be valid'
-      ]
+      ],
+      reverify: false,
+      verificationCode: ""
     };
   },
   computed: {...mapGetters('adminList', ['adminList'])},
   methods: {
-    ...mapActions('auth', ['loginByEmailPassword']),
+    ...mapActions('auth', ['loginByEmailPassword', 'resendVerification', 'verifyUser']),
     async loginUser() {
-      try {
-        await this.loginByEmailPassword(this.login).then(res => {
+      await this.loginByEmailPassword(this.login).then(res => {
+        if (res.token) {
           localStorage.setItem("jwt", res.token);
-          if (res.token) {
-            swal("Success", "Login Successful", "success");
-            this.adminList.includes(res.user.email) ? this.$router.push("/admin") : this.$router.push("/");
-          }
-        })
+          swal("Success", "Login Successful", "success");
+          this.adminList.includes(res.user.email) ? this.$router.push("/admin") : this.$router.push("/");
+        }
+      }).catch(err => {
+        if (err.reverify) {
+          this.reverify = true;
+          swal("Error", "Email registered but not verified. Please reverify", "error");
+          console.log(err);
+        } else {
+          throw Error(err);
+        }
+      })
+    },
+    async verifyCode() {
+      try {
+        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.login.email });
+
+        if (token) {
+          localStorage.setItem("jwt", token);
+          swal("Success", "Registration Was successful", "success");
+        } else {
+          swal("Error", "Something Went Wrong", "error");
+        }
       } catch (err) {
-        swal("Error", "Something Went Wrong", "error");
-        console.log(err.response);
+        console.log(err);
+        if (err.err && err.message) {
+          swal("Error", err.message, "error");
+        } else {
+          swal("Error", "Something Went Wrong", "error");
+        }
+
       }
     }
   }
