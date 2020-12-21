@@ -16,7 +16,7 @@ import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
 
 // import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
 // Vue.use(VuetifyGoogleAutocomplete, {
-//   apiKey: 'AIzaSyBcXjtpzqcHsrNJRSbJXIDRsS2wjf9bx08',
+//   apiKey: '',
 // });
 
 import { firestorePlugin } from 'vuefire';
