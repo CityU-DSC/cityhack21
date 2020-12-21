@@ -36,6 +36,8 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["init"]),
+    ...mapActions('aws_verify', ['isAWSVerified']),
+
     directTo(page){
       this.$router.push(page);
     }
@@ -45,6 +47,7 @@ export default {
       this.$router.push('/');
       return;
     }
+    await this.isAWSVerified();
   }
 }
 </script>

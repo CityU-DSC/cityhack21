@@ -228,10 +228,7 @@ export default {
     },
     async awsVerifyUrl(){
       try{
-        await this.awsVerify(
-          { imageUrl:this.submissionDetail.imageUrl },
-          localStorage.getItem("jwt")
-          )
+        await this.awsVerify({ imageUrl: this.submissionDetail.imageUrl })
         .then(res =>{
           console.log("awsVerification: ");
           console.log(res);
