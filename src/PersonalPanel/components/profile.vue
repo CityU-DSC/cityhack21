@@ -394,7 +394,7 @@ export default {
     alterProfile(){
       this.userInfo.avatarUrl = this.accountDetails.avatarUrl;
       if (this.$vuetify.breakpoint.mdAndUp){
-        this.userInfo.academicYear = this.years[this.year_1];
+        this.userInfo.academicYear = this.years[this.year_1];ㄧ
       }
       this.updateMe(this.userInfo).then(
         res => {
@@ -420,7 +420,7 @@ export default {
     this.currentUser.personalEmail = this.currentUser.email;
     this.currentUser.academicYear = this.currentUser.year;
     this.currentUser.phoneNumber = this.currentUser.number;
-    
+
     for (let key in this.userInfo){
       this.userInfo[key] = this.currentUser[key];
     }

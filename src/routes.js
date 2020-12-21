@@ -2,9 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import LandingPage from "./views/home";
 import Overview from "./views/overView";
-// import Login from "./components/Auth/login";
-// import Register from "./components/Auth/register";
-// import Admin from "./views/admin";
+import Login from "./components/Auth/login";
+import Register from "./components/Auth/register";
+import Admin from "./views/admin";
 
 import PersonalPanel from "./PersonalPanel/home";
 import PersonalProfile from "./PersonalPanel/components/profile";
