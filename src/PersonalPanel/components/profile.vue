@@ -394,7 +394,7 @@ export default {
     alterProfile(){
       this.userInfo.avatarUrl = this.accountDetails.avatarUrl;
       if (this.$vuetify.breakpoint.mdAndUp){
-        this.userInfo.academicYear = this.years[this.year_1];ㄧ
+        this.userInfo.academicYear = this.years[this.year_1];
       }
       this.updateMe(this.userInfo).then(
         res => {
