@@ -280,6 +280,32 @@
         <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified student job seekers with the AWS Educate Job Board.</small>
       </v-stepper-step>
       <v-stepper-content step="4">
+        <div>
+          <v-card
+              class="mb-5"
+              tile
+          >
+            <v-list>
+              <v-subheader>Why you need AWS Educate Account?</v-subheader>
+              <v-list-item-group
+                  v-model="selectedItem"
+                  color="primary"
+              >
+                <v-list-item
+                    v-for="(item, i) in items"
+                    :key="i"
+                >
+                  <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-card>
+        </div>
         <v-form ref="AWSForm" lazy-validation>
           <v-radio-group
               label="Have you finished all the credits of AWS Educate?"
@@ -333,6 +359,12 @@ export default {
   components: {},
   data() {
     return {
+      selectedItem: 1,
+      items: [
+        { text: 'To Use SageMaker in CityHack21', icon: 'mdi-clock' },
+        { text: 'Receive $100 USD and Free AWS Services', icon: 'mdi-aws' },
+        { text: 'Only ones who Registered can receive Souvenirs from AWS', icon: 'mdi-gift' },
+      ],
       discordImgUrl: "",
       submission: {
         firstName: "asdasd",

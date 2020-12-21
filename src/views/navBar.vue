@@ -54,7 +54,7 @@
       <v-col v-else cols="3" lg="1">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on"> Log In </v-btn>
+            <v-btn text v-bind="attrs" v-on="on"> Register </v-btn>
           </template>
           <v-list>
             <v-list-item>

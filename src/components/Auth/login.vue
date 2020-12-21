@@ -1,33 +1,31 @@
 <template>
   <div class="container">
     <v-form>
-      <v-container>
-        <v-layout>
-          <v-flex xs12 md4>
+      <v-container class="mt-5" style="width: 600px;">
+
             <v-text-field
                 v-model="login.email"
                 :rules="emailRules"
                 label="School E-mail"
                 required
+                outlined
             ></v-text-field>
-          </v-flex>
-          <v-flex xs12 md4>
             <v-text-field
                 v-model="login.password"
                 label="Password"
                 required
+                outlined
             ></v-text-field>
-          </v-flex>
-        </v-layout>
-        <v-layout class="d-flex flex-row">
+        <v-row>
           <p>Dont have an account?</p>
+          <v-spacer />
           <v-btn class="ml-5">
             <router-link to="/register">click here</router-link>
           </v-btn>
           <v-btn @click="loginUser" class="ml-5">
             Sign in
           </v-btn>
-        </v-layout>
+        </v-row>
         <v-layout v-if="reverify">
           <v-btn class="ml-5" @click="resendVerification({ email: login.email })">
             Send verification email again

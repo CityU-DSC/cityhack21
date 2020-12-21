@@ -2,7 +2,7 @@
   <div>
     <nav-drawer @direct="directTo" :current="pathName"/>
     <v-card class="mx-auto" max-width="80%" tile>
-      <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"></v-img>
+      <v-img height="100%" src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2F1.jpg?alt=media&token=183fac76-6f53-4ca6-88f1-7bf080067780"></v-img>
       <v-col>
         <v-avatar size="100" style="position:absolute; top: 130px">
           <v-img :src="accountDetails.avatarUrl"></v-img>
