@@ -216,6 +216,7 @@ export default {
         majorProgram: "Architecture",
         academicYear: "Year 1",
         phoneNumber: "66778888",
+        avatarUrl: ""
       },
       discordImgUrl: "",
       accountDetails: {
@@ -414,6 +415,7 @@ export default {
     this.currentUser.personalEmail = this.currentUser.email;
     this.currentUser.academicYear = this.currentUser.year;
     this.currentUser.phoneNumber = this.currentUser.number;
+    this.currentUser.avatarUrl = this.accountDetails.avatarUrl;
     
     for (let key in this.userInfo){
       this.userInfo[key] = this.currentUser[key];
