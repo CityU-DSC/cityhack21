@@ -64,7 +64,7 @@
                     v-model="submission.year"
                     :tick-labels="years"
                     :max="years.length - 1"
-                    class="mt-5 mb-5"
+                    class="mt-5 mb-5 d-none d-md-block"
                     prepend-icon="mdi-school-outline"
                     step="1"
                     ticks="always"
@@ -506,10 +506,10 @@ export default {
       validation: {
         schoolEmail: (value) =>
             value == this.submission.schoolEmail ||
-            "Different Email Address from the previous field",
+            "Different Email Address",
         personalEmail: (value) =>
             value == this.submission.personalEmail ||
-            "Different Personal Email from the previous field",
+            "Are you sure it's the same?",
         confirmPassword: (value) => value === this.accountDetails.password ||
             "Password Mismatch"
       },
