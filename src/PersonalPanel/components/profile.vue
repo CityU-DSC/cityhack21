@@ -391,6 +391,7 @@ export default {
       reader.readAsDataURL(this.avatarImg);
     },
     alterProfile(){
+      this.userInfo.avatarUrl = this.accountDetails.avatarUrl;
       if (this.$vuetify.breakpoint.mdAndUp){
         this.userInfo.academicYear = this.years[this.year_1];
       }
@@ -415,7 +416,6 @@ export default {
     this.currentUser.personalEmail = this.currentUser.email;
     this.currentUser.academicYear = this.currentUser.year;
     this.currentUser.phoneNumber = this.currentUser.number;
-    this.currentUser.avatarUrl = this.accountDetails.avatarUrl;
     
     for (let key in this.userInfo){
       this.userInfo[key] = this.currentUser[key];
