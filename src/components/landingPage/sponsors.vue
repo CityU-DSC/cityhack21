@@ -127,6 +127,7 @@
 <script>
 
 import awsImage from "../../assets/image/sponsors/AWS.jpg";
+import siemensImage from "../../assets/image/sponsors/Siemens.png";
 export default {
   name: "sponsors",
   props: {
@@ -155,6 +156,15 @@ export default {
           brandUrl: 'https://aws.amazon.com/?nc2=h_lg',
           info: 'AWS is the world’s most comprehensive and broadly adopted cloud platform',
           websiteUrl: 'https://aws.amazon.com/?nc2=h_lg',
+          socialMediaUrl: ''
+        },
+        {
+          name: 'Siemens Mobility',
+          img: "https://group.thinkproject.com/cms/assets/projects/siemens.jpg",
+          brandLogo: siemensImage,
+          brandUrl: 'https://new.siemens.com/global/en/company/about.html',
+          info: 'Siemens Mobility is a leader in transport solutions for more than 160 years.',
+          websiteUrl: 'https://www.mobility.siemens.com/global/en.html',
           socialMediaUrl: ''
         },
         {
