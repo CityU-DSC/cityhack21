@@ -256,7 +256,7 @@
 
       <v-stepper-step :complete="e6 > 3" step="3">
         Email Verification
-        <small>The Verification code has been sent to your school email</small>
+        <small>The Verification code has been sent to your email</small>
       </v-stepper-step>
 
       <v-stepper-content step="3">
@@ -272,7 +272,7 @@
         <v-btn color="primary" style="margin-right: 2rem;" @click="verifyCode()">
           Continue
         </v-btn>
-        <v-btn color="warning" @click="resendVerification({email: submission.schoolEmail})"> Re-send Email</v-btn>
+        <v-btn color="warning" @click="resendVerification({email: submission.personalEmail})"> Re-send Email</v-btn>
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 4" step="4">
@@ -603,7 +603,7 @@ export default {
 
     async verifyCode() {
       try {
-        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.submission.schoolEmail });
+        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.submission.personalEmail });
 
         if (token) {
           localStorage.setItem("jwt", token);

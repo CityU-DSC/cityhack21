@@ -412,7 +412,7 @@ export default {
       this.$router.push('/');
       return;
     }
-    this.currentUser.schoolEmail = this.currentUser.email;
+    this.currentUser.personalEmail = this.currentUser.email;
     this.currentUser.academicYear = this.currentUser.year;
     this.currentUser.phoneNumber = this.currentUser.number;
     
