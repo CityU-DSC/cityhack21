@@ -247,7 +247,7 @@
 
           </v-container>
         </v-form>
-        <v-btn color="primary" class="mr-3" @click="registerNewUser()">
+        <v-btn :loading="verifying" color="primary" class="mr-3" @click="registerNewUser()">
           Send Verify Email
         </v-btn>
         <v-btn @click="e6 = 1" class="mr-3"> Previous </v-btn>
@@ -394,6 +394,7 @@ export default {
       showPassword: false,
       showVerifiedPassword: false,
       year_1: 0,
+      verifying: false,
 
       universities: [
         "City University of Hong Kong",
@@ -560,6 +561,7 @@ export default {
     //   this.submission.address = addressData;
     // },
     async registerNewUser() {
+      this.verifying = true;
       if (this.$refs.accountForm.validate()) {
         if (this.$vuetify.breakpoint.mdAndUp){
           this.submission.year = this.years[this.year_1];
@@ -567,20 +569,11 @@ export default {
         await this.registerUser({...this.submission, ...this.accountDetails })
             .then(
                 ({ err }) => {
-                  // res.err
                   if (err) {
                     swal("Error", "Something Went Wrong", "error");
                   } else {
                     swal("Success", "Registration Was successful", "success");
                   }
-                  // let token = res.token;
-                  // if (token) {
-                  //   localStorage.setItem("jwt", token);
-                  //   this.$router.push("/login");
-                  //   swal("Success", "Registration Was successful", "success");
-                  // } else {
-                  //   swal("Error", "Something Went Wrong", "error");
-                  // }
                   this.e6 = 3;
                 }
             )
@@ -591,13 +584,8 @@ export default {
               } else {
                 swal("Error", "Something Went Wrong", "error");
               }
-              // let error = err.response;
-              // if (error.status && error.status === 409) {
-              //   swal("Error", error.data.message, "error");
-              // } else {
-              //   swal("Error", error.data.err.message, "error");
-              // }
             });
+        this.verifying = false;
       }
     },
 

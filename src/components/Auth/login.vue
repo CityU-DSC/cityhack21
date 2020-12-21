@@ -6,7 +6,7 @@
             <v-text-field
                 v-model="login.email"
                 :rules="emailRules"
-                label="School E-mail"
+                label="PERSONAL E-mail"
                 required
                 outlined
             ></v-text-field>
@@ -82,6 +82,7 @@ export default {
           swal("Error", "Email registered but not verified. Please reverify", "error");
           console.log(err);
         } else {
+          swal("Error", "Login Failed", "error");
           throw Error(err);
         }
       })
