@@ -11,16 +11,16 @@
           <v-list>
             <v-list-item class="px-1">
               <v-list-item-avatar>
-                <v-img src="https://randomuser.me/api/portraits/men/1.jpg"></v-img>
+                <v-img :src="currentUser.avatarUrl"></v-img>
               </v-list-item-avatar>
             </v-list-item>
 
             <v-list-item link>
               <v-list-item-content>
                 <v-list-item-title class="title">
-                  Ryan Yen
+                  {{currentUser.nickName}}
                 </v-list-item-title>
-                <v-list-item-subtitle>ryanyen88@gmail.com</v-list-item-subtitle>
+                <v-list-item-subtitle>{{currentUser.email}}</v-list-item-subtitle>
                 <v-list-item-subtitle>
                   <v-breadcrumbs :items="items"/>
                 </v-list-item-subtitle>
@@ -53,6 +53,7 @@ export default {
   },
   computed: {
     // eslint-disable-next-line no-mixed-spaces-and-tabs
+    ...mapGetters('auth', ['currentUser']),
     ...mapGetters('menu', ['drawer']),
   },
   data() {
@@ -71,8 +72,8 @@ export default {
         {id: 1, title: "Home Page", icon: 'mdi-home', page: '/personal'},
         {id: 2, title: "Profile Page", icon: 'mdi-account', page: '/personal/profile'},
         {id: 3, title: "AWS Educate Verification", icon: 'mdi-aws', page: '/personal/verification'},
-        {id: 4, title: "Group", icon: 'mdi-account-group'},
-        {id: 5, title: "File", icon: 'mdi-upload'},
+        // {id: 4, title: "Group", icon: 'mdi-account-group'},
+        // {id: 5, title: "File", icon: 'mdi-upload'},
       ],
     };
   },
