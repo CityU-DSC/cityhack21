@@ -46,7 +46,7 @@
               <v-list-item-title @click="logOut">Log Out</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title><router-link to="/admin">Admin Panel</router-link></v-list-item-title>
+              <v-list-item-title @click="directToAdmin">Admin Panel</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -83,13 +83,14 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('adminList', ['adminList']),
     isOverviewPage() {
       return this.$route.name === "overview";
     },
     isPersonalPage() {
       return this.$route.name.includes('personal');
     },
-    ...mapGetters("auth", ["isLoggedIn", "currentUserName"]),
+    ...mapGetters("auth", ["isLoggedIn", "currentUserName", "currentUser"]),
   },
   methods: {
     ...mapActions("auth", ["logOutUser", "me", "init"]),
@@ -99,9 +100,12 @@ export default {
       this.logOutUser();
       this.$router.push("/");
     },
+    directToAdmin(){
+      this.adminList.includes(this.currentUser.email) ? this.$router.push("/admin") : this.$router.push("/");
+    }
   },
   async mounted() {
-    this.init();
+    await this.init();
   }
 };
 </script>

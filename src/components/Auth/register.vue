@@ -703,6 +703,7 @@ export default {
           }).then((result) => {
             if (result.isConfirmed) {
               window.open("https://www.awseducate.com/Registration?promoCode=CityHack2021");
+              this.$router.push({name: 'login'});
             }
           })
         }
