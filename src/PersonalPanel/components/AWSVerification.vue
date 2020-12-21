@@ -30,6 +30,11 @@
     </v-carousel>
   </v-col>
   <div class="mt-5">
+<!--    <v-col>-->
+<!--      <h5>Example</h5>-->
+<!--      <img src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2FScreenshot%202020-12-21%20194322.jpg?alt=media&token=a141b908-2a1c-4762-9d24-e61df1e36d14"-->
+<!--           style="max-height: 250px; min-height: 50px;" alt="exampleAWS">-->
+<!--    </v-col>-->
     <v-row justify="space-around">
       <v-card width="400">
         <v-img
