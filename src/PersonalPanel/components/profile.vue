@@ -122,14 +122,14 @@
                   outlined
               ></v-autocomplete>
               <v-row class="mt-5 mb-5">
-                <vue-tel-input-vuetify
+                <v-text-field
                     label="Phone Number"
                     v-model="userInfo.phoneNumber"
                     type="number"
                     class="mx-2 mr-5"
                     blur
                     prepend-icon="mdi-cellphone"
-                ></vue-tel-input-vuetify>
+                ></v-text-field>
                 <v-text-field
                     label="CityU SID (if applicable)"
                     v-model="userInfo.sid"

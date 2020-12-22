@@ -1,5 +1,5 @@
 module.exports = {
-  transpileDependencies: ["vuetify", "vue-tel-input-vuetify"],
+  transpileDependencies: ["vuetify"],
   pluginOptions: {
     webpackBundleAnalyzer: {
       openAnalyzer: false,
