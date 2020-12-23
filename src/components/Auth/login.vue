@@ -11,6 +11,9 @@
                 outlined
             ></v-text-field>
             <v-text-field
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPassword ? 'text' : 'password'"
+                @click:append="showPassword = !showPassword"
                 v-model="login.password"
                 label="Password"
                 required
@@ -63,7 +66,8 @@ export default {
         v => /.+@.+/.test(v) || 'E-mail must be valid'
       ],
       reverify: false,
-      verificationCode: ""
+      verificationCode: "",
+      showPassword: false,
     };
   },
   computed: {...mapGetters('adminList', ['adminList'])},

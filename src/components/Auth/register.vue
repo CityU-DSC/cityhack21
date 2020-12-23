@@ -79,10 +79,10 @@
                 ></v-autocomplete>
                 <v-row class="mt-5 mb-5">
                   <v-text-field
-                      label="Phone Number"
+                      label="Phone Number (for WhatsApp)"
                       :rules="[rules.required]"
                       v-model="submission.number"
-                      type="number"
+                      type="text"
                       class="mx-2 mr-5"
                       blur
                       prepend-icon="mdi-cellphone"
@@ -370,9 +370,9 @@ export default {
         lastName: "",
         nickName: "",
         university: "City University of Hong Kong",
-        sid: 0,
+        sid: undefined,
         year: "Year 1",
-        majorProgram: "Architecture",
+        majorProgram: undefined,
         number: "",
         schoolEmail: "",
         personalEmail: "",
@@ -672,7 +672,9 @@ export default {
           Swal.fire({
             title: 'Successfully Registered!',
             html: '<ul><li>Please Upload AWS Educate Account Verification to personal email </li>' +
-                '<li>Join Discord with us for more information!!</li>',
+                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>'+
+                '<li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>'+
+                '</ul>',
             text: '',
             padding: '3em',
             imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fpre-re-discord.png?alt=media&token=8a04cb1a-8dbb-4050-a2b5-c83dcb72d8ec",
@@ -694,7 +696,9 @@ export default {
           Swal.fire({
             title: 'Almost Done!!',
             html: '<ul><li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>' +
-                '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>',
+                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>'+
+                '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>'+
+                '</ul>',
             text: '',
             padding: '3em',
             imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
