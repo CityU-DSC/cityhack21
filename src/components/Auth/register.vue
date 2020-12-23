@@ -78,7 +78,7 @@
                     outlined
                 ></v-autocomplete>
                 <v-row class="mt-5 mb-5">
-                  <vue-tel-input-vuetify
+                  <v-text-field
                       label="Phone Number"
                       :rules="[rules.required]"
                       v-model="submission.number"
@@ -86,7 +86,7 @@
                       class="mx-2 mr-5"
                       blur
                       prepend-icon="mdi-cellphone"
-                  ></vue-tel-input-vuetify>
+                  ></v-text-field>
                   <v-text-field
                       label="CityU SID (if applicable)"
                       v-model="submission.sid"
@@ -94,8 +94,8 @@
                       class="ml-5 mx-2"
                       counter
                       maxlength="8"
-                      prepend-inner-icon="mdi-card"
-                      single-line
+                      prepend-icon="mdi-card"
+                      outlined
                   ></v-text-field>
                 </v-row>
                 <v-row class="mt-5 mb-5">
@@ -105,14 +105,14 @@
                       v-model="submission.schoolEmail"
                       class="mx-2 mr-5"
                       prepend-icon="mdi-email"
-                      single-line
+                      outlined
                   ></v-text-field>
                   <v-text-field
                       label="Confirm School Email Address"
                       :rules="[rules.required, validation.schoolEmail]"
                       class="mx-2 ml-5"
                       prepend-icon="mdi-email-check-outline"
-                      single-line
+                      outlined
                   ></v-text-field>
                 </v-row>
                 <v-row class="mt-5 mb-5">
@@ -122,14 +122,14 @@
                       v-model="submission.personalEmail"
                       class="mx-2 mr-5"
                       prepend-icon="mdi-at"
-                      single-line
+                      outlined
                   ></v-text-field>
                   <v-text-field
                       label="Confirm Personal Email Address"
                       :rules="[rules.required, validation.personalEmail]"
                       class="mx-2 ml-5"
                       prepend-icon="mdi-email-check"
-                      single-line
+                      outlined
                   ></v-text-field>
                 </v-row>
                 <!--                <v-radio-group-->
@@ -350,7 +350,6 @@
 </template>
 
 <script>
-import swal from "sweetalert";
 import Swal from 'sweetalert2';
 import {mapActions} from "vuex";
 
@@ -535,7 +534,7 @@ export default {
         },
         min: v => !v || v.length >= 8 || 'Min 8 characters',
         counter: v => !v || v.length === 8 || "Should be 8 numbers",
-        avatarSize: (value) => !value || value.size <= 1000000 || 'Avatar size should be less than 1 MB!',
+        avatarSize: (value) => !value || value.size <= 3500000 || 'Avatar size should be less than 3 MB!',
       },
       validation: {
         schoolEmail: (value) =>
@@ -570,19 +569,29 @@ export default {
             .then(
                 ({ err }) => {
                   if (err) {
-                    swal("Error", "Something Went Wrong", "error");
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Something went wrong!',
+                    })
                   } else {
-                    swal("Success", "Registration Was successful", "success");
+                    Swal.fire(
+                        'Success',
+                        'Registration Was successful',
+                        'success'
+                    );
                   }
                   this.e6 = 3;
                 }
             )
             .catch(err => {
               console.log(err);
-              if (err.err) {
-                swal("Error", err.message, "error");
-              } else {
-                swal("Error", "Something Went Wrong", "error");
+              {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                })
               }
             });
         this.verifying = false;
@@ -595,17 +604,27 @@ export default {
 
         if (token) {
           localStorage.setItem("jwt", token);
-          swal("Success", "Registration Was successful", "success");
+          Swal.fire(
+              'Success',
+              'Registration Was successful',
+              'success'
+          );
         } else {
-          swal("Error", "Something Went Wrong", "error");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
         }
         this.e6 = 4;
       } catch (err) {
-        console.log(err);
-        if (err.err && err.message) {
-          swal("Error", err.message, "error");
-        } else {
-          swal("Error", "Something Went Wrong", "error");
+        console.error(err);
+        {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
         }
 
       }
@@ -653,10 +672,10 @@ export default {
           Swal.fire({
             title: 'Successfully Registered!',
             html: '<ul><li>Please Upload AWS Educate Account Verification to personal email </li>' +
-                '<li><a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>',
+                '<li>Join Discord with us for more information!!</li>',
             text: '',
             padding: '3em',
-            imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
+            imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fpre-re-discord.png?alt=media&token=8a04cb1a-8dbb-4050-a2b5-c83dcb72d8ec",
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',

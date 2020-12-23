@@ -1,105 +1,104 @@
 <template>
-<div>
-  <nav-drawer @direct="directTo" :current="pathName"/>
-  <v-col>
-    <v-carousel
-        cycle
-        height="400"
-        hide-delimiter-background
-        show-arrows-on-hover
-    >
-      <v-carousel-item
-          v-for="(slide, i) in slides"
-          :key="i"
+  <div>
+    <nav-drawer @direct="directTo" :current="pathName"/>
+    <v-col>
+      <v-carousel
+          cycle
+          height="400"
+          hide-delimiter-background
+          show-arrows-on-hover
       >
-        <v-sheet
-            :color="colors[i]"
-            height="100%"
+        <v-carousel-item
+            v-for="(slide, i) in slides"
+            :key="i"
         >
-          <v-row
-              class="fill-height"
-              align="center"
-              justify="center"
+          <v-sheet
+              :color="colors[i]"
+              height="100%"
           >
-            <div class="display-3">
-              {{ slide }}
-            </div>
-          </v-row>
-        </v-sheet>
-      </v-carousel-item>
-    </v-carousel>
-  </v-col>
-  <div class="mt-5">
-<!--    <v-col>-->
-<!--      <h5>Example</h5>-->
-<!--      <img src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2FScreenshot%202020-12-21%20194322.jpg?alt=media&token=a141b908-2a1c-4762-9d24-e61df1e36d14"-->
-<!--           style="max-height: 250px; min-height: 50px;" alt="exampleAWS">-->
-<!--    </v-col>-->
-    <v-row justify="space-around">
-      <v-card width="400">
-        <v-img
-          height="200px"
-          :src="submissionDetail.imageUrl"
-        >
-        </v-img>
-
-        <v-card-text v-if="submissionDetail.imageUrl">
-          <div class="font-weight-bold ml-8 mb-2">
-            Status: Upload Completed
-          </div>
-        </v-card-text>
-
-        <v-card-text v-else>
-          <div class="font-weight-bold ml-8 mb-2">
-            Status: Upload incomplete
-          </div>
-        </v-card-text>
-
-      </v-card>
-    </v-row>
-  </div>
-  <div id="uploader">
-    <v-app id="inspire">
-      <v-content>
-        <v-container fluid>
-          <v-layout align-center justify-center>
-            <v-flex xs12 sm8 md4>
-              <img :src="imageUrl" height="150" v-if="imageUrl">
-              <v-file-input
-                label="Select Image"
-                accept="image/*"
-                ref="image"
-                @change="onFilePicked"
-              >
-              </v-file-input>
-              <v-btn color="primary" @click="upload">Upload</v-btn>
-            </v-flex>
-          </v-layout>
-
-          <br>
-
-          <v-layout align-center justify-center>
-            <v-flex xs12 sm8 md4>
-              <div v-for="i in imgUrls" :key="i">
-                <br>
-                <img :src="i.downloadUrl" height="150">
+            <v-row
+                class="fill-height"
+                align="center"
+                justify="center"
+            >
+              <div class="display-3">
+                {{ slide }}
               </div>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-content>
-    </v-app>
+            </v-row>
+          </v-sheet>
+        </v-carousel-item>
+      </v-carousel>
+    </v-col>
+    <div class="mt-5">
+      <!--    <v-col>-->
+      <!--      <h5>Example</h5>-->
+      <!--      <img src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2FScreenshot%202020-12-21%20194322.jpg?alt=media&token=a141b908-2a1c-4762-9d24-e61df1e36d14"-->
+      <!--           style="max-height: 250px; min-height: 50px;" alt="exampleAWS">-->
+      <!--    </v-col>-->
+      <v-row justify="space-around">
+        <v-card width="400">
+          <v-img
+              height="200px"
+              :src="submissionDetail.imageUrl"
+          >
+          </v-img>
+
+          <v-card-text v-if="submissionDetail.imageUrl">
+            <div class="font-weight-bold ml-8 mb-2">
+              Status: Upload Completed
+            </div>
+          </v-card-text>
+
+          <v-card-text v-else>
+            <div class="font-weight-bold ml-8 mb-2">
+              Status: Upload incomplete
+            </div>
+          </v-card-text>
+
+        </v-card>
+      </v-row>
+    </div>
+    <div id="uploader">
+      <v-app id="inspire">
+        <v-content>
+          <v-container fluid>
+            <v-layout align-center justify-center>
+              <v-flex xs12 sm8 md4>
+                <img :src="imageUrl" height="150" v-if="imageUrl">
+                <v-file-input
+                    label="Select Image"
+                    accept="image/*"
+                    ref="image"
+                    @change="onFilePicked"
+                >
+                </v-file-input>
+                <v-btn :loading="uploading" color="primary" @click="upload">Upload</v-btn>
+              </v-flex>
+            </v-layout>
+
+            <br>
+
+            <v-layout align-center justify-center>
+              <v-flex xs12 sm8 md4>
+                <div v-for="i in imgUrls" :key="i">
+                  <br>
+                  <img :src="i.downloadUrl" height="150">
+                </div>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-content>
+      </v-app>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
 import navDrawer from "@/PersonalPanel/components/navDrawer";
-import firebase from 'firebase'
-import { db } from "../../config/firebaseConfig.js"
-import swal from "sweetalert"
+import {db, storage} from "../../config/firebaseConfig.js"
+import Swal from "sweetalert2"
 
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 
 export default {
   name: "AWSVerification",
@@ -115,6 +114,7 @@ export default {
       imageFile: "",
       //image_src: require("imageUrl"),
       imgUrls: [],
+      uploading: false,
       submissionDetail: {
         imageUrl: null,
       },
@@ -141,16 +141,16 @@ export default {
     directTo(page) {
       this.$router.push(page);
     },
-    getImages: function() {
+    getImages: function () {
       db.collection("images")
-        .get()
-        .then(snap => {
-          const array = [];
-          snap.forEach(doc => {
-            array.push(doc.data());
+          .get()
+          .then(snap => {
+            const array = [];
+            snap.forEach(doc => {
+              array.push(doc.data());
+            });
+            this.imgUrls = array;
           });
-          this.imgUrls = array;
-        });
 
       this.imageName = "";
       this.imageFile = "";
@@ -160,7 +160,6 @@ export default {
       this.$refs.image.click();
     },
     onFilePicked(e) {
-      console.log(">>>>>>", e);
       const file = e;
       if (file !== undefined) {
         this.imageName = file.name;
@@ -180,18 +179,16 @@ export default {
         this.imageFile = "";
         this.imageUrl = "";
       }
-      console.log(">>>>> imageName: ", this.imageName);
-      console.log(">>>>> imageFile: ", this.imageFile);
-      console.log(">>>>> imageUrl: ", this.imageUrl);
     },
-    upload: function() {
-      // ストレージオブジェクト作成
-      var storageRef = firebase.storage().ref();
-      // ファイルのパスを設定
-      var mountainsRef = storageRef.child(`images/${this.imageName}`);
-      // ファイルを適用してファイルアップロード開始
-      if(this.imageName==""){
-        swal("Error", "No image selected yet", "error");
+    upload: function () {
+      this.uploading = true;
+      let mountainsRef = storage.ref().child(`images/${this.imageName}`);
+      if (this.imageName === "") {
+        Swal.fire({
+          icon: 'error',
+          title: 'No image is selected yet',
+          text: 'Please select an image first',
+        });
         return;
       }
       mountainsRef.put(this.imageFile).then(snapshot => {
@@ -199,44 +196,52 @@ export default {
           this.imageUrl = downloadURL;
           const bucketName = "cityhack21-6404b.appspot.com";
           const filePath = this.imageName;
-          try{
+          try {
             db.collection("VerificationImages").add({
               downloadURL,
               downloadUrl:
-                `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` +
-                "%2F" +
-                `${encodeURIComponent(filePath)}?alt=media`,
+                  `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/images` +
+                  "%2F" +
+                  `${encodeURIComponent(filePath)}?alt=media`,
               timestamp: Date.now()
-            }).then(()=>{
-                swal("Success", "Verification Image Was successful", "success");
-                this.submissionDetail.imageUrl=downloadURL;
-                console.log(">>>submissionDetail: imageUrl",this.submissionDetail.imageUrl);
-                this.awsVerifyUrl();
-              }
+            }).then(() => {
+                  Swal.fire(
+                      'Success',
+                      'Image has been uploaded, pending for verification',
+                      'success'
+                  );
+                  this.submissionDetail.imageUrl = downloadURL;
+                  this.awsVerifyUrl();
+                }
             );
             this.getImages();
 
-          }
-          catch(err){
+          } catch (err) {
             console.error(err);
-            swal("Error", "Something Went Wrong", "error");
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            });
           }
 
         });
       });
-      //this.getImages();
+      this.uploading = false;
     },
-    async awsVerifyUrl(){
-      try{
-        await this.awsVerify({ imageUrl: this.submissionDetail.imageUrl })
-        .then(res =>{
-          console.log("awsVerification: ");
-          console.log(res);
+    async awsVerifyUrl() {
+      try {
+        await this.awsVerify({imageUrl: this.submissionDetail.imageUrl})
+            .then(res => {
+              console.log("awsVerification: ", res);
+            })
+      } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
         })
-      }
-      catch(err){
-        swal("Error", "Something Went Wrong", "error");
-        console.log(err.response);
+        console.error(err);
       }
     }
   }

@@ -26,9 +26,7 @@
     "vue-jwt-decode": "^0.1.0",
     "vue-router": "^3.4.9",
     "vuefire": "^2.2.5",
-    "vue-tel-input-vuetify": "^1.2.15",
     "vuetify": "^2.2.11",
-    "vuetify-google-autocomplete": "^2.0.4",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
