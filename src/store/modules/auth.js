@@ -35,7 +35,7 @@ export default {
         console.log(`[*]AuthApi:: Login Success, ${res}`);
         if (res.token){
           commit("setCurrentUser", res.user, res.token);
-          commit("updateLoginStatus", true);  
+          commit("updateLoginStatus", true);
         }
         return res;
       });
@@ -50,9 +50,9 @@ export default {
     logOutUser({ commit }) {
       commit("clearUserData");
     },
-    async accountIdUsed(garbar, accountId)
+    async accountIdUsed(commit, accountId)
     {
-      return await auth.accountIdUsed("/user/accountIdUsed", {accountId});
+      return await auth.accountIdUsed(accountId);
     },
     verifyUser({ commit }, params) {
       return auth.verifyUser(params).then(
