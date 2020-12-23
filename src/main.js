@@ -11,7 +11,7 @@ import vuetify from "./plugins/vuetify";
 import VueFullPage from "vue-fullpage.js";
 import dayjs from "dayjs";
 
-import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
+// import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
 
 
 // import VuetifyGoogleAutocomplete from 'vuetify-google-autocomplete';
@@ -37,9 +37,9 @@ Vue.use(Vuex);
 
 Vue.use(firestorePlugin);
 
-Vue.use(VueTelInputVuetify, {
-  vuetify,
-});
+// Vue.use(VueTelInputVuetify, {
+//   vuetify,
+// });
 
 new Vue({
   store,

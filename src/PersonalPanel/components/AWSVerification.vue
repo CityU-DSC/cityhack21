@@ -72,7 +72,7 @@
                 @change="onFilePicked"
               >
               </v-file-input>
-              <v-btn color="primary" @click="upload">Upload</v-btn>
+              <v-btn :loading="uploading" color="primary" @click="upload">Upload</v-btn>
             </v-flex>
           </v-layout>
 
@@ -115,6 +115,7 @@ export default {
       imageFile: "",
       //image_src: require("imageUrl"),
       imgUrls: [],
+      uploading: false,
       submissionDetail: {
         imageUrl: null,
       },
@@ -181,6 +182,7 @@ export default {
       }
     },
     upload: function() {
+      this.uploading = true;
       var storageRef = firebase.storage().ref();
       var mountainsRef = storageRef.child(`images/${this.imageName}`);
       if(this.imageName==""){
@@ -217,6 +219,7 @@ export default {
 
         });
       });
+      this.uploading = false;
       //this.getImages();
     },
     async awsVerifyUrl(){
