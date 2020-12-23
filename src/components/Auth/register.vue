@@ -350,7 +350,6 @@
 </template>
 
 <script>
-import swal from "sweetalert";
 import Swal from 'sweetalert2';
 import {mapActions} from "vuex";
 
@@ -570,19 +569,29 @@ export default {
             .then(
                 ({ err }) => {
                   if (err) {
-                    swal("Error", "Something Went Wrong", "error");
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Something went wrong!',
+                    })
                   } else {
-                    swal("Success", "Registration Was successful", "success");
+                    Swal.fire(
+                        'Success',
+                        'Registration Was successful',
+                        'success'
+                    );
                   }
                   this.e6 = 3;
                 }
             )
             .catch(err => {
               console.log(err);
-              if (err.err) {
-                swal("Error", err.message, "error");
-              } else {
-                swal("Error", "Something Went Wrong", "error");
+              {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                })
               }
             });
         this.verifying = false;
@@ -595,17 +604,27 @@ export default {
 
         if (token) {
           localStorage.setItem("jwt", token);
-          swal("Success", "Registration Was successful", "success");
+          Swal.fire(
+              'Success',
+              'Registration Was successful',
+              'success'
+          );
         } else {
-          swal("Error", "Something Went Wrong", "error");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
         }
         this.e6 = 4;
       } catch (err) {
-        console.log(err);
-        if (err.err && err.message) {
-          swal("Error", err.message, "error");
-        } else {
-          swal("Error", "Something Went Wrong", "error");
+        console.error(err);
+        {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
         }
 
       }
