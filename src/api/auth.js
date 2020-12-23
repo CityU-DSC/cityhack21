@@ -31,6 +31,10 @@ export default {
   {
     return axios.post("/user/reverifyEmail", params, { timeout: 10 * 1000 });
   },
+  accountIdUsed(params)
+  {
+    return axios.post("/user/accountIdUsed", params);
+  },
   me(token)
   {
     return axios.get('/user/me', { headers: { Authorization: "Bearer " + token } })
