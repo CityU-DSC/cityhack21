@@ -50,6 +50,10 @@ export default {
     logOutUser({ commit }) {
       commit("clearUserData");
     },
+    async accountIdUsed(garbar, accountId)
+    {
+      return await auth.accountIdUsed("/user/accountIdUsed", {accountId});
+    },
     verifyUser({ commit }, params) {
       return auth.verifyUser(params).then(
         res => {
