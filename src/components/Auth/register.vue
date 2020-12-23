@@ -193,12 +193,12 @@
                   v-model="avatarImg"
                   @change="avatarImgtoUrl"
               ></v-file-input>
-<!--              <v-btn class="mt-4 mx-5">-->
-<!--                <v-icon class="mr-2">-->
-<!--                  mdi-cloud-upload-->
-<!--                </v-icon>-->
-<!--                Auto Generate Avatar-->
-<!--              </v-btn>-->
+              <!--              <v-btn class="mt-4 mx-5">-->
+              <!--                <v-icon class="mr-2">-->
+              <!--                  mdi-cloud-upload-->
+              <!--                </v-icon>-->
+              <!--                Auto Generate Avatar-->
+              <!--              </v-btn>-->
             </v-row>
             <v-text-field
                 label="Account ID"
@@ -210,13 +210,13 @@
                 prepend-inner-icon="mdi-account-circle"
                 outlined
             >
-<!--              <template v-slot:progress>-->
-<!--                <v-progress-linear-->
-<!--                    :value="progress"-->
-<!--                    absolute-->
-<!--                    height="7"-->
-<!--                ></v-progress-linear>-->
-<!--              </template>-->
+              <!--              <template v-slot:progress>-->
+              <!--                <v-progress-linear-->
+              <!--                    :value="progress"-->
+              <!--                    absolute-->
+              <!--                    height="7"-->
+              <!--                ></v-progress-linear>-->
+              <!--              </template>-->
             </v-text-field>
             <v-row class="mt-2">
               <v-text-field
@@ -250,7 +250,7 @@
         <v-btn :loading="verifying" color="primary" class="mr-3" @click="registerNewUser()">
           Send Verify Email
         </v-btn>
-        <v-btn @click="e6 = 1" class="mr-3"> Previous </v-btn>
+        <v-btn @click="e6 = 1" class="mr-3"> Previous</v-btn>
         <v-btn color="warning" @click="resetAccountForm"> Reset Form</v-btn>
       </v-stepper-content>
 
@@ -277,7 +277,9 @@
 
       <v-stepper-step :complete="e6 > 4" step="4">
         AWS Educate Account?
-        <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified student job seekers with the AWS Educate Job Board.</small>
+        <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for
+          cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified
+          student job seekers with the AWS Educate Job Board.</small>
       </v-stepper-step>
       <v-stepper-content step="4">
         <div>
@@ -360,9 +362,9 @@ export default {
     return {
       selectedItem: 1,
       items: [
-        { text: 'To Use SageMaker in CityHack21', icon: 'mdi-clock' },
-        { text: 'Receive $100 USD and Free AWS Services', icon: 'mdi-aws' },
-        { text: 'Only ones who Registered can receive Souvenirs from AWS', icon: 'mdi-gift' },
+        {text: 'To Use SageMaker in CityHack21', icon: 'mdi-clock'},
+        {text: 'Receive $100 USD and Free AWS Services', icon: 'mdi-aws'},
+        {text: 'Only ones who Registered can receive Souvenirs from AWS', icon: 'mdi-gift'},
       ],
       discordImgUrl: "",
       submission: {
@@ -562,12 +564,12 @@ export default {
     async registerNewUser() {
       this.verifying = true;
       if (this.$refs.accountForm.validate()) {
-        if (this.$vuetify.breakpoint.mdAndUp){
+        if (this.$vuetify.breakpoint.mdAndUp) {
           this.submission.year = this.years[this.year_1];
         }
-        await this.registerUser({...this.submission, ...this.accountDetails })
+        await this.registerUser({...this.submission, ...this.accountDetails})
             .then(
-                ({ err }) => {
+                ({err}) => {
                   if (err) {
                     Swal.fire({
                       icon: 'error',
@@ -586,13 +588,11 @@ export default {
             )
             .catch(err => {
               console.log(err);
-              {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Something went wrong!',
-                })
-              }
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+              })
             });
         this.verifying = false;
       }
@@ -600,7 +600,10 @@ export default {
 
     async verifyCode() {
       try {
-        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.submission.personalEmail });
+        const {token} = await this.verifyUser({
+          verificationCode: this.verificationCode.split(' ').join(''),
+          email: this.submission.personalEmail
+        });
 
         if (token) {
           localStorage.setItem("jwt", token);
@@ -619,25 +622,22 @@ export default {
         this.e6 = 4;
       } catch (err) {
         console.error(err);
-        {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          })
-        }
-
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
       }
     },
-    doneBasicForm(){
+    doneBasicForm() {
       if (this.$refs.basicForm.validate()) {
         this.e6 = 2;
       }
     },
-    resetBasicInfoForm(){
+    resetBasicInfoForm() {
       this.$refs.basicForm.reset();
     },
-    resetAccountForm(){
+    resetAccountForm() {
       this.$refs.accountForm.reset();
     },
     avatarImgtoUrl() {
@@ -646,10 +646,10 @@ export default {
       const reader = new FileReader();
 
       reader.addEventListener(
-        "load", () => {
-          this.accountDetails.avatarUrl = reader.result;
-        }
-      )
+          "load", () => {
+            this.accountDetails.avatarUrl = reader.result;
+          }
+      );
       reader.readAsDataURL(this.avatarImg);
 
     },
@@ -659,21 +659,21 @@ export default {
         needAWSExtraCredit: this.AWSPreference.needAWSExtraCredit,
         hasAWSAccount: this.AWSPreference.hasAWSAccount,
       }).then(
-        res => {
-          console.log(res);
-        }
+          res => {
+            console.log(res);
+          }
       ).catch(
-        err => {
-          console.log(err)
-        }
+          err => {
+            console.log(err)
+          }
       );
-      if(this.$refs.AWSForm.validate()){
-        if(this.AWSPreference.hasAWSAccount === "true") {
+      if (this.$refs.AWSForm.validate()) {
+        if (this.AWSPreference.hasAWSAccount === "true") {
           Swal.fire({
             title: 'Successfully Registered!',
             html: '<ul><li>Please Upload AWS Educate Account Verification to personal email </li>' +
-                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>'+
-                '<li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>'+
+                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>' +
+                '<li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>' +
                 '</ul>',
             text: '',
             padding: '3em',
@@ -696,8 +696,8 @@ export default {
           Swal.fire({
             title: 'Almost Done!!',
             html: '<ul><li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>' +
-                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>'+
-                '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>'+
+                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>' +
+                '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>' +
                 '</ul>',
             text: '',
             padding: '3em',

@@ -18,7 +18,7 @@ import PromotionMaterial from './components/promotion/promotion.vue';
 
 export default {
   name: 'App',
-  data(){
+  data() {
     return {
       showDialog: true
     }
@@ -27,6 +27,8 @@ export default {
     NavBar,
     PromotionMaterial
   },
+  mounted() {
+  }
 };
 </script>
 
