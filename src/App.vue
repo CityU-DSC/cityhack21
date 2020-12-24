@@ -1,5 +1,15 @@
 <template>
   <v-app>
+    <v-overlay
+        :opacity="1"
+        :value="overlay"
+    >
+<!--      <v-progress-circular indeterminate size="64">-->
+<!--        Loading...-->
+<!--        <img :src="CityHackLogo" width="50px" class="rotate">-->
+<!--      </v-progress-circular>-->
+      <PreLoader />
+    </v-overlay>
     <v-dialog v-model="showDialog" max-width='500px' close>
       <v-card>
         <div class="d-block text-center">
@@ -15,26 +25,44 @@
 <script>
 import NavBar from './views/navBar.vue';
 import PromotionMaterial from './components/promotion/promotion.vue';
+import CityHackLogo from "./assets/logo/logo_w.png";
+import PreLoader from "./views/preLoader";
 
 export default {
   name: 'App',
   data() {
     return {
-      showDialog: true
+      showDialog: true,
+      overlay: true,
+      CityHackLogo
     }
   },
   components: {
     NavBar,
-    PromotionMaterial
+    PromotionMaterial,
+    PreLoader,
   },
   mounted() {
-  }
+    this.overlay = false
+  },
 };
 </script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+.rotate {
+  animation: rotation 3s infinite linear;
+  margin-left: 20px;
+}
 
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
 
 * {
   font-family: "Space Mono", serif;
