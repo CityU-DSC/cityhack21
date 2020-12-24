@@ -43,7 +43,19 @@ export default {
     PreLoader,
   },
   mounted() {
-    this.overlay = false
+    // this.overlay = false
+  },
+  async created(){
+    this.overlay = true
+    try {
+      const res = await fetch('https://cityhack21.com');
+      if(res) {
+        this.overlay = false
+      }
+    } catch (error) {
+      console.log(error)
+      this.overlay = false
+    }
   },
 };
 </script>

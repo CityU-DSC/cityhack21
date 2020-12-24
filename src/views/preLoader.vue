@@ -74,7 +74,6 @@ name: "preLoader"
     width: $size;
     height: $size;
     z-index: 9;
-    background-image: url(https://rafaelalucas91.github.io/assets/codepen/logo_white.svg);
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: 10px 7px;
@@ -100,28 +99,6 @@ name: "preLoader"
       transition: all 0.2s ease, background-color 0.4s ease;
       opacity: 0;
       border-radius: 100%;
-    }
-
-    &.portfolio {
-      transition: all 0.8s ease;
-
-      .icon {
-        background-image: url(https://rafaelalucas91.github.io/assets/codepen/link.svg);
-      }
-    }
-
-    &.dribbble {
-      transition: all 0.3s ease;
-      .icon {
-        background-image: url(https://rafaelalucas91.github.io/assets/codepen/dribbble.svg);
-      }
-    }
-
-    &.linkedin {
-      transition: all 0.8s ease;
-      .icon {
-        background-image: url(https://rafaelalucas91.github.io/assets/codepen/linkedin.svg);
-      }
     }
   }
 
