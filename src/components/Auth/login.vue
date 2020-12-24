@@ -2,23 +2,25 @@
   <div class="container">
     <v-form>
       <v-container class="mt-5" style="width: 600px;">
-
-            <v-text-field
-                v-model="login.email"
-                :rules="emailRules"
-                label="PERSONAL E-mail"
-                required
-                outlined
-            ></v-text-field>
-            <v-text-field
-                v-model="login.password"
-                label="Password"
-                required
-                outlined
-            ></v-text-field>
+        <v-text-field
+            v-model="login.email"
+            :rules="emailRules"
+            label="PERSONAL E-mail"
+            required
+            outlined
+        ></v-text-field>
+        <v-text-field
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showPassword ? 'text' : 'password'"
+            @click:append="showPassword = !showPassword"
+            v-model="login.password"
+            label="Password"
+            required
+            outlined
+        ></v-text-field>
         <v-row>
           <p>Dont have an account?</p>
-          <v-spacer />
+          <v-spacer/>
           <v-btn class="ml-5">
             <router-link to="/register">click here</router-link>
           </v-btn>
@@ -48,7 +50,7 @@
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex';
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 export default {
   name: 'login',
@@ -63,7 +65,8 @@ export default {
         v => /.+@.+/.test(v) || 'E-mail must be valid'
       ],
       reverify: false,
-      verificationCode: ""
+      verificationCode: "",
+      showPassword: false,
     };
   },
   computed: {...mapGetters('adminList', ['adminList'])},
@@ -73,38 +76,60 @@ export default {
       await this.loginByEmailPassword(this.login).then(res => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
-          swal("Success", "Login Successful", "success");
+          Swal.fire(
+              'Success',
+              'Login Successful',
+              'success'
+          );
           this.adminList.includes(res.user.email) ? this.$router.push("/admin") : this.$router.push("/");
         }
       }).catch(err => {
         if (err.reverify) {
           this.reverify = true;
-          swal("Error", "Email registered but not verified. Please reverify", "error");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Email registered but not verified. Please reverify',
+          });
           console.log(err);
         } else {
-          swal("Error", "Login Failed", "error");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Login Failed',
+          });
           throw Error(err);
         }
       })
     },
     async verifyCode() {
       try {
-        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.login.email });
+        const {token} = await this.verifyUser({
+          verificationCode: this.verificationCode.split(' ').join(''),
+          email: this.login.email
+        });
 
         if (token) {
           localStorage.setItem("jwt", token);
-          swal("Success", "Registration Was successful", "success");
+          Swal.fire(
+              'Success',
+              'Registration Was successful',
+              'success'
+          );
         } else {
-          swal("Error", "Something Went Wrong", "error");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
         }
       } catch (err) {
         console.log(err);
-        if (err.err && err.message) {
-          swal("Error", err.message, "error");
-        } else {
-          swal("Error", "Something Went Wrong", "error");
-        }
-
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        });
       }
     }
   }

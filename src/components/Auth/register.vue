@@ -79,10 +79,10 @@
                 ></v-autocomplete>
                 <v-row class="mt-5 mb-5">
                   <v-text-field
-                      label="Phone Number"
+                      label="Phone Number (for WhatsApp)"
                       :rules="[rules.required]"
                       v-model="submission.number"
-                      type="number"
+                      type="text"
                       class="mx-2 mr-5"
                       blur
                       prepend-icon="mdi-cellphone"
@@ -193,30 +193,17 @@
                   v-model="avatarImg"
                   @change="avatarImgtoUrl"
               ></v-file-input>
-<!--              <v-btn class="mt-4 mx-5">-->
-<!--                <v-icon class="mr-2">-->
-<!--                  mdi-cloud-upload-->
-<!--                </v-icon>-->
-<!--                Auto Generate Avatar-->
-<!--              </v-btn>-->
             </v-row>
             <v-text-field
                 label="Account ID"
                 v-model="accountDetails.accountId"
-                :rules="[rules.required]"
+                :rules="[rules.required, validation.accountIdUsed]"
                 hint="It should be a unique Account ID"
                 class="mx-2 mt-5"
                 clearable
                 prepend-inner-icon="mdi-account-circle"
                 outlined
             >
-<!--              <template v-slot:progress>-->
-<!--                <v-progress-linear-->
-<!--                    :value="progress"-->
-<!--                    absolute-->
-<!--                    height="7"-->
-<!--                ></v-progress-linear>-->
-<!--              </template>-->
             </v-text-field>
             <v-row class="mt-2">
               <v-text-field
@@ -250,7 +237,7 @@
         <v-btn :loading="verifying" color="primary" class="mr-3" @click="registerNewUser()">
           Send Verify Email
         </v-btn>
-        <v-btn @click="e6 = 1" class="mr-3"> Previous </v-btn>
+        <v-btn @click="e6 = 1" class="mr-3"> Previous</v-btn>
         <v-btn color="warning" @click="resetAccountForm"> Reset Form</v-btn>
       </v-stepper-content>
 
@@ -277,7 +264,9 @@
 
       <v-stepper-step :complete="e6 > 4" step="4">
         AWS Educate Account?
-        <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified student job seekers with the AWS Educate Job Board.</small>
+        <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for
+          cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified
+          student job seekers with the AWS Educate Job Board.</small>
       </v-stepper-step>
       <v-stepper-content step="4">
         <div>
@@ -350,7 +339,6 @@
 </template>
 
 <script>
-import swal from "sweetalert";
 import Swal from 'sweetalert2';
 import {mapActions} from "vuex";
 
@@ -361,9 +349,9 @@ export default {
     return {
       selectedItem: 1,
       items: [
-        { text: 'To Use SageMaker in CityHack21', icon: 'mdi-clock' },
-        { text: 'Receive $100 USD and Free AWS Services', icon: 'mdi-aws' },
-        { text: 'Only ones who Registered can receive Souvenirs from AWS', icon: 'mdi-gift' },
+        {text: 'To Use SageMaker in CityHack21', icon: 'mdi-clock'},
+        {text: 'Receive $100 USD and Free AWS Services', icon: 'mdi-aws'},
+        {text: 'Only ones who Registered can receive Souvenirs from AWS', icon: 'mdi-gift'},
       ],
       discordImgUrl: "",
       submission: {
@@ -371,9 +359,9 @@ export default {
         lastName: "",
         nickName: "",
         university: "City University of Hong Kong",
-        sid: 0,
+        sid: undefined,
         year: "Year 1",
-        majorProgram: "Architecture",
+        majorProgram: undefined,
         number: "",
         schoolEmail: "",
         personalEmail: "",
@@ -383,6 +371,7 @@ export default {
         password: "",
         avatarUrl: null,
       },
+      isAccountIdUsed: false,
       verificationCode: "",
 
       AWSPreference: {
@@ -545,10 +534,18 @@ export default {
             value == this.submission.personalEmail ||
             "Are you sure it's the same?",
         confirmPassword: (value) => value === this.accountDetails.password ||
-            "Password Mismatch"
+            "Password Mismatch",
+        accountIdUsed: () => !this.isAccountIdUsed ||
+            "Account ID is already in used"
       },
       e6: 1,
     };
+  },
+  watch: {
+    'accountDetails.accountId': function(newVal) {
+      this.checkIsIdUsed(newVal);
+      this.accountDetails.accountId = newVal;
+    }
   },
   computed: {
     progress() {
@@ -556,34 +553,49 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", ["registerUser", "verifyUser", "resendVerification", "updateMe"]),
+    ...mapActions("auth", ["registerUser", "verifyUser", "resendVerification", "updateMe", "accountIdUsed"]),
     // getAddressData(addressData) {
     //   this.submission.address = addressData;
     // },
+    async checkIsIdUsed(id) {
+      await this.accountIdUsed(id).then(res => this.isAccountIdUsed = res.accountIdUsed);
+    },
     async registerNewUser() {
       this.verifying = true;
       if (this.$refs.accountForm.validate()) {
-        if (this.$vuetify.breakpoint.mdAndUp){
+        if (this.$vuetify.breakpoint.mdAndUp) {
           this.submission.year = this.years[this.year_1];
         }
-        await this.registerUser({...this.submission, ...this.accountDetails })
+        await this.registerUser({...this.submission, ...this.accountDetails})
             .then(
-                ({ err }) => {
+                ({err}) => {
                   if (err) {
-                    swal("Error", "Something Went Wrong", "error");
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Something went wrong!',
+                    })
                   } else {
-                    swal("Success", "Registration Was successful", "success");
+                    Swal.fire(
+                        'Success',
+                        'Please Input the verification code send to your email',
+                        'success'
+                    );
                   }
                   this.e6 = 3;
                 }
             )
             .catch(err => {
               console.log(err);
-              if (err.err) {
-                swal("Error", err.message, "error");
-              } else {
-                swal("Error", "Something Went Wrong", "error");
-              }
+              Swal.fire({
+                icon: 'error',
+                title: 'Email is already in used',
+                text: 'do you want to reset the password?',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.$router.push({name: 'login'});
+                }
+              })
             });
         this.verifying = false;
       }
@@ -591,34 +603,45 @@ export default {
 
     async verifyCode() {
       try {
-        const { token } = await this.verifyUser({ verificationCode: this.verificationCode.split(' ').join(''), email: this.submission.personalEmail });
+        this.verificationCode = this.verificationCode.toUpperCase();
+        const {token} = await this.verifyUser({
+          verificationCode: this.verificationCode.split(' ').join(''),
+          email: this.submission.personalEmail
+        });
 
         if (token) {
           localStorage.setItem("jwt", token);
-          swal("Success", "Registration Was successful", "success");
+          Swal.fire(
+              'Success',
+              'Email has been verified!',
+              'success'
+          );
         } else {
-          swal("Error", "Something Went Wrong", "error");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
         }
         this.e6 = 4;
       } catch (err) {
-        console.log(err);
-        if (err.err && err.message) {
-          swal("Error", err.message, "error");
-        } else {
-          swal("Error", "Something Went Wrong", "error");
-        }
-
+        console.error(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.message,
+        })
       }
     },
-    doneBasicForm(){
+    doneBasicForm() {
       if (this.$refs.basicForm.validate()) {
         this.e6 = 2;
       }
     },
-    resetBasicInfoForm(){
+    resetBasicInfoForm() {
       this.$refs.basicForm.reset();
     },
-    resetAccountForm(){
+    resetAccountForm() {
       this.$refs.accountForm.reset();
     },
     avatarImgtoUrl() {
@@ -627,10 +650,10 @@ export default {
       const reader = new FileReader();
 
       reader.addEventListener(
-        "load", () => {
-          this.accountDetails.avatarUrl = reader.result;
-        }
-      )
+          "load", () => {
+            this.accountDetails.avatarUrl = reader.result;
+          }
+      );
       reader.readAsDataURL(this.avatarImg);
 
     },
@@ -640,23 +663,25 @@ export default {
         needAWSExtraCredit: this.AWSPreference.needAWSExtraCredit,
         hasAWSAccount: this.AWSPreference.hasAWSAccount,
       }).then(
-        res => {
-          console.log(res);
-        }
+          res => {
+            console.log(res);
+          }
       ).catch(
-        err => {
-          console.log(err)
-        }
+          err => {
+            console.log(err)
+          }
       );
-      if(this.$refs.AWSForm.validate()){
-        if(this.AWSPreference.hasAWSAccount === "true") {
+      if (this.$refs.AWSForm.validate()) {
+        if (this.AWSPreference.hasAWSAccount === "true") {
           Swal.fire({
             title: 'Successfully Registered!',
             html: '<ul><li>Please Upload AWS Educate Account Verification to personal email </li>' +
-                '<li>Join Discord with us for more information!!</li>',
+                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>' +
+                '<li>Join Discord with us for more information!!</li>' +
+                '</ul>',
             text: '',
             padding: '3em',
-            imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fpre-re-discord.png?alt=media&token=8a04cb1a-8dbb-4050-a2b5-c83dcb72d8ec",
+            imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdd.png?alt=media&token=5e654e17-c40e-4032-b901-7c73fdbacc73",
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -674,11 +699,13 @@ export default {
         } else {
           Swal.fire({
             title: 'Almost Done!!',
-            html: '<ul><li> <a href="https://discord.gg/234VSVWp">Join Discord with us for more information!!</a></li>' +
-                '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>',
+            html: '<ul><li>Join Discord with us for more information!!</li>' +
+                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>' +
+                '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>' +
+                '</ul>',
             text: '',
             padding: '3em',
-            imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdiscord.png?alt=media&token=1da67a3d-1d8a-4bfa-bf13-95c49cb74544",
+            imageUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Fdd.png?alt=media&token=5e654e17-c40e-4032-b901-7c73fdbacc73",
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',

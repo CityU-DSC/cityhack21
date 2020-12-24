@@ -188,7 +188,7 @@
 <script>
 import navDrawer from "@/PersonalPanel/components/navDrawer";
 import { mapActions, mapGetters } from 'vuex';
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 export default {
   name: "personal_profile",
@@ -398,14 +398,22 @@ export default {
       }
       this.updateMe(this.userInfo).then(
         res => {
-          swal("Success", "Update Profile Successfully", "success");
+          Swal.fire(
+              'Success',
+              'Update Profile Successfully',
+              'success'
+          );
           this.show=false;
           console.log(res);
         }
       ).catch(
         err => {
-          console.log(err);
-          swal("Error", "Profile did not updated", "error");
+          console.error(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Profile did not updated successfully!',
+          });
         }
       );
     },
