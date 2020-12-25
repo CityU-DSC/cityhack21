@@ -34,7 +34,7 @@ export default {
     return {
       showDialog: true,
       overlay: true,
-      CityHackLogo
+      CityHackLogo,
     }
   },
   components: {
@@ -42,18 +42,15 @@ export default {
     PromotionMaterial,
     PreLoader,
   },
-  mounted() {
-    // this.overlay = false
-  },
-  async created(){
-    this.overlay = true
+  async mounted() {
+    this.overlay = true;
     try {
       const res = await fetch('https://cityhack21.com');
       if(res) {
         this.overlay = false
       }
     } catch (error) {
-      console.log(error)
+      console.error(error);
       this.overlay = false
     }
   },
