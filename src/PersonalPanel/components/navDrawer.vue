@@ -72,7 +72,7 @@ export default {
         {id: 1, title: "Home Page", icon: 'mdi-home', page: '/personal'},
         {id: 2, title: "Profile Page", icon: 'mdi-account', page: '/personal/profile'},
         {id: 3, title: "AWS Educate Verification", icon: 'mdi-aws', page: '/personal/verification'},
-        // {id: 4, title: "Group", icon: 'mdi-account-group'},
+        {id: 4, title: "Group", icon: 'mdi-account-group', page: '/personal/team'},
         // {id: 5, title: "File", icon: 'mdi-upload'},
       ],
     };
