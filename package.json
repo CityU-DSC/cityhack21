@@ -16,7 +16,6 @@
     "core-js": "^3.6.5",
     "dayjs": "^1.9.6",
     "firebase": "^8.2.1",
-    "sweetalert": "^2.1.2",
     "sweetalert2": "^10.12.5",
     "timeline-vuejs": "^1.1.7",
     "vue": "^2.6.12",

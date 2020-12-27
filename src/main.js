@@ -10,7 +10,6 @@ import vuetify from "./plugins/vuetify";
 
 import VueFullPage from "vue-fullpage.js";
 import dayjs from "dayjs";
-
 // import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
 
 

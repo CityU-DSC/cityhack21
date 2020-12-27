@@ -1,8 +1,8 @@
 import adminAxios from 'axios'
 
 const service = adminAxios.create({
-  baseURL: 'http://localhost:3000/api/admin',
-  timeout: 3000,
+    baseUrl: process.env.NODE_ENV === 'development'? "http://localhost:3000/api/admin" : "https://cityhack21.com/api/admin",
+    timeout: 3000,
 });
 
 // request interceptors
@@ -16,8 +16,8 @@ service.interceptors.response.use((response) => {
     console.log('[Admin Axios]: get response');
     return response.data
 }, (error) => {
-    const { response = {} } = error;
-    const { data = null } = response;
+    const {response = {}} = error;
+    const {data = null} = response;
     console.log('error = ', data); // for debug
     return Promise.reject(data || error)
 });
