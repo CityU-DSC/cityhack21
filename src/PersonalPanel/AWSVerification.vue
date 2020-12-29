@@ -95,7 +95,7 @@
 
 <script>
 import navDrawer from "@/PersonalPanel/components/navDrawer";
-import {db, storage} from "../../config/firebaseConfig.js"
+import {db, storage} from "../config/firebaseConfig.js"
 import Swal from "sweetalert2"
 
 import {mapActions} from "vuex";
