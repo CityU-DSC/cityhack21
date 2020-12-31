@@ -109,8 +109,8 @@
                           class="mr-3"
                           disabled
                           color="#a64942"
-                          v-model="team.privateGroup"
-                          label="Private Group?"
+                          v-model="team.private"
+                          label="Private ?"
                       ></v-switch>
                     </v-row>
                   </v-card-text>
