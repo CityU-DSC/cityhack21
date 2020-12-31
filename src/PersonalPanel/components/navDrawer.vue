@@ -23,6 +23,7 @@
                 <v-list-item-subtitle>{{currentUser.email}}</v-list-item-subtitle>
                 <v-list-item-subtitle>
                   <v-breadcrumbs :items="items"/>
+                  <v-btn @click="logout">LOGOUT</v-btn>
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -44,7 +45,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex';
+import {mapGetters, mapMutations, mapActions} from 'vuex';
 
 export default {
   name: "navDrawer",
@@ -79,9 +80,15 @@ export default {
   },
   methods: {
     ...mapMutations('menu', ['setDrawer']),
+    ...mapActions("auth", ["logOutUser"]),
     navigateTo(page){
       this.$emit("direct", page);
-    }
+    },
+    logout(){
+      localStorage.removeItem("jwt");
+      this.logOutUser();
+      this.$router.push("/");
+    },
   }
 }
 </script>
