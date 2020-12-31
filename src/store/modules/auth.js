@@ -89,13 +89,19 @@ export default {
       } else {
         const token = localStorage.getItem('jwt');
         try {
-          await auth.me(token).then(
+          const res = await auth.me(token).then(
             res => {
+              localStorage.removeItem('jwt');
               commit("updateLoginStatus", true)
               commit("setCurrentUser", res, token)
+              return res;
             }
           );
-          return true;
+          if (res == null){
+            return false;
+          } else {
+            return true
+          }
         } catch (e) {
           console.log(e);
           return false

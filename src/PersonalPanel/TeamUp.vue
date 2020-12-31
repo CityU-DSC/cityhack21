@@ -53,7 +53,7 @@ export default {
         description: "this is testing team",
         topic: "Atlas",
         needPhysicalSpace: true,
-        privateGroup: true,
+        private: true,
         members: [
           {name: "Ryanyen2", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
           {name: "Ruby", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
@@ -67,7 +67,7 @@ export default {
         description: "this is testing team",
         topic: "SageMaker",
         needPhysicalSpace: false,
-        privateGroup: false,
+        private: false,
         members: [
           {name: "Ruby", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
           {name: "Ryanyen", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
@@ -82,7 +82,7 @@ export default {
         description: "this is testing team pofk o4kpo4k rpo4k po4kr 4prk 4pork4pr ok4po4 krp4okrp4rk4pork4prok4 rpo4krp4o k4pork",
         topic: "Atlas",
         needPhysicalSpace: false,
-        privateGroup: false,
+        private: false,
         members: [
           {name: "Ruby", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
           {name: "Ryanyen", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},

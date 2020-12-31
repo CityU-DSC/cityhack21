@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="my-nav ml-5 v-chip--clickable">
+    <div class="my-nav ml-5 v-chip--clickable" v-if="currentUser">
       <v-card>
         <v-navigation-drawer
             permanent

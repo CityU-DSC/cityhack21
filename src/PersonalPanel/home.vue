@@ -32,6 +32,7 @@ export default {
     AWSStateNotSubmitted
   },
   computed: {
+    ...mapGetters('auth', ['currentUser']),
     ...mapGetters('aws_verify', ['verificationStatus'])
   },
   methods: {
@@ -47,6 +48,7 @@ export default {
       this.$router.push('/');
       return;
     }
+    console.log(this.currentUser)
     await this.isAWSVerified();
   }
 }
