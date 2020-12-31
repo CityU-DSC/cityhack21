@@ -74,6 +74,7 @@
             <v-expansion-panel-content>
               <v-row class="mt-3">
                 <v-card
+                    v-if="editMode !== team.name"
                     class="mr-5"
                     max-width="524"
                     outlined
@@ -130,9 +131,91 @@
                   <v-card-actions>
                     <v-row class="mr-3 mt-2">
                       <v-spacer/>
-                      <v-btn color="#ff9900">Edit</v-btn>
+                      <v-btn color="#ff9900" @click="editTeam(team)">Edit</v-btn>
                     </v-row>
+                  </v-card-actions>
+                </v-card>
+                <!--                EDIT GROUP-->
+                <v-card
+                    v-else
+                    class="mr-5"
+                    max-width="524"
+                    outlined
+                    min-width="300"
+                >
+                  <v-img height="50"
+                         src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2F1.jpg?alt=media&token=183fac76-6f53-4ca6-88f1-7bf080067780"></v-img>
+                  <v-form>
+                    <v-card-title>
+                      <v-text-field
+                          v-model="editInfo.name"
+                          label="Team Name"
+                          :rules="[v => !!v || 'Name is required']"
+                          class="mr-3"
+                          clearable
+                      ></v-text-field>
+                    </v-card-title>
 
+                    <v-card-text>
+                      <v-row class="ml-2 mb-2">
+                        <v-select
+                            :items="editInfo.members"
+                            v-model="editInfo.leader"
+                            item-text="name"
+                            label="Team Leader"
+                            class="mr-3"
+                        ></v-select>
+                      </v-row>
+                      <v-row class="ml-2 mb-2">
+                        <v-textarea
+                            v-model="editInfo.description"
+                            label="Team Description"
+                            :rules="[v => !!v || 'Description is required']"
+                            class="mr-3"
+                            clearable
+                            counter
+                        ></v-textarea>
+                      </v-row>
+                      <v-row class="ml-2 mt-3">
+                        <div class="subtitle-1">Team Detail</div>
+                      </v-row>
+                      <v-row class="ml-2">
+                        <v-switch
+                            class="mr-3"
+                            color="#a64942"
+                            v-model="editInfo.needPhysicalSpace"
+                            label="Need Physical Space?"
+                        ></v-switch>
+                        <v-switch
+                            class="mr-3"
+                            color="#a64942"
+                            v-model="editInfo.private"
+                            label="Private ?"
+                        ></v-switch>
+                      </v-row>
+                    </v-card-text>
+                    <v-card-subtitle class="ml-2">Selected Topic</v-card-subtitle>
+                    <v-card-text>
+                      <v-radio-group
+                          v-model="editInfo.topic"
+                          row
+                      >
+                        <v-radio
+                            color="#a64942"
+                            v-for="topic in topics"
+                            :key="topic.id"
+                            :label="topic"
+                            :value="topic"
+                        ></v-radio>
+                      </v-radio-group>
+                    </v-card-text>
+                  </v-form>
+                  <v-divider class="mx-4"></v-divider>
+                  <v-card-actions>
+                    <v-row class="mr-3 mt-2">
+                      <v-spacer/>
+                      <v-btn color="purple darken-2" @click="saveEdit">Save</v-btn>
+                    </v-row>
                   </v-card-actions>
                 </v-card>
                 <v-list rounded>
@@ -186,7 +269,7 @@ export default {
       selectedMember: 0,
       selectedProfile: null,
       openProfile: false,
-      topics: ["Atlas", "SageMaker", "AWS"],
+      topics: ["Atlas", "SageMaker", "Others"],
       filteredTeams: [],
 
       //search
@@ -194,6 +277,25 @@ export default {
       searchLeader: null,
       usingAtlasTeam: true,
       usingSageMakerTeam: true,
+
+      // Edit
+      editMode: null,
+      editInfo: {
+        name: null,
+        leader: null,
+        description: null,
+        needPhysicalSpace: null,
+        private: null,
+        topic: null,
+        members: null,
+      },
+    }
+  },
+  watch: {
+    teams(val) {
+      console.log("Hello", val);
+      this.filteredTeams = val;
+
     }
   },
   computed: {
@@ -227,6 +329,15 @@ export default {
     resetTeamSearchFrom() {
       this.filteredTeams = this.teams;
       this.$refs.teamSearch.reset()
+    },
+    editTeam(team) {
+      this.editMode = team.name;
+      this.editInfo = {...team};
+      console.log(this.editInfo);
+    },
+    saveEdit() {
+      console.log(this.editInfo);
+      this.editMode = null;
     }
   },
   mounted() {

@@ -49,7 +49,13 @@
             ></v-autocomplete>
           </v-row>
         </v-form>
-        <v-row>
+        <v-row class="mb-5 mt-4">
+          <v-switch
+              class="ml-4"
+              color="#53354a"
+              v-model="searchHasTeam"
+              label="Has Team?"
+          ></v-switch>
           <v-spacer />
           <v-btn outlined color="#ff9900" class="mr-3" @click="searchUsers"
             >Search</v-btn
@@ -108,6 +114,7 @@ export default {
       searchMemberYear: null,
       searchMemberProgram: null,
       searchMemberAccountId: null,
+      searchHasTeam: false,
 
       universities: [
         "City University of Hong Kong",
