@@ -365,6 +365,8 @@ export default {
         number: "",
         schoolEmail: "",
         personalEmail: "",
+        referrerAccountId: "",
+        promoCode: "" 
       },
       accountDetails: {
         accountId: "",

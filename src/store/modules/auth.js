@@ -91,13 +91,13 @@ export default {
         try {
           const res = await auth.me(token).then(
             res => {
-              localStorage.removeItem('jwt');
               commit("updateLoginStatus", true)
               commit("setCurrentUser", res, token)
               return res;
             }
           );
           if (res == null){
+            localStorage.removeItem('jwt');
             return false;
           } else {
             return true
