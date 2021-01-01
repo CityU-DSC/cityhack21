@@ -132,6 +132,7 @@
                       outlined
                   ></v-text-field>
                 </v-row>
+                
                 <!--                <v-radio-group-->
                 <!--                    label="Have you joined a team?"-->
                 <!--                    v-model="submission.joinedTeam"-->
@@ -263,12 +264,41 @@
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 4" step="4">
+        Referrer and Promotion Code
+        <small>The Verification code has been sent to your email</small>
+      </v-stepper-step>
+
+      <v-stepper-content step="4">
+        <v-row class="mt-5 mb-5">
+          <v-text-field
+              label="Referrer Account Id (if applicable)"
+              v-model="submission.referrerAccountId"
+              :rules="[]"
+              class="ml-5 mx-2"
+              prepend-icon="mdi-card"
+              outlined
+          ></v-text-field>
+          <v-text-field
+              label="Promotion Code (if applicable)"
+              v-model="submission.promoCode"
+              :rules="[]"
+              class="ml-5 mx-2"
+              prepend-icon="mdi-card"
+              outlined
+          ></v-text-field>
+        </v-row>
+        <v-btn color="primary" style="margin-right: 2rem;" @click="saveReferPromoCode()">
+          Continue
+        </v-btn>
+      </v-stepper-content>
+
+      <v-stepper-step :complete="e6 > 5" step="5">
         AWS Educate Account?
         <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for
           cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified
           student job seekers with the AWS Educate Job Board.</small>
       </v-stepper-step>
-      <v-stepper-content step="4">
+      <v-stepper-content step="5">
         <div>
           <v-card
               class="mb-5"
@@ -659,6 +689,21 @@ export default {
       reader.readAsDataURL(this.avatarImg);
 
     },
+    saveReferPromoCode(){
+      this.updateMe({
+        referrerAccountId:this.submission.referrerAccountId,
+        promoCode:this.submission.promoCode
+      }).then(
+        res=>{
+          console.log(res);
+          this.e6=5;
+        }
+      ).catch(
+        err=>{
+          console.log(err);
+        }
+      )
+    },
     async finishAllSteps() {
       await this.updateMe({
         awsEducateReason: this.selectedItem,
@@ -729,6 +774,9 @@ export default {
   },
   mounted() {
     // this.$refs.address.focus();
+    //~/register?referrer=xxxx&promoCode=yyy
+    this.submission.referrerAccountId=this.$route.query.referrer;
+    this.submission.promoCode=this.$route.query.promoCode;
   },
 };
 </script>
