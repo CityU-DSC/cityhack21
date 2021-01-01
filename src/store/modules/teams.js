@@ -20,6 +20,18 @@ export default {
             if (state.currentTeam){
                 state.currentTeam.teamCode = teamCode;
             }
+        },
+        updateCurrentTeam: (state, teamInfo) => {
+            if (state.currentTeam){
+                state.currentTeam = Object.assign(state.currentTeam, teamInfo);
+            } else {
+                throw Error('No team set currently for updating');
+            }
+        },
+        toogleTeamPrivate: (state) => {
+            if (state.currentTeam){
+                state.currentTeam.private = !state.currentTeam.private;
+            }
         }
     },
     actions: {
@@ -40,12 +52,12 @@ export default {
             )
         },
 
-        searchTeam({ commit }, params) {
+        searchTeam(garbage, params) {
             // params = {name, teamLeaderAccountId, useAtlas, useSagemaker}
             return teamsAPI.search(params);
         },
 
-        getTeamCode({ commit }, params) {
+        getTeamCode({ commit }) {
             // Get team code for my team (private team)
             return teamsAPI.teamCode().then(
                 res => {
@@ -57,7 +69,7 @@ export default {
 
         createTeam({ commit }, params) {
             // params = {name, description, topic, needPhysicalSpace, private}
-            return teamsAPI.create().then(
+            return teamsAPI.create(params).then(
                 res => {
                     commit('setCurrentTeam', res.team);
                     return res.team;
@@ -65,13 +77,43 @@ export default {
             )
         },
         
-        leaveTeam({ commit }, params) {
+        leaveTeam({ commit }) {
             return teamsAPI.leave().then(
                 res => {
                     commit('setCurrentTeam', null);
                 }
             )
         },
+
+        joinTeam({ commit }, params) {
+            // params = { teamId, teamCode }
+            return teamsAPI.join(params).then(
+                res => {
+                    commit('setCurrentTeam', res.team);
+                    return res.team;
+                }
+            )
+        },
+
+        toogleTeamPrivate({ commit }) {
+            return teamsAPI.tooglePrivate({}).then(
+                res => {
+                    commit('toogleTeamPrivate');
+                    commit('setCurrentTeamCode', res.teamCode);
+                }
+            )
+        },
+
+        editTeam({ commit }, params) {
+            // params = { name, topic, description, leader, needPhysicalSpace }
+            return teamsAPI.edit(params).then(
+                res => {
+                    commit('updateCurrentTeam', params)
+                }
+            )
+        }
+
+
         
 
 
