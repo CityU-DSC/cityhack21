@@ -13,8 +13,8 @@ export default {
         setUsersList: (state, usersList) => state.usersList = usersList,
     },
     actions: {
-        listAllUsers ({ commit }) {
-            return users.listAllUsers().then(users => {
+        listAllUsers ({ commit }, params) {
+            return users.listAllUsers(params).then(users => {
                 commit('setUsersList', users);
                 return users;
             })

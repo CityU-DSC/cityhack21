@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service = axios.create({
-    baseURL: process.env.NODE_ENV==="development"? "http://localhost:3000/api" : "https://cityhack21.com/api/admin",
+    baseURL: process.env.NODE_ENV==="development"? "http://localhost:3000/api" : "https://cityhack21.com/api",
     timeout: 3000
 });
 

@@ -21,8 +21,11 @@
                   {{currentUser.nickName}}
                 </v-list-item-title>
                 <v-list-item-subtitle>{{currentUser.email}}</v-list-item-subtitle>
-                <v-list-item-subtitle>
-                  <v-breadcrumbs :items="items"/>
+                <v-list-item-subtitle class="mt-3">
+                  <v-row class="ml-1">
+                    <v-btn rounded class="mr-3" outlined @click="goToLandingPage">Landing Page</v-btn>
+                    <v-btn rounded outlined @click="logout">LOGOUT</v-btn>
+                  </v-row>
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -44,7 +47,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex';
+import {mapGetters, mapMutations, mapActions} from 'vuex';
 
 export default {
   name: "navDrawer",
@@ -58,29 +61,28 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
-          text: 'Landing Page',
-          href: '/',
-        },
-        {
-          text: 'Log Out',
-          href: '/logout',
-        }
-      ],
       menu: [
         {id: 1, title: "Home Page", icon: 'mdi-home', page: '/personal'},
         {id: 2, title: "Profile Page", icon: 'mdi-account', page: '/personal/profile'},
         {id: 3, title: "AWS Educate Verification", icon: 'mdi-aws', page: '/personal/verification'},
-        {id: 4, title: "Group", icon: 'mdi-account-group', page: '/personal/team'},
+        {id: 4, title: "Team Up", icon: 'mdi-account-group', page: '/personal/team'},
         // {id: 5, title: "File", icon: 'mdi-upload'},
       ],
     };
   },
   methods: {
     ...mapMutations('menu', ['setDrawer']),
+    ...mapActions("auth", ["logOutUser"]),
     navigateTo(page){
       this.$emit("direct", page);
+    },
+    logout(){
+      localStorage.removeItem("jwt");
+      this.logOutUser();
+      this.$router.push("/");
+    },
+    goToLandingPage(){
+      this.$router.push("/")
     }
   }
 }

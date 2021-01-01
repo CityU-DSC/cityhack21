@@ -1,8 +1,9 @@
 import adminAxios from './admin_api'
+// import querystring from 'querystring'
 
 export default {
-    listAllUsers () {
-        console.log("FROMAPI", adminAxios);
-        return adminAxios.get('/user/listAllUsers').catch(err => console.log(err))
+    listAllUsers (params) {
+        // let filter = querystring.stringify(params) ? '?' + querystring.stringify(params) : "";
+        return adminAxios.get(`/user/listAllUsers/`, {params: params}).catch(err => console.log(err))
     },
 }
