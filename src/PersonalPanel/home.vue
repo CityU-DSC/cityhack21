@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class='pt-md-10'>
     <nav-drawer @direct="directTo"/>
-    <clock/>
-    <div style="max-height: 20vh; min-height: 8vh;" />
-    <AWSStateNotSubmitted v-if="this.verificationStatus === 'not submitted'" />
-    <AWSNotVerified v-else-if="this.verificationStatus === 'pending'"/>
-    <AWSVerified v-else-if="this.verificationStatus === 'success'"/>
-    <AWSRejected v-else/>
+      <clock />
+      <div style="max-height: 20vh; min-height: 8vh;" />
+      <AWSStateNotSubmitted v-if="this.verificationStatus === 'not submitted'" />
+      <AWSNotVerified v-else-if="this.verificationStatus === 'pending'"/>
+      <AWSVerified v-else-if="this.verificationStatus === 'success'"/>
+      <AWSRejected v-else/>
   </div>
 </template>
 
