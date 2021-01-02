@@ -630,6 +630,8 @@ export default {
               })
             });
         this.verifying = false;
+      }else {
+        this.verifying = false;
       }
     },
 

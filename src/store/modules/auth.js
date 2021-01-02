@@ -40,7 +40,7 @@ export default {
         return res;
       });
     },
-    registerUser(garbage, params) {
+    registerUser(commit, params) {
       return auth.registerUser(params).then(res => {
         console.log(`[*]AuthApi:: Register Success, ${res}`);
         // commit("setCurrentUser", res.data, res.token);
@@ -50,9 +50,9 @@ export default {
     logOutUser({ commit }) {
       commit("clearUserData");
     },
-    async accountIdUsed(commit, accountId)
+    accountIdUsed(commit, accountId)
     {
-      return await auth.accountIdUsed(accountId);
+      return auth.accountIdUsed({ accountId });
     },
     verifyUser({ commit }, params) {
       return auth.verifyUser(params).then(
@@ -62,7 +62,7 @@ export default {
         }
       )
     },
-    resendVerification(garbage, params) {
+    resendVerification(commit, params) {
       return auth.resendVerification(params);
     },
     me({ commit }, token){

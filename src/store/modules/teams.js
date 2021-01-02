@@ -52,7 +52,7 @@ export default {
             )
         },
 
-        searchTeam(garbage, params) {
+        searchTeam(commit, params) {
             // params = {name, teamLeaderAccountId, useAtlas, useSagemaker}
             return teamsAPI.search(params);
         },
