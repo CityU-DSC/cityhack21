@@ -78,7 +78,7 @@
           <v-card-actions>
             <v-row>
               <v-spacer/>
-              <v-btn class="mr-3" @click="createTeam" outlined color="#ff9900">Creat Team</v-btn>
+              <v-btn class="mr-3" @click="createTeamHandler" outlined color="#ff9900">Creat Team</v-btn>
               <v-btn class="mr-3" @click="resetCreateForm" outlined color="#a64942">Reset All</v-btn>
             </v-row>
 
@@ -115,9 +115,10 @@
 
 <script>
 import navDrawer from "@/PersonalPanel/components/navDrawer";
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import SearchTeams from "@/PersonalPanel/components/SearchTeams";
 import SearchMembers from "@/PersonalPanel/components/SearchMembers";
+//import actions from "../store/modules/teams"
 
 export default {
   name: "TeamUp",
@@ -191,22 +192,44 @@ export default {
   }),
   computed: {
     ...mapGetters('auth', ['currentUser']),
+    ...mapGetters('teams', ['currentTeam'])
   },
   methods: {
+    ...mapActions('teams',['createTeam', 'listAllTeams',"toogleTeamPrivate"]),
+    ...mapActions('teams',['myTeam']),
+    ...mapActions('teams',['getTeamCode']),
     directTo(page) {
       this.$router.push(page);
     },
     resetCreateForm(){
       this.$refs.createTeamForm.reset();
     },
-    createTeam(){
+    async createTeamHandler(){
       if(this.$refs.createTeamForm.validate()){
         this.newTeam.leader = this.currentUser.accountId;
         this.newTeam.members = this.newTeam.members.concat(this.currentUser);
+        await this.createTeam(this.newTeam);
         this.teams = this.teams.concat(this.newTeam);
-        console.log(this.teams);
+        if(this.newTeam.private == true){
+          await this.toogleTeamPrivate();
+          await this.getTeamCode();
+          console.log(this.currentTeam);
+        }
+
+        //actions.createTeam(this.newTeam.name,this.newTeam.description, this.newTeam.topic,this.newTeam.needPhysicalSpace,this.newTeam.private);
       }
     }
+  },
+  async mounted(){
+    // // on load
+    // list all team
+    this.teams = await this.listAllTeams();
+    
+    await this.myTeam();
+    console.log(this.teams)
+    // console.log(this.currentTeam.getTeamCode)
+    //current team
+
   }
 }
 </script>

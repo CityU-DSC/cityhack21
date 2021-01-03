@@ -1,19 +1,21 @@
 
-import { get, post, put, _delete } from './apiWrapper'
+import axiosAPI from './apiWrapper'
+
+const { get, post, put, _delete } = axiosAPI
 
 export default {
 
-	all: get('/all'),
-	me: get('/me'),
+	all: get('/team/all'),
+	me: get('/team/me'),
 
-	search: post('/search'),
-	teamCode: get('/teamCode'),
+	search: post('/team/search'),
+	teamCode: get('/team/teamCode'),
 
-	create: post('/create'),
-	leave: _delete('/leave'),
+	create: post('/team/create'),
+	leave: _delete('/team/leave'),
 
-	join: put('/join'),
-	tooglePrivate: put('/tooglePrivate'),
-	edit: put('/edit')
+	join: put('/team/join'),
+	tooglePrivate: put('/team/tooglePrivate'),
+	edit: put('/team/edit')
 
 }

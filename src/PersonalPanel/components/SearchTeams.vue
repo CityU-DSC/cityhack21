@@ -56,13 +56,13 @@
                                   <v-chip
                                       v-for="member in team.members" :key="member.id"
                                       class="mr-2"
-                                      :color="team.leader === member.name? 'black':null"
+                                      :color="team.leader.firstName+ team.leader.lastName=== member.firstName+member.lastName? 'black':null"
                                   >
-                                    <v-avatar left v-if="team.leader === member.name"><v-icon>mdi-flag-variant</v-icon></v-avatar>
+                                    <v-avatar left v-if="team.leader.firstName === member.firstName"><v-icon>mdi-flag-variant</v-icon></v-avatar>
                                     <v-avatar left>
-                                      <v-img :src="member.avatar"></v-img>
+                                      <v-img :src="member.avatarUrl"></v-img>
                                     </v-avatar>
-                                      {{ member.name }}
+                                      {{ member.firstName + " " + member.lastName}}
                                     </v-chip>
                                 </v-row>
                               </span>
@@ -87,7 +87,7 @@
                   <v-card-text>
                     <v-row class="ml-2 mb-2">
                       <div class="subtitle-1">Team Leader:</div>
-                      <h3 class="ml-3">{{ team.leader }}</h3>
+                      <h3 class="ml-3">{{ team.leader.accountId }}</h3>
                     </v-row>
                     <v-row class="ml-2 mb-2">
                       <div class="subtitle-1">Team Description</div>
@@ -114,6 +114,10 @@
                           label="Private ?"
                       ></v-switch>
                     </v-row>
+                    <v-row class="ml-2 mt-3">
+                      <div class="subtitle-1">Team Code</div>
+                         <h5>{{ teamCode }}</h5>
+                    </v-row>
                   </v-card-text>
                   <v-card-subtitle class="ml-2">Selected Topic</v-card-subtitle>
                   <v-card-text>
@@ -121,12 +125,16 @@
                       <v-chip
                           v-for="topic in topics"
                           :key="topic.id"
-                          :color="team.topic === topic? '#a64942' : null"
+                          :color="team.topic === topic? '#a64942' : null"          
                       >
                         {{ topic }}
                       </v-chip>
                     </v-chip-group>
                   </v-card-text>
+
+
+
+
                   <v-divider class="mx-4"></v-divider>
                   <v-card-actions>
                     <v-row class="mr-3 mt-2">
@@ -225,13 +233,13 @@
                                  @click="openProfileDetail(member)"
                     >
                       <v-list-item-avatar>
-                        <v-img :src="member.avatar"></v-img>
+                        <v-img :src="member.avatarUrl"></v-img>
                       </v-list-item-avatar>
-                      <v-list-item-icon v-if="team.leader === member.name" class="mr-2">
+                      <v-list-item-icon v-if="team.leader.firstName+team.leader.lastName=== member.firstName+member.lastName" class="mr-2">
                         <v-icon>mdi-flag-variant</v-icon>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title v-text="member.name"></v-list-item-title>
+                        <v-list-item-title v-text="member.firstName+ ' '+member.lastName"></v-list-item-title>
                         <v-list-item-subtitle v-html="member.email"></v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
@@ -253,7 +261,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import ProfileDetail from "@/PersonalPanel/components/ProfileDetail";
 
 export default {
@@ -289,24 +297,27 @@ export default {
         topic: null,
         members: null,
       },
+      teamCode: null,
     }
   },
   watch: {
     teams(val) {
-      console.log("Hello", val);
       this.filteredTeams = val;
-
-    }
+      this.getTeamCode().then(res => this.teamCode = res);
+    },
   },
   computed: {
     ...mapGetters('auth', ['currentUser']),
+    ...mapGetters('teams', ['currentTeam'])
   },
   methods: {
+    ...mapActions('teams', ['getTeamCode']),
     checkUserinTeam(name) {
-      if (this.currentUser) {
-        let team = this.filteredTeams.filter(team => team.name === name);
-        return team[0].members.some(member => member.name === this.currentUser.nickName);
-      }
+      return this.currentTeam? name == this.currentTeam.name : false;
+      // if (this.currentUser) {
+      //   let team = this.filteredTeams.filter(team => team.name === name);
+      //   return team[0].members.some(member => member.name === this.currentUser.nickName);
+      // }
     },
     openProfileDetail(member) {
       this.selectedProfile = member;
@@ -333,15 +344,14 @@ export default {
     editTeam(team) {
       this.editMode = team.name;
       this.editInfo = {...team};
-      console.log(this.editInfo);
     },
     saveEdit() {
-      console.log(this.editInfo);
       this.editMode = null;
     }
   },
-  mounted() {
+  async mounted() {
     this.filteredTeams = this.teams;
+    await this.getTeamCode().then(res => this.teamCode = res);
   }
 }
 </script>

@@ -35,6 +35,7 @@ export default {
         }
     },
     actions: {
+        //修好 ok
         listAllTeams({ commit }){
             return teamsAPI.all().then(res =>
             {
@@ -57,6 +58,7 @@ export default {
             return teamsAPI.search(params);
         },
 
+        // always show getTeamCode
         getTeamCode({ commit }) {
             // Get team code for my team (private team)
             return teamsAPI.teamCode().then(
@@ -68,7 +70,7 @@ export default {
         },
 
         createTeam({ commit }, params) {
-            // params = {name, description, topic, needPhysicalSpace, private}
+            //params = {name, description, topic, needPhysicalSpace}
             return teamsAPI.create(params).then(
                 res => {
                     commit('setCurrentTeam', res.team);
@@ -77,14 +79,16 @@ export default {
             )
         },
         
+        //button游泳
         leaveTeam({ commit }) {
             return teamsAPI.leave().then(
-                res => {
+                () => {
                     commit('setCurrentTeam', null);
                 }
             )
         },
 
+        //button游泳
         joinTeam({ commit }, params) {
             // params = { teamId, teamCode }
             return teamsAPI.join(params).then(
@@ -95,6 +99,7 @@ export default {
             )
         },
 
+        //edit toggle team private
         toogleTeamPrivate({ commit }) {
             return teamsAPI.tooglePrivate({}).then(
                 res => {
@@ -104,10 +109,11 @@ export default {
             )
         },
 
+        //掛在button上 （all can be edited）
         editTeam({ commit }, params) {
             // params = { name, topic, description, leader, needPhysicalSpace }
             return teamsAPI.edit(params).then(
-                res => {
+                () => {
                     commit('updateCurrentTeam', params)
                 }
             )
