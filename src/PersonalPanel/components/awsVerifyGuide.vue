@@ -7,6 +7,9 @@
                 <v-card 
                 elevation="16"
                 shaped>
+                <v-card-title primary-title>
+                    Guide to Uploading AWS Educate Image
+                  </v-card-title>
                   <v-card-title primary-title>
                     Step 1: Register an AWS Educate account
                   </v-card-title>
