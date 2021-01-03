@@ -1,44 +1,55 @@
 <template>
-<div>
-  <!-- about -->
-  <div class="about">
-    <a class="bg_links social portfolio" href="https://www.rafaelalucas.com" target="_blank">
-      <span class="icon"></span>
-    </a>
-    <a class="bg_links social dribbble" href="https://dribbble.com/rafaelalucas" target="_blank">
-      <span class="icon"></span>
-    </a>
-    <a class="bg_links social linkedin" href="https://www.linkedin.com/in/rafaelalucas/" target="_blank">
-      <span class="icon"></span>
-    </a>
-    <a class="bg_links logo"></a>
-  </div>
-  <!-- end about -->
-
-  <div class="content">
-    <div class="planet">
-      <div class="ring"></div>
-      <div class="cover-ring"></div>
-      <div class="spots">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-
-      </div>
+  <div>
+    <!-- about -->
+    <div class="about">
+      <a
+        class="bg_links social portfolio"
+        href="https://www.rafaelalucas.com"
+        target="_blank"
+      >
+        <span class="icon"></span>
+      </a>
+      <a
+        class="bg_links social dribbble"
+        href="https://dribbble.com/rafaelalucas"
+        target="_blank"
+      >
+        <span class="icon"></span>
+      </a>
+      <a
+        class="bg_links social linkedin"
+        href="https://www.linkedin.com/in/rafaelalucas/"
+        target="_blank"
+      >
+        <span class="icon"></span>
+      </a>
+      <a class="bg_links logo"></a>
     </div>
-    <p>loading</p>
+    <!-- end about -->
+
+    <div class="content">
+      <div class="planet">
+        <div class="ring"></div>
+        <div class="cover-ring"></div>
+        <div class="spots">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <p>loading</p>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
 export default {
-name: "preLoader"
-}
+  name: "preLoader",
+};
 </script>
 
 <style lang="scss" scoped>
@@ -224,7 +235,7 @@ body {
       justify-content: center;
       transform-origin: 33% center;
       box-shadow: 2px -10px 0px rgba(0, 0, 0, 0.1),
-      inset -5px -10px 0px rgba(0, 0, 0, 0.1);
+        inset -5px -10px 0px rgba(0, 0, 0, 0.1);
       animation: ring 3s ease infinite;
 
       @keyframes ring {
