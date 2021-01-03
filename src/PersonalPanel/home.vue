@@ -11,7 +11,6 @@
           <AWSVerified v-else-if="this.verificationStatus === 'success'" />
           <AWSRejected v-else />
         </v-col>
-
 <!--        <v-col v-for="undo in undoList" :key="undo.id">-->
 <!--          <v-alert-->
 <!--            v-if="undo.show"-->
@@ -24,12 +23,13 @@
 <!--          </v-alert>-->
 <!--        </v-col>-->
       </v-col>
-      
+
       <v-col class="ml-5">
         <h3 class="mb-5">Referrer Board</h3>
         <ReferrerBoard />
       </v-col>
     </v-row>
+    <guide v-model="showAWSGuide" v-if="this.verificationStatus === 'not submitted'" />
   </v-container>
 </template>
 
@@ -56,6 +56,7 @@ export default {
     AWSRejected,
     AWSStateNotSubmitted,
     ReferrerBoard,
+    guide
   },
   data() {
     return {
@@ -64,6 +65,7 @@ export default {
         { name: "Update Profile Page", show: true },
         { name: "Attend Discord Grpoup", show: false },
       ],
+      showAWSGuide: false,
     };
   },
   computed: {
@@ -87,6 +89,7 @@ export default {
       return;
     }
     await this.isAWSVerified();
+    this.showAWSGuide = true;
   },
 };
 </script>

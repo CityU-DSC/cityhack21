@@ -90,6 +90,7 @@
         </v-content>
       </v-app>
     </div>
+    <guide v-model="showAWSGuide" />
   </div>
 </template>
 
@@ -97,6 +98,7 @@
 import navDrawer from "@/PersonalPanel/components/navDrawer";
 import {db, storage} from "../config/firebaseConfig.js"
 import Swal from "sweetalert2"
+import guide from "@/PersonalPanel/components/awsVerifyGuide";
 
 import {mapActions} from "vuex";
 
@@ -104,9 +106,12 @@ export default {
   name: "AWSVerification",
   components: {
     navDrawer,
+    guide,
   },
   data() {
     return {
+      showAWSGuide: false,
+
       pathName: "AWSVerification Page",
       dialog: false,
       imageName: "",
@@ -244,6 +249,9 @@ export default {
         console.error(err);
       }
     }
+  },
+  mounted() {
+    this.showAWSGuide = true;
   }
 }
 </script>
