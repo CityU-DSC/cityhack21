@@ -1,12 +1,13 @@
 <template>
   <div class='pt-md-10'>
     <nav-drawer @direct="directTo"/>
-      <clock />
+      <clock v-if="this.verificationStatus !== 'not submitted'"/>
       <div style="max-height: 20vh; min-height: 8vh;" />
       <AWSStateNotSubmitted v-if="this.verificationStatus === 'not submitted'" />
       <AWSNotVerified v-else-if="this.verificationStatus === 'pending'"/>
       <AWSVerified v-else-if="this.verificationStatus === 'success'"/>
       <AWSRejected v-else/>
+      <guide v-if="this.verificationStatus === 'not submitted'" />
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import { mapActions } from "vuex";
 
 import navDrawer from "@/PersonalPanel/components/navDrawer";
 import clock from "@/PersonalPanel/components/Timer";
+import guide from "@/PersonalPanel/components/awsVerifyGuide";
 import AWSNotVerified from "@/PersonalPanel/components/AWSState/AWSStateNotVerified";
 import AWSVerified from "@/PersonalPanel/components/AWSState/AWSStateVerified";
 import AWSRejected from "@/PersonalPanel/components/AWSState/AWSStateRejected";
@@ -29,7 +31,8 @@ export default {
     AWSNotVerified,
     AWSVerified,
     AWSRejected,
-    AWSStateNotSubmitted
+    AWSStateNotSubmitted,
+    guide
   },
   computed: {
     ...mapGetters('auth', ['currentUser']),
