@@ -40,6 +40,7 @@
           <v-img
               height="200px"
               :src="submissionDetail.imageUrl"
+              alt="submission-details"
           >
           </v-img>
 
@@ -64,7 +65,7 @@
           <v-container fluid>
             <v-layout align-center justify-center>
               <v-flex xs12 sm8 md4>
-                <img :src="imageUrl" height="150" v-if="imageUrl">
+                <img :src="imageUrl" alt="select-image" height="150" v-if="imageUrl">
                 <v-file-input
                     label="Select Image"
                     accept="image/*"
@@ -82,7 +83,7 @@
               <v-flex xs12 sm8 md4>
                 <div v-for="i in imgUrls" :key="i">
                   <br>
-                  <img :src="i.downloadUrl" height="150">
+                  <img :src="i.downloadUrl" alt="download-url" height="150">
                 </div>
               </v-flex>
             </v-layout>

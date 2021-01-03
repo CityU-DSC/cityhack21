@@ -14,7 +14,7 @@
           <h3>{{ slide.name }} </h3>
         </div>
         <figure>
-          <img :src="slide.img" alt="">
+          <img :src="slide.img" alt="slide-img">
         </figure>
       </slide>
     </carousel-3d>

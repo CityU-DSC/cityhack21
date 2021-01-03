@@ -2,10 +2,11 @@
   <div>
     <nav-drawer @direct="directTo" :current="pathName"/>
     <v-card class="mx-auto" max-width="80%" tile>
-      <v-img height="100%" src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2F1.jpg?alt=media&token=183fac76-6f53-4ca6-88f1-7bf080067780"></v-img>
+      <v-img height="100%" src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2F1.jpg?alt=media&token=183fac76-6f53-4ca6-88f1-7bf080067780"
+      alt="registration-material"></v-img>
       <v-col>
         <v-avatar size="100" style="position:absolute; top: 30rem;">
-          <v-img :src="accountDetails.avatarUrl"></v-img>
+          <v-img :src="accountDetails.avatarUrl" alt="avartar-url"></v-img>
         </v-avatar>
       </v-col>
       <div class="px-4 mx-2">

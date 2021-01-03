@@ -11,7 +11,7 @@
           <v-list>
             <v-list-item class="px-1">
               <v-list-item-avatar>
-                <v-img :src="currentUser.avatarUrl"></v-img>
+                <v-img :src="currentUser.avatarUrl" alt="avatar-url" ></v-img>
               </v-list-item-avatar>
             </v-list-item>
 
