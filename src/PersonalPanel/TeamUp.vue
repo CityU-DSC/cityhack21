@@ -32,7 +32,7 @@
                     label="Team Description"
                     class="mr-3"
                     clearable
-                    required
+                    requireds
                     :rules="[v => !!v || 'Description is required']"
                     counter
                 ></v-textarea>
