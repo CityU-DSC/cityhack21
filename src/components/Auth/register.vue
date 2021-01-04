@@ -133,6 +133,18 @@
                   ></v-text-field>
                 </v-row>
 
+                <v-row class="mt-5 mb-5">
+                  <v-text-field
+                      label="Home Address"
+                      :rules="[rules.required, rules.blank]"
+                      v-model="submission.address"
+                      class="mx-2 mr-5"
+                      prepend-icon="mdi-at"
+                      outlined
+                  ></v-text-field>
+                </v-row>
+                
+
                 <!--                <v-radio-group-->
                 <!--                    label="Have you joined a team?"-->
                 <!--                    v-model="submission.joinedTeam"-->
@@ -426,7 +438,8 @@ export default {
         schoolEmail: "",
         personalEmail: "",
         referrerAccountId: "",
-        promoCode: ""
+        promoCode: "",
+        address: ""
       },
       accountDetails: {
         accountId: "",
