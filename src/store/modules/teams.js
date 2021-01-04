@@ -70,8 +70,9 @@ export default {
         createTeam({ commit }, params) {
             //params = {name, description, topic, needPhysicalSpace}
             return teamsAPI.create(params).then(
-                res => {
+                async res => {
                     commit('setCurrentTeam', res.team);
+                    await this.listAllTeams();
                     return res.team;
                 }
             )
@@ -80,8 +81,9 @@ export default {
         //button游泳
         leaveTeam({ commit }) {
             return teamsAPI.leave().then(
-                () => {
+                async () => {
                     commit('setCurrentTeam', null);
+                    await this.listAllTeams();
                 }
             )
         },
@@ -90,8 +92,9 @@ export default {
         joinTeam({ commit }, params) {
             // params = { teamId, teamCode }
             return teamsAPI.join(params).then(
-                res => {
+                async res => {
                     commit('setCurrentTeam', res.team);
+                    await this.listAllTeams();
                     return res.team;
                 }
             )
@@ -111,15 +114,11 @@ export default {
         editTeam({ commit }, params) {
             // params = { name, topic, description, leader, needPhysicalSpace }
             return teamsAPI.edit(params).then(
-                () => {
+                async () => {
                     commit('updateCurrentTeam', params)
+                    await this.listAllTeams();
                 }
             )
         }
-
-
-
-
-
     },
 }
