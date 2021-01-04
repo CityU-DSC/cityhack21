@@ -31,7 +31,7 @@
 			>
 				<figure class="qaCard">
 					<div class="profile-image">
-						<img :src="qa.img" alt="qa profile" />
+						<!-- <img :src="qa.img" alt="qa profile" /> -->
 						<div class="icons">
 							<h3>{{ qa.question }}</h3>
 						</div>
@@ -48,7 +48,7 @@
 			<v-col cols="12" sm="12" md="12" lg="6" v-for="qa in qas" :key="qa.id">
 				<figure class="qaCard">
 					<div class="profile-image">
-						<img :src="qa.img" alt="qa profile" />
+						<!-- <img :src="qa.img" alt="qa profile" /> -->
 						<div class="icons">
 							<h3>{{ qa.question }}</h3>
 						</div>
@@ -152,7 +152,6 @@
 <style scoped>
 	.qaCard {
 		box-shadow: none !important;
-		color: #141414;
 		display: inline-block;
 		font-family: 'Open Sans', Arial, sans-serif;
 		font-size: 14px;
@@ -219,6 +218,6 @@
 	}
 
 	.qaCard .icons {
-		padding: 20px 90px;
+		padding: 20px 20px;
 	}
 </style>

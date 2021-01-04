@@ -55,6 +55,7 @@ export default {
       return auth.accountIdUsed({ accountId });
     },
     verifyUser({ commit }, params) {
+      // params = { verificationCode, email, password }
       return auth.verifyUser(params).then(
         res => {
           commit("setCurrentUser", res.user, res.token);
@@ -107,6 +108,10 @@ export default {
           return false
         }
       }
+    },
+    forgetPassword(commit, params){
+      // params = { email }
+      return auth.forgetPassword(params)
     }
   }
 };
