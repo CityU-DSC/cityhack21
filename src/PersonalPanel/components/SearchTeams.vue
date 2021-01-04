@@ -160,7 +160,7 @@
                   <v-card-actions>
                     <v-row class="mr-3 mt-2">
                       <v-spacer />
-                      <v-btn color="#ff9900" @click="editTeam(team)"
+                      <v-btn color="#ff9900" @click="editTeamHandler(team)"
                         >Edit</v-btn
                       >
                     </v-row>
@@ -454,12 +454,20 @@ export default {
       this.filteredTeams = this.teams;
       this.$refs.teamSearch.reset();
     },
-    editTeam(team) {
+    editTeamHandler(team) {
       this.editMode = team.name;
       this.editInfo = { ...team };
     },
     saveEdit() {
       this.editMode = null;
+      this.editTeam({
+        name: this.editInfo.name,
+        leader: this.editInfo.leader,
+        description: this.editInfo.description,
+        needPhysicalSpace: this.editInfo.needPhysicalSpace,
+        topic: null,
+      });
+
     },
   },
   async mounted() {
