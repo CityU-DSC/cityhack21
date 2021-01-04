@@ -102,6 +102,7 @@
                   outlined
                   min-width="300"
                 >
+                 
                   <v-img
                     height="50"
                     src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2F1.jpg?alt=media&token=183fac76-6f53-4ca6-88f1-7bf080067780"
@@ -158,9 +159,9 @@
 
                   <v-divider class="mx-4"></v-divider>
                   <v-card-actions>
-                    <v-row class="mr-3 mt-2">
+                    <v-row class="mr-3 mt-2" >
                       <v-spacer />
-                      <v-btn color="#ff9900" @click="editTeamHandler(team)"
+                      <v-btn v-if="team.leader.accountId===currentUser.accountId" color="#ff9900" @click="editTeamHandler(team)"
                         >Edit</v-btn
                       >
                     </v-row>
@@ -457,15 +458,16 @@ export default {
     editTeamHandler(team) {
       this.editMode = team.name;
       this.editInfo = { ...team };
+    
     },
     saveEdit() {
       this.editMode = null;
       this.editTeam({
         name: this.editInfo.name,
-        leader: this.editInfo.leader,
+        leader: this.editInfo.members.filter(x => x.accountId == this.editInfo.leader)[0],
         description: this.editInfo.description,
         needPhysicalSpace: this.editInfo.needPhysicalSpace,
-        topic: null,
+        topic: this.editInfo.topic,
       });
 
     },
