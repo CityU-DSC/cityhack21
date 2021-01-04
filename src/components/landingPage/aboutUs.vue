@@ -149,7 +149,7 @@ export default {
 
 <style scoped>
 p, li{
-  font-size:1.2rem;
+  font-size:1.1rem;
   line-height:1.6rem;
 }
   .highlight{

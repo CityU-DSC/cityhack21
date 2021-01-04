@@ -649,15 +649,26 @@ export default {
             )
             .catch(err => {
               console.log(err);
-              Swal.fire({
-                icon: 'error',
-                title: 'Email is already in used',
-                text: 'do you want to reset the password?',
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.$router.push({name: 'login'});
-                }
-              })
+              if (err.emailUsed){
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Email is already in used',
+                  text: 'do you want to reset the password?',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.$router.push({name: 'login'});
+                  }
+                })
+              } else {
+
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Opps...',
+                  text: 'Unknown error, please try again later',
+                  showConfirmButton: false,
+                })
+              }
+              
             });
         this.verifying = false;
       }else {

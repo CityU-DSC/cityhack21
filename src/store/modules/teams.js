@@ -32,10 +32,12 @@ export default {
             if (state.currentTeam){
                 state.currentTeam.private = !state.currentTeam.private;
             }
+        },
+        addCurrentTeamToTeamList: (state) => {
+            state.teamLists.unshift(state.currentTeam);
         }
     },
     actions: {
-        //修好 ok
         listAllTeams({ commit }){
             return teamsAPI.all().then(res =>
             {
@@ -48,7 +50,7 @@ export default {
             return teamsAPI.me().then(
                 res => {
                     commit("setCurrentTeam", res.team)
-                    return res.teams;
+                    return res.team;
                 }
             )
         },
@@ -58,7 +60,6 @@ export default {
             return teamsAPI.search(params);
         },
 
-        // always show getTeamCode
         getTeamCode({ commit }) {
             // Get team code for my team (private team)
             return teamsAPI.teamCode().then(
@@ -72,17 +73,18 @@ export default {
         createTeam({ commit }, params) {
             //params = {name, description, topic, needPhysicalSpace}
             return teamsAPI.create(params).then(
-                res => {
+                async res => {
                     commit('setCurrentTeam', res.team);
+                    commit('addCurrentTeamToTeamList');
                     return res.team;
                 }
             )
         },
-        
+
         //button游泳
         leaveTeam({ commit }) {
             return teamsAPI.leave().then(
-                () => {
+                async () => {
                     commit('setCurrentTeam', null);
                 }
             )
@@ -92,7 +94,7 @@ export default {
         joinTeam({ commit }, params) {
             // params = { teamId, teamCode }
             return teamsAPI.join(params).then(
-                res => {
+                async res => {
                     commit('setCurrentTeam', res.team);
                     return res.team;
                 }
@@ -113,15 +115,10 @@ export default {
         editTeam({ commit }, params) {
             // params = { name, topic, description, leader, needPhysicalSpace }
             return teamsAPI.edit(params).then(
-                () => {
+                async () => {
                     commit('updateCurrentTeam', params)
                 }
             )
         }
-
-
-        
-
-
     },
 }
