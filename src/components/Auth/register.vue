@@ -136,7 +136,7 @@
                 <v-row class="mt-5 mb-5">
                   <v-text-field
                       label="Home Address"
-                      :rules="[rules.required, rules.blank]"
+                      :rules="[rules.required]"
                       v-model="submission.address"
                       class="mx-2 mr-5"
                       prepend-icon="mdi-at"
