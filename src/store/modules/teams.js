@@ -47,7 +47,7 @@ export default {
             return teamsAPI.me().then(
                 res => {
                     commit("setCurrentTeam", res.team)
-                    return res.teams;
+                    return res.team;
                 }
             )
         },
@@ -76,7 +76,7 @@ export default {
                 }
             )
         },
-        
+
         //button游泳
         leaveTeam({ commit }) {
             return teamsAPI.leave().then(
@@ -118,7 +118,7 @@ export default {
         }
 
 
-        
+
 
 
     },
