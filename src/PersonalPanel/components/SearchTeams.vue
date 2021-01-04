@@ -38,17 +38,6 @@
             <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
           </v-btn>
         </v-row>
-        <v-row>
-          <v-spacer/>
-          <v-btn outlined color="green" class="mr-3" @click="searchTeams">Search</v-btn>
-          <v-btn
-              outlined
-              color="#a64942"
-              class="mr-3"
-              @click="resetTeamSearchFrom"
-          >Reset
-          </v-btn>
-        </v-row>
         <v-expand-transition>
           <v-card v-show="show" shaped elevation="12" class="mr-4 mt-5 mb-3">
             <v-form ref="createTeamForm" v-model="valid">
@@ -117,7 +106,7 @@
             <v-card-actions>
               <v-row>
                 <v-spacer/>
-                <v-btn class="mr-3" @click="createTeamHandler" outlined color="#ff9900">Creat Team</v-btn>
+                <v-btn class="mr-3" @click="createTeamHandler" outlined color="#ff9900">Create Team</v-btn>
                 <v-btn class="mr-3" @click="resetCreateForm" outlined color="#a64942">Reset All</v-btn>
               </v-row>
 
@@ -130,7 +119,7 @@
         <v-expansion-panels>
           <v-expansion-panel v-for="team in filteredTeams" :key="team.name">
             <v-expansion-panel-header v-if='team.show'
-                                      v-bind:class="{ inTeam: checkUserinTeam(team.name) }"
+                                      v-bind:class="{ inTeam: checkUserInTeam(team.name) }"
             >
               <template v-slot:default="{ open }">
                 <v-row no-gutters>
@@ -379,7 +368,7 @@
                 </v-btn
                 >
                 <v-btn
-                    :disabled="!checkUserinTeam(team.name)"
+                    :disabled="!checkUserInTeam(team.name)"
                     color="warning"
                     class="ml-3"
                     @click="leaveTeamHandler"
@@ -407,8 +396,6 @@ export default {
   },
   data() {
     return {
-      teams: [],
-
       selectedMember: 0,
       selectedProfile: null,
       openProfile: false,
@@ -419,6 +406,8 @@ export default {
       searchLeader: '',
       usingAtlasTeam: true,
       usingSageMakerTeam: true,
+
+      currentTeam: null,
 
       //create
       valid: false,
@@ -431,6 +420,7 @@ export default {
         topic: "Others",
         members: [],
       },
+      teamCode: null,
       topics: ["Atlas", "SageMaker", "Others"],
       show: false,
 
@@ -445,45 +435,51 @@ export default {
         topic: null,
         members: null,
       },
-      teamCode: null,
+
     };
   },
   watch: {
-    teams(val) {
-      console.log("NEWVAL", val);
+    filteredTeams(val) {
       this.filteredTeams = val;
-      for (let filterT of this.filteredTeams) {
-        if (!this.searchLeader && !this.searchTeamName) {
-          filterT.show = true;
-        }
-      }
-      this.getTeamCode().then((res) => (this.teamCode = res));
     },
+    currentTeam(val) {
+      let tc = this.currentTeam.teamCode;
+      this.filteredTeams = this.filteredTeams.map(team => {
+        if (team._id === val._id) {
+          team = val;
+        }
+        return team;
+      });
+      this.currentTeam = val;
+      this.currentTeam.teamCode = tc;
+    },
+    searchTeamName() {
+      this.searchTeams();
+    },
+    searchLeader() {
+      this.searchTeams();
+    }
   },
   computed: {
     ...mapGetters("auth", ["currentUser"]),
-    ...mapGetters("teams", ["currentTeam"]),
   },
   methods: {
-    ...mapActions("teams", [
-      "createTeam",
-      "joinTeam",
-      "leaveTeam",
-      "editTeam", 'listAllTeams', "toogleTeamPrivate", 'myTeam', 'getTeamCode']),
+    ...mapActions("teams", ["createTeam", "joinTeam", "leaveTeam", "editTeam", 'listAllTeams', "toggleTeamPrivate", 'myTeam', 'getTeamCode']),
     async createTeamHandler() {
       if (this.$refs.createTeamForm.validate()) {
-        this.newTeam.leader = this.currentUser.accountId;
-        this.newTeam.members = this.newTeam.members.concat(this.currentUser);
         await this.createTeam(this.newTeam).then(res => {
-          console.log(res);
           Swal.fire("Success", "Create Team is successful", "success");
+          this.currentTeam = res;
+          this.currentTeam.show = true;
           this.show = !this.show;
-          this.teams = this.teams.concat(this.newTeam);
-          if (this.newTeam.private) {
-            this.toogleTeamPrivate();
-            this.getTeamCode().then(res => console.log("TEAM", res));
-          }
-        });
+          this.filteredTeams.push(this.currentTeam);
+          // if (this.newTeam.private) {
+          //   this.toggleTeamPrivate().then(res => {
+          //     this.teamCode = res;
+          //     this.currentTeam.private = true;
+          //   });
+          // }
+        }).catch(err => console.error(err));
       }
     },
     resetCreateForm() {
@@ -492,9 +488,10 @@ export default {
     leaveTeamHandler() {
       let cur = this.currentTeam;
       this.filteredTeams = this.filteredTeams.filter(team => team._id !== cur._id);
-      this.leaveTeam().then(res => {
-        console.log(res)
-      });
+      this.leaveTeam().then(() => {
+        this.currentTeam = null;
+        this.teamCode = null;
+      }).catch(err => console.error(err));
     },
     async joinTeamHandler(team) {
       if (team.private) {
@@ -502,8 +499,8 @@ export default {
           title: "Enter your team code",
           input: "text",
           inputLabel: "Team Code",
-          inputPlaceholder: "team code...",
-          inputValidator: (value) => {
+          inputPlaceholder: "input team code...",
+          inputValidator: value => {
             if (!value) {
               return "Empty Field Error";
             }
@@ -511,7 +508,8 @@ export default {
         });
         if (inputTeamCode) {
           this.joinTeam({teamId: team._id, teamCode: inputTeamCode}).then(res => {
-            console.log(res);
+            this.currentTeam = res;
+            this.teamCode = inputTeamCode;
             Swal.fire("Success", "Join Team Was successful", "success");
           }).catch(err => {
             console.error(err);
@@ -524,7 +522,7 @@ export default {
         }
       } else {
         this.joinTeam({teamId: team._id}).then(res => {
-          console.log(res);
+          this.currentTeam = res;
           Swal.fire("Success", "Join Team Was successful", "success");
         }).catch(err => {
           console.error(err);
@@ -536,8 +534,7 @@ export default {
         });
       }
     },
-
-    checkUserinTeam(name) {
+    checkUserInTeam(name) {
       return this.currentTeam ? name === this.currentTeam.name : false;
     },
     openProfileDetail(member) {
@@ -573,36 +570,33 @@ export default {
         } else {
           this.filteredTeams[i].show = true;
         }
-
-        console.log(filterT,)
       }
       console.log(this.filteredTeams);
-    },
-    resetTeamSearchFrom() {
-      this.filteredTeams = this.teams;
-      this.$refs.teamSearch.reset();
     },
     editTeamHandler(team) {
       this.editMode = team.name;
       this.editInfo = {...team};
     },
-    saveEdit() {
+    async saveEdit() {
       this.editMode = null;
-      this.editTeam({
+      await this.editTeam({
         name: this.editInfo.name,
         leader: this.editInfo.members.filter(x => x.accountId === this.editInfo.leader)[0],
         description: this.editInfo.description,
         needPhysicalSpace: this.editInfo.needPhysicalSpace,
-        topic: null,
-      });
-
+        topic: this.editInfo.topic,
+      }).then((res) => {
+        this.currentTeam = res;
+      }).catch(err => console.error(err));
     },
   },
   async mounted() {
-    this.filteredTeams = this.teams;
-    await this.getTeamCode().then((res) => (this.teamCode = res));
-    await this.listAllTeams().then(res => this.teams = res).catch(err => console.error(err));
-    await this.myTeam().catch(err => console.error(err));
+    await this.listAllTeams().then(res => {
+      this.filteredTeams = res;
+      this.filteredTeams.map(team => team.show = true);
+    }).catch(err => console.error(err));
+    await this.myTeam().then(res => this.currentTeam = res).catch(err => console.error(err));
+    await this.getTeamCode().then((res) => (this.teamCode = res)).catch(err => console.error(err));
   },
 };
 </script>
