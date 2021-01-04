@@ -39,7 +39,8 @@
           </v-btn>
         </v-row>
         <v-row>
-          <v-btn outlined color="#ff9900" class="mr-3" @click="searchTeams">Search</v-btn>
+          <v-spacer/>
+          <v-btn outlined color="green" class="mr-3" @click="searchTeams">Search</v-btn>
           <v-btn
               outlined
               color="#a64942"
@@ -128,8 +129,8 @@
       <v-col>
         <v-expansion-panels>
           <v-expansion-panel v-for="team in filteredTeams" :key="team.name">
-            <v-expansion-panel-header  v-if='team.show'
-              v-bind:class="{ inTeam: checkUserinTeam(team.name) }"
+            <v-expansion-panel-header v-if='team.show'
+                                      v-bind:class="{ inTeam: checkUserinTeam(team.name) }"
             >
               <template v-slot:default="{ open }">
                 <v-row no-gutters>
@@ -172,7 +173,7 @@
                 </v-row>
               </template>
             </v-expansion-panel-header>
-            <v-expansion-panel-content  v-if='team.show'>
+            <v-expansion-panel-content v-if='team.show'>
               <v-row class="mt-3">
                 <v-card
                     v-if="editMode !== team.name"
@@ -451,8 +452,8 @@ export default {
     teams(val) {
       console.log("NEWVAL", val);
       this.filteredTeams = val;
-      for (let filterT of this.filteredTeams){
-        if (!this.searchLeader && !this.searchTeamName){
+      for (let filterT of this.filteredTeams) {
+        if (!this.searchLeader && !this.searchTeamName) {
           filterT.show = true;
         }
       }
@@ -483,8 +484,6 @@ export default {
             this.getTeamCode().then(res => console.log("TEAM", res));
           }
         });
-
-
       }
     },
     resetCreateForm() {
@@ -549,30 +548,28 @@ export default {
       let tempSearchLeader = this.searchLeader.toLowerCase().split(' ');
       let tempSearchTeamName = this.searchTeamName.toLowerCase().split(' ');
 
-      if (this.searchLeader == ''){
+      if (this.searchLeader === '') {
         tempSearchLeader = []
-      } 
-      if (this.searchTeamName == ''){
+      }
+      if (this.searchTeamName === '') {
         tempSearchTeamName = []
       }
 
       const topics = ['Others']
-        if (this.useAtlasTeam)
-        {
-            topics.push('Atlas')
-        }
-        if (this.useSageMakerTeam)
-        {
-            topics.push('SageMake')
-        }
-      for (let i =0; i< this.filteredTeams.length ;i ++){
-          console.log(this.searchTeamName)
-          console.log(this.searchLeader);
-          const filterT = this.filteredTeams[i];
-          console.log(tempSearchLeader.every((v) => filterT.leader.accountId.toLowerCase().includes(v)))
-          console.log(tempSearchTeamName.every((v) => filterT.name.toLowerCase().includes(v)) )
-        if (this.searchTeamName ||  this.searchLeader){
-          this.filteredTeams[i].show = (tempSearchLeader.every((v) => filterT.leader.accountId.toLowerCase().includes(v)) && tempSearchTeamName.every((v) => filterT.name.toLowerCase().includes(v)) )&& (topics.indexOf(filterT.topic) != -1);
+      if (this.usingAtlasTeam) {
+        topics.push('Atlas')
+      }
+      if (this.usingSageMakerTeam) {
+        topics.push('SageMake')
+      }
+      for (let i = 0; i < this.filteredTeams.length; i++) {
+        console.log(this.searchTeamName)
+        console.log(this.searchLeader);
+        const filterT = this.filteredTeams[i];
+        console.log(tempSearchLeader.every((v) => filterT.leader.accountId.toLowerCase().includes(v)))
+        console.log(tempSearchTeamName.every((v) => filterT.name.toLowerCase().includes(v)))
+        if (this.searchTeamName || this.searchLeader) {
+          this.filteredTeams[i].show = (tempSearchLeader.every((v) => filterT.leader.accountId.toLowerCase().includes(v)) && tempSearchTeamName.every((v) => filterT.name.toLowerCase().includes(v))) && (topics.indexOf(filterT.topic) != -1);
         } else {
           this.filteredTeams[i].show = true;
         }
@@ -580,37 +577,6 @@ export default {
         console.log(filterT,)
       }
       console.log(this.filteredTeams);
-      // if (this.searchTeamName || this.searchLeader) {
-      //   if (this.searchTeamName && this.searchLeader) {
-      //     this.filteredTeams = this.filteredTeams.filter((team) => {
-      //       this.searchTeamName
-      //         .toLowerCase()
-      //         .split(" ")
-      //         .every((v) => team.name.toLowerCase().includes(v)) &&
-      //         this.searchLeader
-      //           .toLowerCase()
-      //           .split(" ")
-      //           .every((v) => team.leader.toLowerCase().includes(v));
-      //     });
-      //   } else if (this.searchLeader) {
-      //     // this.filteredTeams = this.filteredTeams.filter((team) =>
-      //     //   this.searchLeader
-      //     //     .toLowerCase()
-      //     //     .split(" ")
-      //     //     .every((v) => team.leader.accountId.toLowerCase().includes(v))
-      //     // );
-
-
-
-      //   } else {
-      //     this.filteredTeams = this.filteredTeams.filter((team) =>
-      //       this.searchTeamName
-      //         .toLowerCase()
-      //         .split(" ")
-      //         .every((v) => team.name.toLowerCase().includes(v))
-      //     );
-      //   }
-      // }
     },
     resetTeamSearchFrom() {
       this.filteredTeams = this.teams;
@@ -624,7 +590,7 @@ export default {
       this.editMode = null;
       this.editTeam({
         name: this.editInfo.name,
-        leader: this.editInfo.members.filter(x => x.accountId == this.editInfo.leader)[0],
+        leader: this.editInfo.members.filter(x => x.accountId === this.editInfo.leader)[0],
         description: this.editInfo.description,
         needPhysicalSpace: this.editInfo.needPhysicalSpace,
         topic: null,
