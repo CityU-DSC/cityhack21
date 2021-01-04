@@ -47,7 +47,7 @@ export default {
             return teamsAPI.me().then(
                 res => {
                     commit("setCurrentTeam", res.team)
-                    return res.teams;
+                    return res.team;
                 }
             )
         },
@@ -68,7 +68,7 @@ export default {
         },
 
         createTeam({ commit }, params) {
-            // params = {name, description, topic, needPhysicalSpace, private}
+            //params = {name, description, topic, needPhysicalSpace}
             return teamsAPI.create(params).then(
                 res => {
                     commit('setCurrentTeam', res.team);
@@ -76,15 +76,17 @@ export default {
                 }
             )
         },
-        
+
+        //button游泳
         leaveTeam({ commit }) {
             return teamsAPI.leave().then(
-                res => {
+                () => {
                     commit('setCurrentTeam', null);
                 }
             )
         },
 
+        //button游泳
         joinTeam({ commit }, params) {
             // params = { teamId, teamCode }
             return teamsAPI.join(params).then(
@@ -95,6 +97,7 @@ export default {
             )
         },
 
+        //edit toggle team private
         toogleTeamPrivate({ commit }) {
             return teamsAPI.tooglePrivate({}).then(
                 res => {
@@ -104,17 +107,18 @@ export default {
             )
         },
 
+        //掛在button上 （all can be edited）
         editTeam({ commit }, params) {
             // params = { name, topic, description, leader, needPhysicalSpace }
             return teamsAPI.edit(params).then(
-                res => {
+                () => {
                     commit('updateCurrentTeam', params)
                 }
             )
         }
 
 
-        
+
 
 
     },

@@ -10,6 +10,9 @@ import vuetify from "./plugins/vuetify";
 
 import VueFullPage from "vue-fullpage.js";
 import dayjs from "dayjs";
+import VueSocialSharing from 'vue-social-sharing'
+
+
 // import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
 
 
@@ -26,14 +29,12 @@ const dayjsPlugin = {
   }
 };
 
+Vue.use(VueSocialSharing);
 Vue.use(dayjsPlugin);
-
 Vue.use(VueFullPage);
-
 Vue.config.productionTip = false;
 Vue.use(Carousel3d);
 Vue.use(Vuex);
-
 Vue.use(firestorePlugin);
 
 // Vue.use(VueTelInputVuetify, {

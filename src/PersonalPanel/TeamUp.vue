@@ -32,7 +32,7 @@
                     label="Team Description"
                     class="mr-3"
                     clearable
-                    required
+                    requireds
                     :rules="[v => !!v || 'Description is required']"
                     counter
                 ></v-textarea>
@@ -78,7 +78,7 @@
           <v-card-actions>
             <v-row>
               <v-spacer/>
-              <v-btn class="mr-3" @click="createTeam" outlined color="#ff9900">Creat Team</v-btn>
+              <v-btn class="mr-3" @click="createTeamHandler" outlined color="#ff9900">Creat Team</v-btn>
               <v-btn class="mr-3" @click="resetCreateForm" outlined color="#a64942">Reset All</v-btn>
             </v-row>
 
@@ -115,9 +115,10 @@
 
 <script>
 import navDrawer from "@/PersonalPanel/components/navDrawer";
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import SearchTeams from "@/PersonalPanel/components/SearchTeams";
 import SearchMembers from "@/PersonalPanel/components/SearchMembers";
+//import actions from "../store/modules/teams"
 
 export default {
   name: "TeamUp",
@@ -143,70 +144,36 @@ export default {
     },
     valid: false,
 
-    teams: [
-      {
-        name: "Team1",
-        leader: "Ryanyen2",
-        description: "this is testing team",
-        topic: "Atlas",
-        needPhysicalSpace: true,
-        private: true,
-        members: [
-          {name: "Ryanyen2", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Ruby", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-        ],
-      },
-      {
-        name: "Team2",
-        leader: "Ruby",
-        description: "this is testing team",
-        topic: "SageMaker",
-        needPhysicalSpace: false,
-        private: false,
-        members: [
-          {name: "Ruby", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Ryanyen", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "asdasd", email: "xavier@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-        ],
-      },
-      {
-        name: "Team3",
-        leader: "Ruby",
-        description: "this is testing team pofk o4kpo4k rpo4k po4kr 4prk 4pork4pr ok4po4 krp4okrp4rk4pork4prok4 rpo4krp4o k4pork",
-        topic: "Others",
-        needPhysicalSpace: false,
-        private: false,
-        members: [
-          {name: "Ruby", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Ryanyen", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-        ],
-      },
-    ],
+    teams: [],
   }),
   computed: {
     ...mapGetters('auth', ['currentUser']),
   },
   methods: {
+    ...mapActions('teams',['createTeam', 'listAllTeams',"toogleTeamPrivate", 'myTeam',
+                  'getTeamCode']),
     directTo(page) {
       this.$router.push(page);
     },
     resetCreateForm(){
       this.$refs.createTeamForm.reset();
     },
-    createTeam(){
+    async createTeamHandler(){
       if(this.$refs.createTeamForm.validate()){
         this.newTeam.leader = this.currentUser.accountId;
         this.newTeam.members = this.newTeam.members.concat(this.currentUser);
+        await this.createTeam(this.newTeam).then(res => console.log(res));
         this.teams = this.teams.concat(this.newTeam);
-        console.log(this.teams);
+        if(this.newTeam.private){
+          await this.toogleTeamPrivate();
+          await this.getTeamCode().then(res=> console.log("TEAM", res));
+        }
       }
     }
+  },
+  async mounted(){
+    await this.listAllTeams().then(res => this.teams = res).catch(err => console.error(err));
+    await this.myTeam().catch(err => console.error(err));
   }
 }
 </script>
