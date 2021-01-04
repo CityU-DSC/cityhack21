@@ -49,7 +49,7 @@
       <v-col>
         <v-expansion-panels>
           <v-expansion-panel v-for="team in filteredTeams" :key="team.name">
-            <v-expansion-panel-header
+            <v-expansion-panel-header  v-if='team.show'
               v-bind:class="{ inTeam: checkUserinTeam(team.name) }"
             >
               <template v-slot:default="{ open }">
@@ -93,7 +93,7 @@
                 </v-row>
               </template>
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content  v-if='team.show'>
               <v-row class="mt-3">
                 <v-card
                   v-if="editMode !== team.name"
@@ -332,8 +332,8 @@ export default {
       filteredTeams: [],
 
       //search
-      searchTeamName: null,
-      searchLeader: null,
+      searchTeamName: '',
+      searchLeader: '',
       usingAtlasTeam: true,
       usingSageMakerTeam: true,
 
@@ -354,6 +354,11 @@ export default {
   watch: {
     teams(val) {
       this.filteredTeams = val;
+      for (let filterT of this.filteredTeams){
+        if (!this.searchLeader && !this.searchTeamName){
+          filterT.show = true;
+        }
+      }
       this.getTeamCode().then((res) => (this.teamCode = res));
     },
   },
@@ -422,34 +427,71 @@ export default {
       this.openProfile = true;
     },
     searchTeams() {
-      if (this.searchTeamName || this.searchLeader) {
-        if (this.searchTeamName && this.searchLeader) {
-          this.filteredTeams = this.filteredTeams.filter((team) => {
-            this.searchTeamName
-              .toLowerCase()
-              .split(" ")
-              .every((v) => team.name.toLowerCase().includes(v)) &&
-              this.searchLeader
-                .toLowerCase()
-                .split(" ")
-                .every((v) => team.leader.toLowerCase().includes(v));
-          });
-        } else if (this.searchLeader) {
-          this.filteredTeams = this.filteredTeams.filter((team) =>
-            this.searchLeader
-              .toLowerCase()
-              .split(" ")
-              .every((v) => team.leader.toLowerCase().includes(v))
-          );
-        } else {
-          this.filteredTeams = this.filteredTeams.filter((team) =>
-            this.searchTeamName
-              .toLowerCase()
-              .split(" ")
-              .every((v) => team.name.toLowerCase().includes(v))
-          );
-        }
+      let tempSearchLeader = this.searchLeader.toLowerCase().split(' ');
+      let tempSearchTeamName = this.searchTeamName.toLowerCase().split(' ');
+
+      if (this.searchLeader == ''){
+        tempSearchLeader = []
+      } 
+      if (this.searchTeamName == ''){
+        tempSearchTeamName = []
       }
+
+      const topics = ['Others']
+        if (this.useAtlasTeam)
+        {
+            topics.push('Atlas')
+        }
+        if (this.useSageMakerTeam)
+        {
+            topics.push('SageMake')
+        }
+      for (let i =0; i< this.filteredTeams.length ;i ++){
+          console.log(this.searchTeamName)
+          console.log(this.searchLeader);
+          const filterT = this.filteredTeams[i];
+          console.log(tempSearchLeader.every((v) => filterT.leader.accountId.toLowerCase().includes(v)))
+          console.log(tempSearchTeamName.every((v) => filterT.name.toLowerCase().includes(v)) )
+        if (this.searchTeamName ||  this.searchLeader){
+          this.filteredTeams[i].show = (tempSearchLeader.every((v) => filterT.leader.accountId.toLowerCase().includes(v)) && tempSearchTeamName.every((v) => filterT.name.toLowerCase().includes(v)) )&& (topics.indexOf(filterT.topic) != -1);
+        } else {
+          this.filteredTeams[i].show = true;
+        }
+
+        console.log(filterT,)
+      }
+      console.log(this.filteredTeams);
+      // if (this.searchTeamName || this.searchLeader) {
+      //   if (this.searchTeamName && this.searchLeader) {
+      //     this.filteredTeams = this.filteredTeams.filter((team) => {
+      //       this.searchTeamName
+      //         .toLowerCase()
+      //         .split(" ")
+      //         .every((v) => team.name.toLowerCase().includes(v)) &&
+      //         this.searchLeader
+      //           .toLowerCase()
+      //           .split(" ")
+      //           .every((v) => team.leader.toLowerCase().includes(v));
+      //     });
+      //   } else if (this.searchLeader) {
+      //     // this.filteredTeams = this.filteredTeams.filter((team) =>
+      //     //   this.searchLeader
+      //     //     .toLowerCase()
+      //     //     .split(" ")
+      //     //     .every((v) => team.leader.accountId.toLowerCase().includes(v))
+      //     // );
+
+
+
+      //   } else {
+      //     this.filteredTeams = this.filteredTeams.filter((team) =>
+      //       this.searchTeamName
+      //         .toLowerCase()
+      //         .split(" ")
+      //         .every((v) => team.name.toLowerCase().includes(v))
+      //     );
+      //   }
+      // }
     },
     resetTeamSearchFrom() {
       this.filteredTeams = this.teams;
