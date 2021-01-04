@@ -32,6 +32,9 @@ export default {
             if (state.currentTeam){
                 state.currentTeam.private = !state.currentTeam.private;
             }
+        },
+        addCurrentTeamToTeamList: (state) => {
+            state.teamLists.unshift(state.currentTeam);
         }
     },
     actions: {
@@ -72,7 +75,7 @@ export default {
             return teamsAPI.create(params).then(
                 async res => {
                     commit('setCurrentTeam', res.team);
-                    await this.listAllTeams();
+                    commit('addCurrentTeamToTeamList');
                     return res.team;
                 }
             )
@@ -83,7 +86,6 @@ export default {
             return teamsAPI.leave().then(
                 async () => {
                     commit('setCurrentTeam', null);
-                    await this.listAllTeams();
                 }
             )
         },
@@ -94,7 +96,6 @@ export default {
             return teamsAPI.join(params).then(
                 async res => {
                     commit('setCurrentTeam', res.team);
-                    await this.listAllTeams();
                     return res.team;
                 }
             )
@@ -116,7 +117,6 @@ export default {
             return teamsAPI.edit(params).then(
                 async () => {
                     commit('updateCurrentTeam', params)
-                    await this.listAllTeams();
                 }
             )
         }
