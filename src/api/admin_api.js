@@ -1,7 +1,7 @@
 import adminAxios from 'axios'
 
 const service = adminAxios.create({
-    baseUrl: process.env.NODE_ENV === 'development'? "http://localhost:3000/api/admin" : "https://cityhack21.com/api/admin",
+    baseURL: process.env.NODE_ENV==="development"? "http://localhost:3000/api/admin" : "https://cityhack21.com/api/admin",
     timeout: 3000,
 });
 
@@ -22,4 +22,4 @@ service.interceptors.response.use((response) => {
     return Promise.reject(data || error)
 });
 
-export default service
+export default service;

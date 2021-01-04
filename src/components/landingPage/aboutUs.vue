@@ -38,9 +38,9 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h2 class="mb-5">What is Hackathon</h2>
+              <h1 class="mb-5">What is <span class='highlight'>Hackathon</span></h1>
               <p>
-                The word “hackathon” is a portmanteau of “hacking marathon”.
+                The word “<span class='highlight'>hackathon</span>” is a portmanteau of “<span class='highlight'>hacking marathon</span>”.
               </p>
               <p>
                 A hackathon is a design sprint-like event which involves parties with software development background such as computer programmers, graphic designers, interface designers, project managers, and others who collaborate intensively on software projects. The goal of the hackathon is to create functioning software or hardware before the end of the event.
@@ -51,12 +51,12 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h2 class="mb-5">What is CityHack</h2>
+              <h1 class="mb-5">What is <span class='highlight'>CityHack</span></h1>
               <p>
-                CityHack is CityU’s largest Hackathon event. We aim to break away from conventional education and provide students with a unique opportunity to create a “hack” through a collaborative effort.
+                <span class='highlight'>CityHack is CityU’s largest Hackathon event</span>. We aim to break away from conventional education and provide students with a unique opportunity to create a “hack” through a collaborative effort.
               </p>
               <p>
-                For us, a hackathon means creative and innovative problem-solving. CityHack is open to everyone, be it designers, curious individuals, geeks, or even technophobes. Even if you have never been to a hackathon before, believe us when we say: “All you need to be part of CityHack is a passionate heart”.
+                For us, a hackathon means <span class='highlight'>creative</span> and <span class='highlight'>innovative problem-solving</span>. CityHack is open to everyone, be it designers, curious individuals, geeks, or even technophobes. Even if you have never been to a hackathon before, believe us when we say: “<span class='highlight'>All you need to be part of CityHack is a passionate heart</span>”.
               </p>
             </v-card-text>
           </v-card>
@@ -64,16 +64,15 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h2 class="mb-5">Events Outline</h2>
-              <h4>Basic Information</h4>
+              <h1 class="mb-5">Events Outline</h1>
+              <h2>Basic Information</h2>
               <ul>
-                <li>Name: CityHack 2021</li>
-                <li>Time: 30/JAN/2021 - 30/JAN/2021</li>
-                <li>Format: Virtual + Physical</li>
-                <li>Participants: > 120 students</li>
+                <li>Date: <span class='highlight'>30 - 31 JAN 2021</span></li>
+                <li>Format: <span class='highlight'>Virtual + Physical</span></li>
+                <li>Participants: <span class='highlight'> > 120 students</span></li>
               </ul>
-
-              <h4>Cooperation with Corporation</h4>
+              <br>
+              <h2>Cooperation with Corporation</h2>
               <ol class="ml-3">
                 <li>Provide resources or products (e.g., hardware, API) for the participants.</li>
                 <li>Provide workshops or talks on related topics.</li>
@@ -87,7 +86,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h2 class="mb-5">Themes</h2>
+              <h1 class="mb-5">Themes</h1>
               <p>
                 This year we will have open-ended tasks. Participants can think of possible solutions or ideas to improve the situation caused by Covid19. Below are the four main aspects that they can consider in their solutions:
               </p>
@@ -103,9 +102,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
-              <h2 class="mb-5">
-                Contact Info
-              </h2>
+              <h1 class="mb-5">Contact Info</h1>
               <ul class="ml-3">
                 <li>Team Lead: Su Jin -  <a href = "mailto: sjyeap2-c@my.cityu.edu.hk">sjyeap2-c@my.cityu.edu.hk</a></li>
                 <li>Google DSC Lead: Ryan Yen – <a href = "mailto: ryanyen2-c@my.cityu.edu.hk">ryanyen2-c@my.cityu.edu.hk</a></li>
@@ -151,5 +148,11 @@ export default {
 </script>
 
 <style scoped>
-
+p, li{
+  font-size:1.2rem;
+  line-height:1.6rem;
+}
+  .highlight{
+    color: #FF9900; font-weight:bold;
+  }
 </style>

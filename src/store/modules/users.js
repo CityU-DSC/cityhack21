@@ -16,8 +16,8 @@ export default {
         setReferrersList: (state, referrers) => state.referrersList = referrers,
     },
     actions: {
-        listAllUsers ({ commit }) {
-            return users.listAllUsers().then(users => {
+        listAllUsers ({ commit }, params) {
+            return users.listAllUsers(params).then(users => {
                 commit('setUsersList', users);
                 return users;
             })

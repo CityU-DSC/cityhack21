@@ -85,4 +85,7 @@ export default {
 .v-window__next {
   right: 0;
 }
+.v-icon.theme--dark {
+  background: none !important;
+}
 </style>

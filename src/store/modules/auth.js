@@ -40,7 +40,7 @@ export default {
         return res;
       });
     },
-    registerUser(garbage, params) {
+    registerUser(commit, params) {
       return auth.registerUser(params).then(res => {
         console.log(`[*]AuthApi:: Register Success, ${res}`);
         // commit("setCurrentUser", res.data, res.token);
@@ -50,9 +50,9 @@ export default {
     logOutUser({ commit }) {
       commit("clearUserData");
     },
-    async accountIdUsed(commit, accountId)
+    accountIdUsed(commit, accountId)
     {
-      return await auth.accountIdUsed(accountId);
+      return auth.accountIdUsed({ accountId });
     },
     verifyUser({ commit }, params) {
       return auth.verifyUser(params).then(
@@ -62,7 +62,7 @@ export default {
         }
       )
     },
-    resendVerification(garbage, params) {
+    resendVerification(commit, params) {
       return auth.resendVerification(params);
     },
     me({ commit }, token){
@@ -89,13 +89,19 @@ export default {
       } else {
         const token = localStorage.getItem('jwt');
         try {
-          await auth.me(token).then(
+          const res = await auth.me(token).then(
             res => {
               commit("updateLoginStatus", true)
               commit("setCurrentUser", res, token)
+              return res;
             }
           );
-          return true;
+          if (res == null){
+            localStorage.removeItem('jwt');
+            return false;
+          } else {
+            return true
+          }
         } catch (e) {
           console.log(e);
           return false
