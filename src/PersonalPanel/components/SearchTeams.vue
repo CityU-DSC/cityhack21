@@ -469,7 +469,7 @@ export default {
       "createTeam",
       "joinTeam",
       "leaveTeam",
-      "editTeam", 'listAllTeams', "toogleTeamPrivate", 'myTeam', 'getTeamCode']),
+      "editTeam", 'myTeam']),
     async createTeamHandler() {
       if (this.$refs.createTeamForm.validate()) {
         this.newTeam.leader = this.currentUser.accountId;

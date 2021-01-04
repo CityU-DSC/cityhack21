@@ -38,13 +38,13 @@ export default {
         }
     },
     actions: {
-        listAllTeams({ commit }){
-            return teamsAPI.all().then(res =>
-            {
-                commit('setTeamsList', res.teams);
-                return res.teams;
-            })
-        },
+        // listAllTeams({ commit }){
+        //     return teamsAPI.all().then(res =>
+        //     {
+        //         commit('setTeamsList', res.teams);
+        //         return res.teams;
+        //     })
+        // },
 
         myTeam({ commit }) {
             return teamsAPI.me().then(
@@ -60,15 +60,15 @@ export default {
             return teamsAPI.search(params);
         },
 
-        getTeamCode({ commit }) {
-            // Get team code for my team (private team)
-            return teamsAPI.teamCode().then(
-                res => {
-                    commit("setCurrentTeamCode", res.teamCode);
-                    return res.teamCode;
-                }
-            );
-        },
+        // getTeamCode({ commit }) {
+        //     // Get team code for my team (private team)
+        //     return teamsAPI.teamCode().then(
+        //         res => {
+        //             commit("setCurrentTeamCode", res.teamCode);
+        //             return res.teamCode;
+        //         }
+        //     );
+        // },
 
         createTeam({ commit }, params) {
             //params = {name, description, topic, needPhysicalSpace}
@@ -101,15 +101,15 @@ export default {
             )
         },
 
-        //edit toggle team private
-        toogleTeamPrivate({ commit }) {
-            return teamsAPI.tooglePrivate({}).then(
-                res => {
-                    commit('toogleTeamPrivate');
-                    commit('setCurrentTeamCode', res.teamCode);
-                }
-            )
-        },
+        // //edit toggle team private
+        // toogleTeamPrivate({ commit }) {
+        //     return teamsAPI.tooglePrivate({}).then(
+        //         res => {
+        //             commit('toogleTeamPrivate');
+        //             commit('setCurrentTeamCode', res.teamCode);
+        //         }
+        //     )
+        // },
 
         //掛在button上 （all can be edited）
         editTeam({ commit }, params) {
