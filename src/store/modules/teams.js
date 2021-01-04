@@ -57,7 +57,7 @@ export default {
 
         searchTeam(commit, params) {
             // params = {name, teamLeaderAccountId, useAtlas, useSagemaker}
-            return teamsAPI.search(params);
+            return teamsAPI.search(params).then(res => res.teams);
         },
 
         // getTeamCode({ commit }) {

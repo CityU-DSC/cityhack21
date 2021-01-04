@@ -28,7 +28,7 @@
             </v-menu>
           </v-app-bar>
 
-          <v-card-title class="white--text mt-8">
+          <v-card-title class="white--text mt-8" v-if='currentProfile'>
             <v-avatar size="56">
               <img alt="profileAvatar" :src="currentProfile.avatarUrl"/>
             </v-avatar>
@@ -38,7 +38,7 @@
           </v-card-title>
         </v-img>
 
-        <v-card-text>
+        <v-card-text v-if='currentProfile'>
           <h3 style="color: #ff9900;" class="ma-4">Personal Information</h3>
           <v-row class="mb-3">
             <span class="font-weight-bold ml-8 mr-3">AccountId:</span>
