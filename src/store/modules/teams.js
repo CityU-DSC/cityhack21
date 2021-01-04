@@ -35,7 +35,6 @@ export default {
         }
     },
     actions: {
-        //修好 ok
         listAllTeams({ commit }){
             return teamsAPI.all().then(res =>
             {
@@ -58,7 +57,6 @@ export default {
             return teamsAPI.search(params);
         },
 
-        // always show getTeamCode
         getTeamCode({ commit }) {
             // Get team code for my team (private team)
             return teamsAPI.teamCode().then(

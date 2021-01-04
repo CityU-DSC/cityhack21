@@ -145,49 +145,49 @@ export default {
     valid: false,
 
     teams: [
-      {
-        name: "Team1",
-        leader: "Ryanyen2",
-        description: "this is testing team",
-        topic: "Atlas",
-        needPhysicalSpace: true,
-        private: true,
-        members: [
-          {name: "Ryanyen2", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Ruby", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-        ],
-      },
-      {
-        name: "Team2",
-        leader: "Ruby",
-        description: "this is testing team",
-        topic: "SageMaker",
-        needPhysicalSpace: false,
-        private: false,
-        members: [
-          {name: "Ruby", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Ryanyen", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "asdasd", email: "xavier@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-        ],
-      },
-      {
-        name: "Team3",
-        leader: "Ruby",
-        description: "this is testing team pofk o4kpo4k rpo4k po4kr 4prk 4pork4pr ok4po4 krp4okrp4rk4pork4prok4 rpo4krp4o k4pork",
-        topic: "Others",
-        needPhysicalSpace: false,
-        private: false,
-        members: [
-          {name: "Ruby", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Ryanyen", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-          {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
-        ],
-      },
+      // {
+      //   name: "Team1",
+      //   leader: "Ryanyen2",
+      //   description: "this is testing team",
+      //   topic: "Atlas",
+      //   needPhysicalSpace: true,
+      //   private: true,
+      //   members: [
+      //     {name: "Ryanyen2", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Ruby", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //   ],
+      // },
+      // {
+      //   name: "Team2",
+      //   leader: "Ruby",
+      //   description: "this is testing team",
+      //   topic: "SageMaker",
+      //   needPhysicalSpace: false,
+      //   private: false,
+      //   members: [
+      //     {name: "Ruby", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Ryanyen", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "asdasd", email: "xavier@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //   ],
+      // },
+      // {
+      //   name: "Team3",
+      //   leader: "Ruby",
+      //   description: "this is testing team pofk o4kpo4k rpo4k po4kr 4prk 4pork4pr ok4po4 krp4okrp4rk4pork4prok4 rpo4krp4o k4pork",
+      //   topic: "Others",
+      //   needPhysicalSpace: false,
+      //   private: false,
+      //   members: [
+      //     {name: "Ruby", email: "ryanyen89@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Ryanyen", email: "rubbb@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Eugene", email: "eugenelow@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //     {name: "Michelle", email: "michellle@gmail.com", avatar: "https://cdn.vuetifyjs.com/images/john.png"},
+      //   ],
+      // },
     ],
   }),
   computed: {
@@ -195,9 +195,8 @@ export default {
     ...mapGetters('teams', ['currentTeam'])
   },
   methods: {
-    ...mapActions('teams',['createTeam', 'listAllTeams',"toogleTeamPrivate"]),
-    ...mapActions('teams',['myTeam']),
-    ...mapActions('teams',['getTeamCode']),
+    ...mapActions('teams',['createTeam', 'listAllTeams',"toogleTeamPrivate", 'myTeam', 
+                  'getTeamCode']),
     directTo(page) {
       this.$router.push(page);
     },
@@ -213,23 +212,16 @@ export default {
         if(this.newTeam.private == true){
           await this.toogleTeamPrivate();
           await this.getTeamCode();
-          console.log(this.currentTeam);
         }
-
-        //actions.createTeam(this.newTeam.name,this.newTeam.description, this.newTeam.topic,this.newTeam.needPhysicalSpace,this.newTeam.private);
       }
     }
   },
   async mounted(){
-    // // on load
-    // list all team
+    // list all teams
     this.teams = await this.listAllTeams();
     
+    // highlight my team
     await this.myTeam();
-    console.log(this.teams)
-    // console.log(this.currentTeam.getTeamCode)
-    //current team
-
   }
 }
 </script>
