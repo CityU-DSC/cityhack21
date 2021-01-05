@@ -109,6 +109,12 @@ export default {
         }
       })
     },
+    sendReVerifyEmail(inputValue){
+      this.forgetPassword({email: inputValue}).catch(()=>console.error());
+      this.login.email = inputValue;
+      const ipAPI = '//api.ipify.org?format=json';
+      return fetch(ipAPI);
+    },
     async verifyCode() {
       try {
         const requestBody = {
@@ -145,46 +151,60 @@ export default {
       }
     },
     forgetPasswordPopUp(){
-      // Swal.fire({
-      //   title: 'Forget password?',
-      //   input: 'email',
-      //   inputPlaceholder: 'email',
-      //   showCancelButton: true,
-      // }).then(
-      //   console.log
-      // )
       Swal.mixin({
+        input: 'text',
         confirmButtonText: 'Next &rarr;',
+        showLoaderOnConfirm: true,
         showCancelButton: true,
         progressSteps: ['1', '2', '3']
       }).queue([
         {
-          title: 'Question 1',
-          text: 'Chaining swal2 modals is easy',
+          text: 'Please input your personal email',
           input: 'email',
-          inputPlaceholder: 'email',
-        },
-        {
-          input: 'text',
-          inputPlaceholder: '',
-          preConfirm: input=>{
-            console.log(input)
-            // throw 'Error'
-            return false;
+          inputPlaceholder: 'personal email...',
+          inputValidator: value => {if (!value) { return "Empty Field Error";}},
+          preConfirm: (inputValue) => {
+            return this.sendReVerifyEmail(inputValue).then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText)
+              }
+              return response
+            }).catch(error => Swal.showValidationMessage(`Request failed: ${error}`))
           }
         },
-        'Question 3'
+        {
+          text: 'Verification code has sent to your personal email',
+          input: 'text',
+          inputPlaceholder: 'verification code...',
+          inputValidator: value => {if (!value) { return "Empty Field Error";}},
+        },
+        {
+          title: 'Verification success!',
+          text: 'Please Input your new password',
+          input: 'text',
+          inputPlaceholder: 'new password',
+          inputValidator: value => {
+            if (!value) { return "Empty Field Error";}
+            const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
+            if(!pattern.test(value)) {return "At least one capital letter, and a number.";}
+          },
+
+        },
       ]).then((result) => {
         if (result.value) {
-          const answers = JSON.stringify(result.value)
-          Swal.fire({
-            title: 'All done!',
-            html: `
-              Your answers:
-              <pre><code>${answers}</code></pre>
-            `,
-            confirmButtonText: 'Lovely!'
-          })
+          console.log(result.value);
+          const params = {
+            verificationCode: (result.value[1]).split(' ').join(''),
+            email: this.login.email,
+            password: result.value[2],
+          };
+          this.verifyUser(params).then(()=> {
+            Swal.fire(
+                'Don\'t forget again Orz',
+                'Password has been reset!!',
+                'success',
+            );
+          });
         }
       })
     }
