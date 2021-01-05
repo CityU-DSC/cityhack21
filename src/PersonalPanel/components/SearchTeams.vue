@@ -25,28 +25,19 @@
               class="mr-3"
               color="#53354a"
               v-model="usingAtlasTeam"
+              @click='searchTeams()'
               label="Using Atlas?"
           ></v-switch>
           <v-switch
               color="#53354a"
               v-model="usingSageMakerTeam"
+              @click='searchTeams()'
               label="Using SageMaker?"
           ></v-switch>
           <v-spacer/>
           <v-btn outlined color="#ff9900" @click="show = !show" class="mt-3">
             Create Team
             <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-          </v-btn>
-        </v-row>
-        <v-row>
-          <v-spacer/>
-          <v-btn outlined color="green" class="mr-3" @click="searchTeams">Search</v-btn>
-          <v-btn
-              outlined
-              color="#a64942"
-              class="mr-3"
-              @click="resetTeamSearchFrom"
-          >Reset
           </v-btn>
         </v-row>
         <v-expand-transition>
@@ -63,7 +54,7 @@
                       clearable
                   ></v-text-field>
                   <div class="ml-5 subtitle-1">Team Leader:</div>
-                  <h3 class="ml-3 mr-2">{{ currentUser.accountId }}</h3>
+                  <h3 class="ml-3 mr-2" v-if='currentUser'>{{ currentUser.accountId }}</h3>
                 </v-row>
                 <v-row class="ml-2 mb-2">
                   <v-textarea
@@ -117,7 +108,7 @@
             <v-card-actions>
               <v-row>
                 <v-spacer/>
-                <v-btn class="mr-3" @click="createTeamHandler" outlined color="#ff9900">Creat Team</v-btn>
+                <v-btn class="mr-3" @click="createTeamHandler" outlined color="#ff9900">Create Team</v-btn>
                 <v-btn class="mr-3" @click="resetCreateForm" outlined color="#a64942">Reset All</v-btn>
               </v-row>
 
@@ -129,9 +120,7 @@
       <v-col>
         <v-expansion-panels>
           <v-expansion-panel v-for="team in filteredTeams" :key="team.name">
-            <v-expansion-panel-header v-if='team.show'
-                                      v-bind:class="{ inTeam: checkUserinTeam(team.name) }"
-            >
+            <v-expansion-panel-header v-bind:class="{ inTeam: checkUserInTeam(team.name) }">
               <template v-slot:default="{ open }">
                 <v-row no-gutters>
                   <v-col cols="4">
@@ -173,7 +162,7 @@
                 </v-row>
               </template>
             </v-expansion-panel-header>
-            <v-expansion-panel-content v-if='team.show'>
+            <v-expansion-panel-content>
               <v-row class="mt-3">
                 <v-card
                     v-if="editMode !== team.name"
@@ -221,7 +210,7 @@
                     </v-row>
                     <v-row class="ml-2 mt-3">
                       <div class="subtitle-1">Team Code</div>
-                      <h5>{{ teamCode }}</h5>
+                      <h5>{{ team.teamCode }}</h5>
                     </v-row>
                   </v-card-text>
                   <v-card-subtitle class="ml-2">Selected Topic</v-card-subtitle>
@@ -379,7 +368,7 @@
                 </v-btn
                 >
                 <v-btn
-                    :disabled="!checkUserinTeam(team.name)"
+                    :disabled="!checkUserInTeam(team.name)"
                     color="warning"
                     class="ml-3"
                     @click="leaveTeamHandler"
@@ -407,8 +396,6 @@ export default {
   },
   data() {
     return {
-      teams: [],
-
       selectedMember: 0,
       selectedProfile: null,
       openProfile: false,
@@ -419,6 +406,8 @@ export default {
       searchLeader: '',
       usingAtlasTeam: true,
       usingSageMakerTeam: true,
+
+      currentTeam: null,
 
       //create
       valid: false,
@@ -431,6 +420,7 @@ export default {
         topic: "Others",
         members: [],
       },
+      teamCode: null,
       topics: ["Atlas", "SageMaker", "Others"],
       show: false,
 
@@ -445,56 +435,56 @@ export default {
         topic: null,
         members: null,
       },
-      teamCode: null,
+
     };
   },
   watch: {
-    teams(val) {
-      console.log("NEWVAL", val);
-      this.filteredTeams = val;
-      for (let filterT of this.filteredTeams) {
-        if (!this.searchLeader && !this.searchTeamName) {
-          filterT.show = true;
-        }
-      }
-      this.getTeamCode().then((res) => (this.teamCode = res));
+    searchTeamName() {
+      this.searchTeams();
     },
+    searchLeader() {
+      this.searchTeams();
+    }
   },
   computed: {
     ...mapGetters("auth", ["currentUser"]),
-    ...mapGetters("teams", ["currentTeam"]),
   },
   methods: {
-    ...mapActions("teams", [
-      "createTeam",
-      "joinTeam",
-      "leaveTeam",
-      "editTeam", 'listAllTeams', "toogleTeamPrivate", 'myTeam', 'getTeamCode']),
+    ...mapActions("teams", ["createTeam", "joinTeam", "leaveTeam", "editTeam", 'myTeam', 'searchTeam']),
     async createTeamHandler() {
       if (this.$refs.createTeamForm.validate()) {
-        this.newTeam.leader = this.currentUser.accountId;
-        this.newTeam.members = this.newTeam.members.concat(this.currentUser);
         await this.createTeam(this.newTeam).then(res => {
-          console.log(res);
           Swal.fire("Success", "Create Team is successful", "success");
+          this.currentTeam = res;
+          this.currentTeam.show = true;
           this.show = !this.show;
-          this.teams = this.teams.concat(this.newTeam);
-          if (this.newTeam.private) {
-            this.toogleTeamPrivate();
-            this.getTeamCode().then(res => console.log("TEAM", res));
-          }
-        });
+          this.filteredTeams.push(this.currentTeam);
+          // if (this.newTeam.private) {
+          //   this.toggleTeamPrivate().then(res => {
+          //     this.teamCode = res;
+          //     this.currentTeam.private = true;
+          //   });
+          // }
+        }).catch(
+      err => {
+        if(err.message == 'Member is in other teams'){
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please leave team before creating another one.",
+          });
+        }
+      });
       }
     },
     resetCreateForm() {
       this.$refs.createTeamForm.reset();
     },
-    leaveTeamHandler() {
-      let cur = this.currentTeam;
-      this.filteredTeams = this.filteredTeams.filter(team => team._id !== cur._id);
-      this.leaveTeam().then(res => {
-        console.log(res)
-      });
+    async leaveTeamHandler() {
+      await this.leaveTeam().then(() => {
+        this.currentTeam = null;
+        this.searchTeams();
+      }).catch(err => console.error(err));
     },
     async joinTeamHandler(team) {
       if (team.private) {
@@ -502,16 +492,18 @@ export default {
           title: "Enter your team code",
           input: "text",
           inputLabel: "Team Code",
-          inputPlaceholder: "team code...",
-          inputValidator: (value) => {
+          inputPlaceholder: "input team code...",
+          inputValidator: value => {
             if (!value) {
               return "Empty Field Error";
             }
           },
         });
         if (inputTeamCode) {
-          this.joinTeam({teamId: team._id, teamCode: inputTeamCode}).then(res => {
-            console.log(res);
+          await this.joinTeam({teamId: team._id, teamCode: inputTeamCode}).then(res => {
+            this.searchTeams();
+            this.currentTeam = res;
+            this.teamCode = inputTeamCode;
             Swal.fire("Success", "Join Team Was successful", "success");
           }).catch(err => {
             console.error(err);
@@ -524,7 +516,8 @@ export default {
         }
       } else {
         this.joinTeam({teamId: team._id}).then(res => {
-          console.log(res);
+          this.searchTeams();
+          this.currentTeam = res;
           Swal.fire("Success", "Join Team Was successful", "success");
         }).catch(err => {
           console.error(err);
@@ -536,73 +529,46 @@ export default {
         });
       }
     },
-
-    checkUserinTeam(name) {
+    checkUserInTeam(name) {
       return this.currentTeam ? name === this.currentTeam.name : false;
     },
     openProfileDetail(member) {
       this.selectedProfile = member;
       this.openProfile = true;
     },
-    searchTeams() {
-      let tempSearchLeader = this.searchLeader.toLowerCase().split(' ');
-      let tempSearchTeamName = this.searchTeamName.toLowerCase().split(' ');
-
-      if (this.searchLeader === '') {
-        tempSearchLeader = []
-      }
-      if (this.searchTeamName === '') {
-        tempSearchTeamName = []
-      }
-
-      const topics = ['Others']
-      if (this.usingAtlasTeam) {
-        topics.push('Atlas')
-      }
-      if (this.usingSageMakerTeam) {
-        topics.push('SageMake')
-      }
-      for (let i = 0; i < this.filteredTeams.length; i++) {
-        console.log(this.searchTeamName)
-        console.log(this.searchLeader);
-        const filterT = this.filteredTeams[i];
-        console.log(tempSearchLeader.every((v) => filterT.leader.accountId.toLowerCase().includes(v)))
-        console.log(tempSearchTeamName.every((v) => filterT.name.toLowerCase().includes(v)))
-        if (this.searchTeamName || this.searchLeader) {
-          this.filteredTeams[i].show = (tempSearchLeader.every((v) => filterT.leader.accountId.toLowerCase().includes(v)) && tempSearchTeamName.every((v) => filterT.name.toLowerCase().includes(v))) && (topics.indexOf(filterT.topic) != -1);
-        } else {
-          this.filteredTeams[i].show = true;
-        }
-
-        console.log(filterT,)
-      }
-      console.log(this.filteredTeams);
-    },
-    resetTeamSearchFrom() {
-      this.filteredTeams = this.teams;
-      this.$refs.teamSearch.reset();
+    async searchTeams() {
+      await this.searchTeam({
+        name: this.searchTeamName,
+        teamLeaderAccountId: this.searchLeader,
+        useAtlas: this.usingAtlasTeam,
+        useSagemaker: this.usingSageMakerTeam
+      }).then(res => {
+        this.filteredTeams = res;
+      }).catch(err => console.error(err));
     },
     editTeamHandler(team) {
       this.editMode = team.name;
       this.editInfo = {...team};
     },
-    saveEdit() {
+    async saveEdit() {
       this.editMode = null;
-      this.editTeam({
+      await this.editTeam({
         name: this.editInfo.name,
         leader: this.editInfo.members.filter(x => x.accountId === this.editInfo.leader)[0],
         description: this.editInfo.description,
         needPhysicalSpace: this.editInfo.needPhysicalSpace,
-        topic: null,
-      });
-
+        topic: this.editInfo.topic,
+        private: this.editInfo.private,
+      }).then((res) => {
+        this.currentTeam = res;
+      }).catch(err => console.error(err));
     },
   },
   async mounted() {
-    this.filteredTeams = this.teams;
-    await this.getTeamCode().then((res) => (this.teamCode = res));
-    await this.listAllTeams().then(res => this.teams = res).catch(err => console.error(err));
-    await this.myTeam().catch(err => console.error(err));
+    await this.searchTeam({useAtlas: true, useSagemaker: true}).then(res => {
+      this.filteredTeams = res;
+    }).catch(err => console.error(err));
+    await this.myTeam().then(res => this.currentTeam = res).catch(err => console.error(err));
   },
 };
 </script>

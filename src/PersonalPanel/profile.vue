@@ -158,6 +158,16 @@
                     single-line
                 ></v-text-field>
               </v-row>
+              <v-row class="mt-5 mb-5">
+                <v-text-field
+                    label="Home Address"
+                    :rules="[rules.blank]"
+                    v-model="userInfo.address"
+                    class="mx-2 ml-5"
+                    prepend-icon="mdi-email-check"
+                    single-line
+                ></v-text-field>
+              </v-row>
             </v-col>
             <v-col>
               <v-textarea
@@ -217,7 +227,8 @@ export default {
         majorProgram: "",
         academicYear: "",
         phoneNumber: "",
-        avatarUrl: ""
+        avatarUrl: "",
+        address: "",
       },
       discordImgUrl: "",
       accountDetails: {

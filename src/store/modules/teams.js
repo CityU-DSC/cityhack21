@@ -38,13 +38,13 @@ export default {
         }
     },
     actions: {
-        listAllTeams({ commit }){
-            return teamsAPI.all().then(res =>
-            {
-                commit('setTeamsList', res.teams);
-                return res.teams;
-            })
-        },
+        // listAllTeams({ commit }){
+        //     return teamsAPI.all().then(res =>
+        //     {
+        //         commit('setTeamsList', res.teams);
+        //         return res.teams;
+        //     })
+        // },
 
         myTeam({ commit }) {
             return teamsAPI.me().then(
@@ -57,18 +57,18 @@ export default {
 
         searchTeam(commit, params) {
             // params = {name, teamLeaderAccountId, useAtlas, useSagemaker}
-            return teamsAPI.search(params);
+            return teamsAPI.search(params).then(res => res.teams);
         },
 
-        getTeamCode({ commit }) {
-            // Get team code for my team (private team)
-            return teamsAPI.teamCode().then(
-                res => {
-                    commit("setCurrentTeamCode", res.teamCode);
-                    return res.teamCode;
-                }
-            );
-        },
+        // getTeamCode({ commit }) {
+        //     // Get team code for my team (private team)
+        //     return teamsAPI.teamCode().then(
+        //         res => {
+        //             commit("setCurrentTeamCode", res.teamCode);
+        //             return res.teamCode;
+        //         }
+        //     );
+        // },
 
         createTeam({ commit }, params) {
             //params = {name, description, topic, needPhysicalSpace}
@@ -80,8 +80,6 @@ export default {
                 }
             )
         },
-
-        //button游泳
         leaveTeam({ commit }) {
             return teamsAPI.leave().then(
                 async () => {
@@ -89,8 +87,6 @@ export default {
                 }
             )
         },
-
-        //button游泳
         joinTeam({ commit }, params) {
             // params = { teamId, teamCode }
             return teamsAPI.join(params).then(
@@ -102,21 +98,21 @@ export default {
         },
 
         //edit toggle team private
-        toogleTeamPrivate({ commit }) {
-            return teamsAPI.tooglePrivate({}).then(
-                res => {
-                    commit('toogleTeamPrivate');
-                    commit('setCurrentTeamCode', res.teamCode);
-                }
-            )
-        },
-
-        //掛在button上 （all can be edited）
+        // toggleTeamPrivate({ commit }) {
+        //     return teamsAPI.tooglePrivate({}).then(
+        //         res => {
+        //             commit('toogleTeamPrivate');
+        //             commit('setCurrentTeamCode', res.teamCode);
+        //             return res.teamCode;
+        //         }
+        //     )
+        // },
         editTeam({ commit }, params) {
             // params = { name, topic, description, leader, needPhysicalSpace }
             return teamsAPI.edit(params).then(
-                async () => {
-                    commit('updateCurrentTeam', params)
+                async (res) => {
+                    commit('setCurrentTeam', res.team)
+                    return res.team;
                 }
             )
         }
