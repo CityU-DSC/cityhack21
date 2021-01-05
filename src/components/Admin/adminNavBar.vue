@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      tabs: ['Users List', 'Groups List', 'Logs List'],
+      tabs: ['Users List', 'Teams List', 'Logs List'],
       currentTab: 0,
       tab: null,
     }

@@ -19,31 +19,36 @@
             outlined
         ></v-text-field>
         <v-row>
-          <p>Dont have an account?</p>
+          <router-link to="/register" style='text-decoration: none;'>Dont have an account?</router-link>
           <v-spacer/>
-          <v-btn class="ml-5">
-            <router-link to="/register">click here</router-link>
-          </v-btn>
           <v-btn @click="loginUser" class="ml-5">
             Sign in
           </v-btn>
         </v-row>
-        <v-layout v-if="reverify">
+        <v-row v-if='!reverify'>
+          <a @click='forgetPasswordPopUp'>Forget password?</a>
+          <!-- <a @click='forgetPassword({ email: forgetPassword.email, schoolEmail: forgetPassword.schoolEmail })'>Forget password?</a> -->
+        </v-row>
+        <div v-if="reverify">
+          <v-row>
           <v-btn class="ml-5" @click="resendVerification({ email: login.email })">
             Send verification email again
           </v-btn>
-          <v-text-field
-              label="Verification Code"
-              v-model="verificationCode"
-              class="mx-2"
-              counter
-              prepend-inner-icon="mdi-key"
-              outlined
-          ></v-text-field>
-          <v-btn color="primary" style="margin-right: 2rem;" @click="verifyCode()">
-            Continue
-          </v-btn>
-        </v-layout>
+          </v-row>
+          <v-row>
+            <v-text-field
+                label="Verification Code"
+                v-model="verificationCode"
+                class="mx-2"
+                counter
+                prepend-inner-icon="mdi-key"
+                outlined
+            ></v-text-field>
+            <v-btn color="primary" style="margin-right: 2rem;" @click="verifyCode()">
+              Continue
+            </v-btn>
+          </v-row>
+        </div>
       </v-container>
     </v-form>
   </div>
@@ -67,11 +72,13 @@ export default {
       reverify: false,
       verificationCode: "",
       showPassword: false,
+      newPassword: "",
+      newPasswordConfirm: "",
     };
   },
   computed: {...mapGetters('adminList', ['adminList'])},
   methods: {
-    ...mapActions('auth', ['loginByEmailPassword', 'resendVerification', 'verifyUser']),
+    ...mapActions('auth', ['loginByEmailPassword', 'resendVerification', 'verifyUser', 'forgetPassword']),
     async loginUser() {
       await this.loginByEmailPassword(this.login).then(res => {
         if (res.token) {
@@ -104,10 +111,15 @@ export default {
     },
     async verifyCode() {
       try {
-        const {token} = await this.verifyUser({
-          verificationCode: this.verificationCode.split(' ').join(''),
+        const requestBody = {
+          verificationCode: this.verificationCode.split(' ').join('').toUpperCase(),
           email: this.login.email
-        });
+        }
+        if (this.newPassword){
+          requestBody.password = this.newPassword;
+        }
+
+        const {token} = await this.verifyUser(requestBody);
 
         if (token) {
           localStorage.setItem("jwt", token);
@@ -131,6 +143,50 @@ export default {
           text: 'Something went wrong!',
         });
       }
+    },
+    forgetPasswordPopUp(){
+      // Swal.fire({
+      //   title: 'Forget password?',
+      //   input: 'email',
+      //   inputPlaceholder: 'email',
+      //   showCancelButton: true,
+      // }).then(
+      //   console.log
+      // )
+      Swal.mixin({
+        confirmButtonText: 'Next &rarr;',
+        showCancelButton: true,
+        progressSteps: ['1', '2', '3']
+      }).queue([
+        {
+          title: 'Question 1',
+          text: 'Chaining swal2 modals is easy',
+          input: 'email',
+          inputPlaceholder: 'email',
+        },
+        {
+          input: 'text',
+          inputPlaceholder: '',
+          preConfirm: input=>{
+            console.log(input)
+            // throw 'Error'
+            return false;
+          }
+        },
+        'Question 3'
+      ]).then((result) => {
+        if (result.value) {
+          const answers = JSON.stringify(result.value)
+          Swal.fire({
+            title: 'All done!',
+            html: `
+              Your answers:
+              <pre><code>${answers}</code></pre>
+            `,
+            confirmButtonText: 'Lovely!'
+          })
+        }
+      })
     }
   }
 };

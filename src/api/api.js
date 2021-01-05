@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service = axios.create({
-    baseURL: process.env.NODE_ENV==="development"? "http://localhost:3000/api" : "https://cityhack21.com/api/admin",
+    baseURL: process.env.NODE_ENV==="development"? "http://localhost:3000/api" : "https://cityhack21.com/api",
     timeout: 3000
 });
 
@@ -27,5 +27,13 @@ service.interceptors.response.use(
         return Promise.reject(data || error);
     }
 );
+
+
+// Add a request interceptor
+service.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('jwt');
+    config.headers.Authorization = "Bearer " + token;
+    return config;
+});
 
 export default service;

@@ -7,7 +7,7 @@
         x-large
         @click.stop="gotoRegister"
     >
-      Pre-Registration
+      Registration
     </v-btn>
   </div>
 </template>
