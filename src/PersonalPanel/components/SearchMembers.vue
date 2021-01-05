@@ -24,29 +24,29 @@
             ></v-text-field>
           </v-row>
           <v-row class="mx-1">
-            <v-autocomplete
+            <v-combobox
               small-chips
               label="University"
               v-model="searchMemberSchool"
               :items="universities"
               class="mr-2"
               clearable
-            ></v-autocomplete>
-            <v-autocomplete
+            ></v-combobox>
+            <v-combobox
               small-chips
               label="Major/Programme"
               v-model="searchMemberProgram"
               :items="majors"
               class="mr-2"
               clearable
-            ></v-autocomplete>
-            <v-autocomplete
+            ></v-combobox>
+            <v-combobox
               small-chips
               label="Academic Year"
               v-model="searchMemberYear"
               clearable
               :items="years"
-            ></v-autocomplete>
+            ></v-combobox>
           </v-row>
         </v-form>
         <v-row class="mb-5 mt-4">
@@ -123,7 +123,6 @@ export default {
         "Hong Kong Polytechnic University",
         "Hong Kong University of Science and Technology",
         "University of Hong Kong",
-        "Others",
       ],
       majors: [
         "Architecture",

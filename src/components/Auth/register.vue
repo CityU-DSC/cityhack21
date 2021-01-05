@@ -143,7 +143,7 @@
                       outlined
                   ></v-text-field>
                 </v-row>
-                
+
 
                 <!--                <v-radio-group-->
                 <!--                    label="Have you joined a team?"-->
@@ -295,7 +295,7 @@
                 mdi-gift
               </v-icon>
               <span class="title-3 font-weight-bold">Invite Friends and Get Friendship Rewards</span>
-              <v-spacer />
+              <v-spacer/>
               <shareNetworks
                   :url="referrerUrl"
                   title="Welcome to CityHack21!"
@@ -305,7 +305,9 @@
               />
             </v-card-title>
             <v-card-text class="">
-              <p> Let your friends put referrer account ID in registration form (need to verify AWS Educate account). You can view the ranking of top referrers in the personal panel. Top 10 referrers and referrers who invite >3 can get special rewards worth 6,000 HKD in total.</p>
+              <p> Let your friends put referrer account ID in registration form (need to verify AWS Educate account).
+                You can view the ranking of top referrers in the personal panel. Top 10 referrers and referrers who
+                invite >3 can get special rewards worth 6,000 HKD in total.</p>
               <p class="font-weight-bold subtitle-1">Press the share button and share this message to your friends!</p>
             </v-card-text>
           </v-card>
@@ -444,7 +446,7 @@ export default {
       accountDetails: {
         accountId: "",
         password: "",
-        avatarUrl: null,
+        avatarUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Flogo_w%20(1).png?alt=media&token=cb078b46-349e-4a0c-b228-11b262a9fe8b",
       },
       isAccountIdUsed: false,
       verificationCode: "",
@@ -467,7 +469,6 @@ export default {
         "Hong Kong Polytechnic University",
         "Hong Kong University of Science and Technology",
         "University of Hong Kong",
-        "Others"
       ],
       majors: [
         "Architecture",
@@ -504,6 +505,7 @@ export default {
         "Tourism & Travel Marketing",
         "Communications, General",
         "Advertising",
+        "Data Science",
         "Digital Communications/Media",
         "Journalism, Broadcast",
         "Computer Networking/Telecommunications",
@@ -617,7 +619,7 @@ export default {
     };
   },
   watch: {
-    'accountDetails.accountId': function(newVal) {
+    'accountDetails.accountId': function (newVal) {
       this.checkIsIdUsed(newVal);
       this.accountDetails.accountId = newVal;
     }
@@ -662,7 +664,7 @@ export default {
             )
             .catch(err => {
               console.log(err);
-              if (err.emailUsed){
+              if (err.emailUsed) {
                 Swal.fire({
                   icon: 'error',
                   title: 'Email is already in used',
@@ -681,10 +683,10 @@ export default {
                   showConfirmButton: false,
                 })
               }
-              
+
             });
         this.verifying = false;
-      }else {
+      } else {
         this.verifying = false;
       }
     },
@@ -704,7 +706,7 @@ export default {
               'Email has been verified!',
               'success'
           );
-          this.referrerUrl = `${process.env.VUE_APP_BASE_URL}register?referrer=${this.accountDetails.accountId}`
+          this.referrerUrl = `https://cityhack21.com/register?referrer=${this.accountDetails.accountId}`
         } else {
           Swal.fire({
             icon: 'error',
@@ -734,7 +736,16 @@ export default {
       this.$refs.accountForm.reset();
     },
     avatarImgtoUrl() {
-      this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
+      try {
+        this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
+      } catch (err) {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops... too big (,,>_<,,)",
+          text: "Please pick another picture",
+        });
+      }
 
       const reader = new FileReader();
 
@@ -746,19 +757,19 @@ export default {
       reader.readAsDataURL(this.avatarImg);
 
     },
-    saveReferPromoCode(){
+    saveReferPromoCode() {
       this.updateMe({
-        referrerAccountId:this.submission.referrerAccountId,
-        promoCode:this.submission.promoCode
+        referrerAccountId: this.submission.referrerAccountId,
+        promoCode: this.submission.promoCode
       }).then(
-        res=>{
-          console.log(res);
-          this.e6=5;
-        }
+          res => {
+            console.log(res);
+            this.e6 = 5;
+          }
       ).catch(
-        err=>{
-          console.log(err);
-        }
+          err => {
+            console.log(err);
+          }
       )
     },
     async finishAllSteps() {
@@ -830,8 +841,8 @@ export default {
   mounted() {
     // this.$refs.address.focus();
     //~/register?referrer=xxxx&promoCode=yyy
-    this.submission.referrerAccountId=this.$route.query.referrer;
-    this.submission.promoCode=this.$route.query.promoCode;
+    this.submission.referrerAccountId = this.$route.query.referrer;
+    this.submission.promoCode = this.$route.query.promoCode;
   },
 };
 </script>
