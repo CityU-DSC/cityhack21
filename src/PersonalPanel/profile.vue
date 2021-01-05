@@ -87,20 +87,20 @@
                 ></v-text-field>
               </v-row>
               <v-row class="mt-5 mb-5">
-                <v-autocomplete
+                <v-combobox
                     label="University"
                     v-model="userInfo.university"
                     :items="universities"
                     class="mx-2"
                     outlined
-                ></v-autocomplete>
-                <v-autocomplete
+                ></v-combobox>
+                <v-combobox
                     label="Major/Programme"
                     v-model="userInfo.majorProgram"
                     :items="majors"
                     class="mx-2"
                     outlined
-                ></v-autocomplete>
+                ></v-combobox>
               </v-row>
               <v-slider
                   v-if="$vuetify.breakpoint.mdAndUp"
@@ -114,13 +114,13 @@
                   ticks="always"
                   tick-size="5"
               ></v-slider>
-              <v-autocomplete
+              <v-combobox
                   v-else
                   label="Academic Year"
                   v-model="userInfo.academicYear"
                   :items="years"
                   outlined
-              ></v-autocomplete>
+              ></v-combobox>
               <v-row class="mt-5 mb-5">
                 <v-text-field
                     label="Phone Number"
@@ -245,7 +245,6 @@ export default {
         "Hong Kong Polytechnic University",
         "Hong Kong University of Science and Technology",
         "University of Hong Kong",
-        "Others"
       ],
       majors: [
         "Architecture",
