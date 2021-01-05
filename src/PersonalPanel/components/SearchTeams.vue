@@ -439,6 +439,13 @@ export default {
     };
   },
   watch: {
+    currentTeam(value) {
+      this.currentTeam = value;
+      if (!value.private) {
+        this.currentTeam.teamCode = null;
+      }
+      console.log(value);
+    },
     searchTeamName() {
       this.searchTeams();
     },
@@ -459,22 +466,16 @@ export default {
           this.currentTeam.show = true;
           this.show = !this.show;
           this.filteredTeams.push(this.currentTeam);
-          // if (this.newTeam.private) {
-          //   this.toggleTeamPrivate().then(res => {
-          //     this.teamCode = res;
-          //     this.currentTeam.private = true;
-          //   });
-          // }
         }).catch(
-      err => {
-        if(err.message == 'Member is in other teams'){
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Please leave team before creating another one.",
-          });
-        }
-      });
+            err => {
+              if (err.message === 'Member is in other teams') {
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Please leave team before creating another one.",
+                });
+              }
+            });
       }
     },
     resetCreateForm() {
@@ -487,23 +488,38 @@ export default {
       }).catch(err => console.error(err));
     },
     async joinTeamHandler(team) {
-      if (team.private) {
-        const {value: inputTeamCode} = await Swal.fire({
-          title: "Enter your team code",
-          input: "text",
-          inputLabel: "Team Code",
-          inputPlaceholder: "input team code...",
-          inputValidator: value => {
-            if (!value) {
-              return "Empty Field Error";
-            }
-          },
-        });
-        if (inputTeamCode) {
-          await this.joinTeam({teamId: team._id, teamCode: inputTeamCode}).then(res => {
+      if (this.currentTeam._id !== team._id) {
+        if (team.private) {
+          const {value: inputTeamCode} = await Swal.fire({
+            title: "Enter your team code",
+            input: "text",
+            inputLabel: "Team Code",
+            inputPlaceholder: "input team code...",
+            inputValidator: value => {
+              if (!value) {
+                return "Empty Field Error";
+              }
+            },
+          });
+          if (inputTeamCode) {
+            await this.joinTeam({teamId: team._id, teamCode: inputTeamCode}).then(res => {
+              this.searchTeams();
+              this.currentTeam = res;
+              this.teamCode = inputTeamCode;
+              Swal.fire("Success", "Join Team Was successful", "success");
+            }).catch(err => {
+              console.error(err);
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+              });
+            });
+          }
+        } else {
+          this.joinTeam({teamId: team._id}).then(res => {
             this.searchTeams();
             this.currentTeam = res;
-            this.teamCode = inputTeamCode;
             Swal.fire("Success", "Join Team Was successful", "success");
           }).catch(err => {
             console.error(err);
@@ -515,17 +531,10 @@ export default {
           });
         }
       } else {
-        this.joinTeam({teamId: team._id}).then(res => {
-          this.searchTeams();
-          this.currentTeam = res;
-          Swal.fire("Success", "Join Team Was successful", "success");
-        }).catch(err => {
-          console.error(err);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-          });
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Already in this team",
         });
       }
     },
@@ -562,10 +571,23 @@ export default {
       }).then((res) => {
         this.currentTeam = res;
       }).catch(err => console.error(err));
+      await this.searchTeam().then(res => {
+        res.map(r => {
+          if (!r.private) {
+            r.teamCode = null;
+          }
+        });
+        this.filteredTeams = res;
+      }).catch(err => console.error(err));
     },
   },
   async mounted() {
     await this.searchTeam({useAtlas: true, useSagemaker: true}).then(res => {
+      res.map(r => {
+        if (!r.private) {
+          r.teamCode = null;
+        }
+      });
       this.filteredTeams = res;
     }).catch(err => console.error(err));
     await this.myTeam().then(res => this.currentTeam = res).catch(err => console.error(err));
