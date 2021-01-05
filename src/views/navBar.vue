@@ -5,7 +5,7 @@
         <v-col class="d-flex p-0">
           <v-icon class="mr-2">mdi-instagram</v-icon>
           <v-icon class="mr-2">mdi-facebook</v-icon>
-          <v-spacer />
+          <v-spacer></v-spacer>
           <a
             href="https://cityu-dsc.github.io/dsc-web/"
             target="_blank"
@@ -19,14 +19,14 @@
         </v-col>
       </v-row>
     </v-container>
-    <div class="d-flex justify-center">
-      <img :src="CityHackLogo" style="max-width: 60px; max-height: 60px;" alt="cityHack-logo"/>
+    <div class="d-flex justify-center align-center">
+      <img :src="CityHackLogo" style="max-width: 80px; max-height: 80px;" alt="cityHack-logo"/>
       <router-link class="pl-3 d-none d-md-block" to="/" style="font-size: 40px; font-weight: bold;">#CityHack 20<span style="color:#ff9900;">21</span></router-link>
       <router-link class="d-md-none pl-3" to="/" style="font-size: 25px; font-weight: bold;">#CityHack 20<span style="color:#ff9900;">21</span></router-link>
     </div>
-    <v-row align="center" no-gutters>
-      <v-spacer></v-spacer>
-      <v-col cols="4" lg="1">
+    <v-row align="center" justify="center" no-gutters>
+      <!-- <v-spacer></v-spacer> -->
+      <v-col cols="3" lg="1">
         <v-app-bar-nav-icon
           v-if="isOverviewPage"
           class="overviewNavButton d-md-none"
@@ -39,7 +39,7 @@
       <v-col v-if="isLoggedIn" cols="3" lg="1">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on"> Hello {{ currentUserName }} </v-btn>
+            <v-btn text v-bind="attrs" v-on="on">{{ currentUserName }} </v-btn>
           </template>
           <v-list>
             <v-list-item>
@@ -66,7 +66,7 @@
           </v-list>
         </v-menu>
       </v-col>
-      <v-spacer />
+      <!-- <v-spacer /> -->
     </v-row>
   </div>
 </template>

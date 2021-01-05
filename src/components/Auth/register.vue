@@ -132,6 +132,19 @@
                       outlined
                   ></v-text-field>
                 </v-row>
+
+                <v-row class="mt-5 mb-5">
+                  <v-text-field
+                      label="Home Address"
+                      :rules="[rules.required]"
+                      v-model="submission.address"
+                      class="mx-2 mr-5"
+                      prepend-icon="mdi-at"
+                      outlined
+                  ></v-text-field>
+                </v-row>
+                
+
                 <!--                <v-radio-group-->
                 <!--                    label="Have you joined a team?"-->
                 <!--                    v-model="submission.joinedTeam"-->
@@ -263,12 +276,69 @@
       </v-stepper-content>
 
       <v-stepper-step :complete="e6 > 4" step="4">
+        Referrer and Promotion Code
+        <small>The Verification code has been sent to your email</small>
+      </v-stepper-step>
+
+      <v-stepper-content step="4">
+        <v-row>
+          <v-card
+              max-width="800"
+              class="mx-auto pa-2"
+              shaped
+          >
+            <v-card-title>
+              <v-icon
+                  left
+                  color="#ff9900"
+              >
+                mdi-gift
+              </v-icon>
+              <span class="title-3 font-weight-bold">Invite Friends and Get Friendship Rewards</span>
+              <v-spacer />
+              <shareNetworks
+                  :url="referrerUrl"
+                  title="Welcome to CityHack21!"
+                  description="CityU Hall 2 IT Team and CityU Google Developer Student Club (DSC) are very glad to announce CityHack 2021 – the hackathon event to be hosted by City University of Hong Kong. This event is open to all students, regardless of your academic background. The event will be a fulfilling experience for individuals hailing from all sorts of backgrounds."
+                  hashtags="hackathon, CityHack, cityU"
+                  quote="All you need to be part of CityHack is a passionate heart"
+              />
+            </v-card-title>
+            <v-card-text class="">
+              <p> Let your friends put referrer account ID in registration form (need to verify AWS Educate account). You can view the ranking of top referrers in the personal panel. Top 10 referrers and referrers who invite >3 can get special rewards worth 6,000 HKD in total.</p>
+              <p class="font-weight-bold subtitle-1">Press the share button and share this message to your friends!</p>
+            </v-card-text>
+          </v-card>
+        </v-row>
+        <v-row class="mt-5 mb-5">
+          <v-text-field
+              label="Referrer Account Id (if applicable)"
+              v-model="submission.referrerAccountId"
+              class="ml-5 mx-2"
+              prepend-icon="mdi-account"
+              outlined
+          ></v-text-field>
+          <v-text-field
+              label="Promotion Code (if applicable)"
+              v-model="submission.promoCode"
+              :rules="[]"
+              class="ml-5 mx-2"
+              prepend-icon="mdi-card"
+              outlined
+          ></v-text-field>
+        </v-row>
+        <v-btn color="primary" style="margin-right: 2rem;" @click="saveReferPromoCode()">
+          Continue
+        </v-btn>
+      </v-stepper-content>
+
+      <v-stepper-step :complete="e6 > 5" step="5">
         AWS Educate Account?
         <small>Through AWS Educate, students and educators have access to content and programs developed to skill up for
           cloud careers in growing fields. AWS Educate also connects companies hiring for cloud skills to qualified
           student job seekers with the AWS Educate Job Board.</small>
       </v-stepper-step>
-      <v-stepper-content step="4">
+      <v-stepper-content step="5">
         <div>
           <v-card
               class="mb-5"
@@ -341,10 +411,11 @@
 <script>
 import Swal from 'sweetalert2';
 import {mapActions} from "vuex";
+import shareNetworks from "@/components/shareNetworks";
 
 export default {
   name: "register",
-  components: {},
+  components: {shareNetworks,},
   data() {
     return {
       selectedItem: 1,
@@ -353,6 +424,7 @@ export default {
         {text: 'Receive $100 USD and Free AWS Services', icon: 'mdi-aws'},
         {text: 'Only ones who Registered can receive Souvenirs from AWS', icon: 'mdi-gift'},
       ],
+      referrerUrl: null,
       discordImgUrl: "",
       submission: {
         firstName: "",
@@ -365,6 +437,9 @@ export default {
         number: "",
         schoolEmail: "",
         personalEmail: "",
+        referrerAccountId: "",
+        promoCode: "",
+        address: ""
       },
       accountDetails: {
         accountId: "",
@@ -587,16 +662,29 @@ export default {
             )
             .catch(err => {
               console.log(err);
-              Swal.fire({
-                icon: 'error',
-                title: 'Email is already in used',
-                text: 'do you want to reset the password?',
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.$router.push({name: 'login'});
-                }
-              })
+              if (err.emailUsed){
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Email is already in used',
+                  text: 'do you want to reset the password?',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.$router.push({name: 'login'});
+                  }
+                })
+              } else {
+
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Opps...',
+                  text: 'Unknown error, please try again later',
+                  showConfirmButton: false,
+                })
+              }
+              
             });
+        this.verifying = false;
+      }else {
         this.verifying = false;
       }
     },
@@ -616,6 +704,7 @@ export default {
               'Email has been verified!',
               'success'
           );
+          this.referrerUrl = `${process.env.VUE_APP_BASE_URL}register?referrer=${this.accountDetails.accountId}`
         } else {
           Swal.fire({
             icon: 'error',
@@ -657,6 +746,21 @@ export default {
       reader.readAsDataURL(this.avatarImg);
 
     },
+    saveReferPromoCode(){
+      this.updateMe({
+        referrerAccountId:this.submission.referrerAccountId,
+        promoCode:this.submission.promoCode
+      }).then(
+        res=>{
+          console.log(res);
+          this.e6=5;
+        }
+      ).catch(
+        err=>{
+          console.log(err);
+        }
+      )
+    },
     async finishAllSteps() {
       await this.updateMe({
         awsEducateReason: this.selectedItem,
@@ -676,7 +780,6 @@ export default {
           Swal.fire({
             title: 'Successfully Registered!',
             html: '<ul><li>Please Upload AWS Educate Account Verification to personal email </li>' +
-                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>' +
                 '<li>Join Discord with us for more information!!</li>' +
                 '</ul>',
             text: '',
@@ -700,7 +803,6 @@ export default {
           Swal.fire({
             title: 'Almost Done!!',
             html: '<ul><li>Join Discord with us for more information!!</li>' +
-                '<li><a href="">Join our WhatsApp Group to meet your friends!!</a></li>' +
                 '<li>We will direct you to AWS Educate with our UNIQUE promo-code</li>' +
                 '</ul>',
             text: '',
@@ -727,6 +829,9 @@ export default {
   },
   mounted() {
     // this.$refs.address.focus();
+    //~/register?referrer=xxxx&promoCode=yyy
+    this.submission.referrerAccountId=this.$route.query.referrer;
+    this.submission.promoCode=this.$route.query.promoCode;
   },
 };
 </script>

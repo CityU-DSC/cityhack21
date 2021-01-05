@@ -33,5 +33,8 @@ export default {
     },
     updateMe(params, token) {
         return axios.put('/user/me', params, {headers: {Authorization: "Bearer " + token}})
+    },
+    forgetPassword(params) {
+        return axios.post('/user/forgetPassword', params);
     }
 };
