@@ -488,7 +488,7 @@ export default {
       }).catch(err => console.error(err));
     },
     async joinTeamHandler(team) {
-      if (this.currentTeam._id !== team._id) {
+      if (this.currentTeam && this.currentTeam._id !== team._id) {
         if (team.private) {
           const {value: inputTeamCode} = await Swal.fire({
             title: "Enter your team code",

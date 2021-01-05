@@ -41,22 +41,22 @@
                   ></v-text-field>
                 </v-row>
                 <v-row class="mt-5 mb-5">
-                  <v-autocomplete
+                  <v-combobox
                       label="University"
                       v-model="submission.university"
                       :items="universities"
                       :rules="[rules.required]"
                       class="mx-2"
                       outlined
-                  ></v-autocomplete>
-                  <v-autocomplete
+                  ></v-combobox>
+                  <v-combobox
                       label="Major/Programme"
                       v-model="submission.majorProgram"
                       :items="majors"
                       :rules="[rules.required]"
                       class="mx-2"
                       outlined
-                  ></v-autocomplete>
+                  ></v-combobox>
                 </v-row>
                 <v-slider
                     v-if="$vuetify.breakpoint.mdAndUp"
@@ -70,13 +70,13 @@
                     ticks="always"
                     tick-size="5"
                 ></v-slider>
-                <v-autocomplete
+                <v-combobox
                     v-else
                     label="Academic Year"
                     v-model="submission.year"
                     :items="years"
                     outlined
-                ></v-autocomplete>
+                ></v-combobox>
                 <v-row class="mt-5 mb-5">
                   <v-text-field
                       label="Phone Number (for WhatsApp)"
@@ -161,7 +161,7 @@
                 <!--                      value="false"-->
                 <!--                  ></v-radio>-->
                 <!--                </v-radio-group>-->
-                <!--                <vuetify-google-autocomplete-->
+                <!--                <vuetify-google-combobox-->
                 <!--                    ref="submission.address"-->
                 <!--                    id="map"-->
                 <!--                    append-icon="mdi-search"-->
@@ -170,7 +170,7 @@
                 <!--                    placeholder="Please type your address"-->
                 <!--                    v-on:placechanged="getAddressData"-->
                 <!--                >-->
-                <!--                </vuetify-google-autocomplete>-->
+                <!--                </vuetify-google-combobox>-->
               </v-col>
             </v-row>
           </v-container>
@@ -197,7 +197,7 @@
                 >
               </v-avatar>
               <v-file-input
-                  :rules="[rules.avatarSize, rules.required]"
+                  :rules="[rules.avatarSize]"
                   accept="image/png, image/jpeg, image/bmp"
                   placeholder="Pick an avatar"
                   prepend-icon="mdi-camera"
