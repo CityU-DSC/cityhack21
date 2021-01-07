@@ -19,6 +19,7 @@
     "sweetalert2": "^10.12.6",
     "timeline-vuejs": "^1.1.7",
     "vue": "^2.6.12",
+    "vue-analytics": "^5.22.1",
     "vue-carousel-3d": "^1.0.1",
     "vue-fullpage.js": "^0.1.6",
     "vue-horizontal-timeline": "^0.7.0",
