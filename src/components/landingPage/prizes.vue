@@ -1,22 +1,12 @@
 <template>
   <v-container>
-    <v-toolbar flat>
-      <v-toolbar-title>CityHack 2021 Prizes</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon @click.stop="close">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-    </v-toolbar>
     <v-row>
       <v-col cols="12" sm="12" md='6' lg="4" v-for="prize in prizes" :key="prize.id">
         <figure class="prizeCard">
-          <img :src="prize.img" alt="prize image"/>
+          <img style="height: 200px; object-fit: cover;"  :src="prize.img" alt="prize image"/>
           <figcaption>
             <v-avatar class="mb-2">
-              <img
-                  :src="prize.brandLogo"
-                  alt="brand logo"
-              >
+              <img :src="prize.brandLogo" alt="brand logo">
               <a :href="prize.brandUrl" target="_blank" />
             </v-avatar>
             <h4> {{prize.brand}} <span>{{ prize.name }}</span></h4>
@@ -38,28 +28,28 @@ export default {
     return {
       prizes: [
         {
-          name: 'Old Radio',
-          brand: 'OldSchool',
-          brandLogo: 'https://cdn.vuetifyjs.com/images/john.jpg',
-          brandUrl: 'https://cityu-hall2.github.io/',
-          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample103.jpg',
-          value: '1,500',
+          name: 'Champion',
+          brand: 'Kindle + Cash',
+          brandLogo: 'https://iconarchive.com/download/i87070/graphicloads/colorful-long-shadow/Cup-champion.ico',
+          brandUrl: 'https://cityhack21.com/register',
+          img: 'https://i.pcmag.com/imagery/lineups/03DVzCnZHBMAqvUwAAueYME-1.1569492808.fit_lim.size_1182x667.jpg',
+          value: '> 20,000',
         },
         {
-          name: 'AWS Develop kit',
-          brand: 'AWS Educate',
+          name: '1st Runner Up',
+          brand: 'Cash + Taste Coupon',
+          brandLogo: 'https://cdn.iconscout.com/icon/free/png-256/huawei-226443.png',
+          brandUrl: 'https://cityhack21.com/register',
+          img: 'https://www.festivalwalk.com.hk/images/shops_detail/MTR-05_TaSTe.jpg',
+          value: '15,000',
+        },
+        {
+          name: '2nd Runner Up',
+          brand: 'Cash + Taste Coupon',
           brandLogo: 'https://res-3.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/r4wsu8rl4jvpjydbhooy',
-          brandUrl: 'https://cityu-hall2.github.io/',
-          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample104.jpg',
-          value: '5,250',
-        },
-        {
-          name: 'Google Support',
-          brand: 'Google',
-          brandLogo: 'https://cdn.iconscout.com/icon/free/png-256/google-146-189804.png',
-          brandUrl: 'https://cityu-hall2.github.io/',
-          img: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample105.jpg',
-          value: '600',
+          brandUrl: 'https://cityhack21.com/register',
+          img: 'https://www.eyeshenzhen.com/pic/2017-01/02/IMG507b9de776274333414568.png',
+          value: '10,000',
         },
       ]
     }
@@ -83,6 +73,9 @@ export default {
 </script>
 
 <style scoped>
+span {
+  color: #000000;
+}
 .prizeCard {
   background-color: #fff;
   color: #444;

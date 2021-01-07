@@ -14,17 +14,17 @@
           <h3>{{ slide.name }} </h3>
         </div>
         <figure>
-          <img :src="slide.img" alt="">
+          <img style="top: -10px;" :src="slide.img" alt="">
         </figure>
       </slide>
     </carousel-3d>
     <div v-if="selectedSlideId===1"> <AboutUs/> </div>
-    <div v-if="selectedSlideId===2"> <RulesAndCriteria/> </div>
-    <div v-if="selectedSlideId===3"> <TimeLine/> </div>
-<!--    <div v-if="selectedSlideId===4"><Prizes/></div>-->
-    <div v-if="selectedSlideId===4"> <QandA/> </div>
-<!--    <div v-if="selectedSlideId === 6"><Judges/></div>-->
-    <div v-if="selectedSlideId===5"> <Sponsors/> </div>
+    <div v-if="selectedSlideId===2"> <Prizes/> </div>
+    <div v-if="selectedSlideId===3"> <RulesAndCriteria/> </div>
+    <div v-if="selectedSlideId===4"> <TimeLine/> </div>
+    <div v-if="selectedSlideId===5"> <QandA/> </div>
+    <!--    <div v-if="selectedSlideId === 6"><Judges/></div>-->
+    <div v-if="selectedSlideId===6"> <Sponsors/> </div>
   </div>
 </template>
 
@@ -36,11 +36,12 @@ import imageThree from "../../assets/image/slides/3.jpg";
 import imageFive from "../../assets/image/slides/5.jpg";
 // import imageSix from "../../assets/image/slides/6.jpg";
 import imageSeven from "../../assets/image/slides/7.jpg";
+import imagePrize from "../../assets/image/slides/8.jpg";
 
 import AboutUs from "./aboutUs";
 import TimeLine from "./timeLine";
 // import Judges from "./judges";
-// import Prizes from "./prizes";
+import Prizes from "./prizes";
 import RulesAndCriteria from "./rulesAndCriteria";
 import Sponsors from './sponsors';
 import QandA from "./QandA";
@@ -51,7 +52,7 @@ export default {
     AboutUs,
     TimeLine,
     // Judges,
-    // Prizes,
+    Prizes,
     RulesAndCriteria,
     Sponsors,
     QandA,
@@ -60,21 +61,21 @@ export default {
     return {
       navSlides: [
         {id: 1, text: 'About CityHack'},
-        {id: 2, text: 'Rules & Judging Criteria'},
-        {id: 3, text: 'TimeLine'},
-        // {id: 4, text: 'Prizes'},
-        {id: 4, text: 'Q&As'},
+        {id: 2, text: 'Prizes'},
+        {id: 3, text: 'Rules & Judging Criteria'},
+        {id: 4, text: 'TimeLine'},
+        {id: 5, text: 'Q&As'},
         // {id: 6, text: 'Judges'},
-        {id: 5, text: 'Sponsors'},
+        {id: 6, text: 'Sponsors'},
       ],
       slides: [
         {id: 1, name: "About CityHack", img: imageOne},
-        {id: 2, name: "Rules & Judging Criteria", img: imageThree},
-        {id: 3, name: "TimeLine", img: imageTwo},
-        // {id: 4, name: "Prizes", img: imageFour},
-        {id: 4, name: "Q&As", img: imageFive},
+        {id: 2, name: "Prizes", img: imagePrize},
+        {id: 3, name: "Rules & Judging Criteria", img: imageThree},
+        {id: 4, name: "TimeLine", img: imageTwo},
+        {id: 5, name: "Q&As", img: imageFive},
         // {id: 6, name: "Judges", img: imageSix},
-        {id: 5, name: "Sponsors", img: imageSeven},
+        {id: 6, name: "Sponsors", img: imageSeven},
       ],
       count: null,
       selectedSlideId: 1,
