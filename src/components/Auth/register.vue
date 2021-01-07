@@ -700,6 +700,7 @@ export default {
         });
 
         if (token) {
+          this.$ga.set('userId', JSON.parse(atob(token.split('.')[1]))._id);
           localStorage.setItem("jwt", token);
           Swal.fire(
               'Success',

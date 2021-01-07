@@ -43,6 +43,7 @@ export default {
     PreLoader,
   },
   async mounted() {
+    this.$ga.set('userId', JSON.parse(atob(localStorage.getItem("jwt").split('.')[1]))._id);
     this.overlay = true;
     try {
       const res = await fetch('https://cityhack21.com');

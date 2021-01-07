@@ -11,6 +11,7 @@ import vuetify from "./plugins/vuetify";
 import VueFullPage from "vue-fullpage.js";
 import dayjs from "dayjs";
 import VueSocialSharing from 'vue-social-sharing'
+import VueAnalytics from 'vue-analytics';
 
 
 // import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
@@ -40,6 +41,11 @@ Vue.use(firestorePlugin);
 // Vue.use(VueTelInputVuetify, {
 //   vuetify,
 // });
+
+Vue.use(VueAnalytics, {
+  id: 'UA-186817163-1',
+  router
+});
 
 new Vue({
   store,

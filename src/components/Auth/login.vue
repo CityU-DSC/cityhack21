@@ -82,6 +82,7 @@ export default {
     async loginUser() {
       await this.loginByEmailPassword(this.login).then(res => {
         if (res.token) {
+          this.$ga.set('userId', JSON.parse(atob(res.token.split('.')[1]))._id);
           localStorage.setItem("jwt", res.token);
           Swal.fire(
               'Success',
@@ -128,6 +129,7 @@ export default {
         const {token} = await this.verifyUser(requestBody);
 
         if (token) {
+          this.$ga.set('userId', JSON.parse(atob(token.split('.')[1]))._id);
           localStorage.setItem("jwt", token);
           Swal.fire(
               'Success',
