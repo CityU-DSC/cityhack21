@@ -60,7 +60,7 @@
     </div>
     <div id="uploader">
       <v-app id="inspire">
-        <v-content>
+        <v-main>
           <v-container fluid>
             <v-layout align-center justify-center>
               <v-flex xs12 sm8 md4>
@@ -87,7 +87,7 @@
               </v-flex>
             </v-layout>
           </v-container>
-        </v-content>
+        </v-main>
       </v-app>
     </div>
     <guide v-model="showAWSGuide" />
@@ -226,7 +226,7 @@ export default {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: 'Something went wrong!',
+              text: err.message,
             });
           }
 

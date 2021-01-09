@@ -45,82 +45,6 @@
         </figure>
       </v-col>
     </v-row>
-<!--    <div class="text-center">-->
-<!--      <v-chip-->
-<!--          class="mt-5"-->
-<!--          color="#ebad00"-->
-<!--          style="padding: 2rem 1.8rem 1rem 2rem; color: white;"-->
-<!--      >-->
-<!--        <h3 style="font-weight: normal"> Golden Sponsor</h3>-->
-<!--      </v-chip>-->
-<!--    </div>-->
-<!--    <v-row>-->
-<!--      <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">-->
-<!--        <figure class="sponsorCard yellow">-->
-<!--          <img :src="sponsor.img" alt="sponsor img"/>-->
-<!--          <figcaption>-->
-<!--            <div class="sponsorName">-->
-<!--              <img-->
-<!--                  :src="sponsor.brandLogo"-->
-<!--                  alt="brand logo"-->
-<!--                  width="100"-->
-<!--              >-->
-<!--              <a :href="sponsor.brandUrl" target="_blank"/>-->
-<!--            </div>-->
-<!--          </figcaption>-->
-<!--          <div class="reverse">-->
-<!--            <div class="icons">-->
-<!--              <h5>{{ sponsor.name }}</h5>-->
-<!--              <p>{{ sponsor.info }} </p>-->
-<!--              <a :href="sponsor.websiteUrl">-->
-<!--                <v-icon>mdi-web</v-icon>-->
-<!--              </a>-->
-<!--              <a :href="sponsor.socialMediaUrl">-->
-<!--                <v-icon>mdi-facebook</v-icon>-->
-<!--              </a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </figure>-->
-<!--      </v-col>-->
-<!--    </v-row>-->
-<!--    <div class="text-center">-->
-<!--      <v-chip-->
-<!--          class="mt-5"-->
-<!--          color="#c0c0c0"-->
-<!--          style="padding: 1.8rem 1.8rem 1rem 2rem; color: white;"-->
-<!--      >-->
-<!--        <h5 style="font-weight: normal"> Silver Sponsor</h5>-->
-<!--      </v-chip>-->
-<!--    </div>-->
-<!--    <v-row>-->
-<!--      <v-col v-for="sponsor in diamondSponsors" :key="sponsor.id" cols="12" sm="12" md='6' lg="4">-->
-<!--        <figure class="sponsorCard yellow">-->
-<!--          <img :src="sponsor.img" width="200" alt="sponsor img"/>-->
-<!--          <figcaption>-->
-<!--            <div class="sponsorName">-->
-<!--              <img-->
-<!--                  :src="sponsor.brandLogo"-->
-<!--                  alt="brand logo"-->
-<!--                  width="100"-->
-<!--              >-->
-<!--              <a :href="sponsor.brandUrl" target="_blank"/>-->
-<!--            </div>-->
-<!--          </figcaption>-->
-<!--          <div class="reverse">-->
-<!--            <div class="icons">-->
-<!--              <h5>{{ sponsor.name }}</h5>-->
-<!--              <p>{{ sponsor.info }} </p>-->
-<!--              <a :href="sponsor.websiteUrl">-->
-<!--                <v-icon>mdi-web</v-icon>-->
-<!--              </a>-->
-<!--              <a :href="sponsor.socialMediaUrl">-->
-<!--                <v-icon>mdi-facebook</v-icon>-->
-<!--              </a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </figure>-->
-<!--      </v-col>-->
-<!--    </v-row>-->
   </v-container>
 </template>
 
@@ -174,6 +98,15 @@ export default {
           brandUrl: 'https://www.sensetime.com/hmt-en?gclid=CjwKCAiAtej9BRAvEiwA0UAWXpe2JrYBEdizIR7TMM09yZtNtiUohK6xd-89tdoqyJhXQBygEW635xoCDg8QAvD_BwE',
           info: 'SenseTime aims to develop AI technologies that advance the world for a better tomorrow.',
           websiteUrl: 'https://www.sensetime.com/hmt-en?gclid=CjwKCAiAtej9BRAvEiwA0UAWXpe2JrYBEdizIR7TMM09yZtNtiUohK6xd-89tdoqyJhXQBygEW635xoCDg8QAvD_BwE',
+          socialMediaUrl: ''
+        },
+        {
+          name: 'Sengital',
+          img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Streulichtfilterung.3.P1023258.jpg/540px-Streulichtfilterung.3.P1023258.jpg',
+          brandLogo: 'https://secure.gravatar.com/blavatar/ff5e861d3e43910df2102e768d3f208e?s=200&ts=1604902363',
+          brandUrl: 'https://sengital.com/about/',
+          info: 'Sengital has rich experience in sensor and wireless network for IoT applications',
+          websiteUrl: 'https://sengital.com/about/',
           socialMediaUrl: ''
         },
       ],
