@@ -29,6 +29,25 @@
         </v-carousel-item>
       </v-carousel>
     </v-col>
+    <v-col>
+      <v-parallax
+          v-for="img in awsImgs"
+          :key="img._id"
+          :src="img.imageUrl"
+          height="200"
+      >
+        <v-alert
+            width="200"
+            transition="scale-transition"
+            dense
+            id="awsStatus"
+            type="warning"
+        >
+          {{ img.status }}
+        </v-alert>
+
+      </v-parallax>
+    </v-col>
     <div class="mt-5">
       <!--    <v-col>-->
       <!--      <h5>Example</h5>-->
@@ -112,6 +131,8 @@ export default {
     return {
       showAWSGuide: false,
 
+      awsImgs: [],
+
       pathName: "AWSVerification Page",
       dialog: false,
       imageName: "",
@@ -142,7 +163,7 @@ export default {
     this.getImages();
   },
   methods: {
-    ...mapActions('aws_verify', ['awsVerify']),
+    ...mapActions('aws_verify', ['awsVerify', 'getAWSVerifications']),
     directTo(page) {
       this.$router.push(page);
     },
@@ -194,6 +215,7 @@ export default {
           title: 'No image is selected yet',
           text: 'Please select an image first',
         });
+        this.uploading = false;
         return;
       }
       mountainsRef.put(this.imageFile).then(snapshot => {
@@ -250,8 +272,9 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     this.showAWSGuide = true;
+    await this.getAWSVerifications().then(res => this.awsImgs = res);
   }
 }
 </script>
@@ -263,5 +286,14 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#awsStatus {
+  text-align: center;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
 }
 </style>

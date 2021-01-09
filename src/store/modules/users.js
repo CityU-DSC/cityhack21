@@ -5,6 +5,7 @@ export default {
     state: {
         usersList: [],
         referrersList: [],
+
     },
     getters: {
         usersList: (state) => state.usersList,

@@ -112,6 +112,6 @@ export default {
     forgetPassword(commit, params){
       // params = { email }
       return auth.forgetPassword(params)
-    }
+    },
   }
 };

@@ -5,10 +5,12 @@ export default{
     state:{
         currentImgUrl: null,
         verificationStatus: 'not submitted',
+        awsVerifications: [],
     },
     getters:{
         currentImgUrl: state => state.currentImgUrl,
-        verificationStatus: state => state.verificationStatus
+        verificationStatus: state => state.verificationStatus,
+        awsVerifications: state => state.awsVerifications,
     },
     mutations:{
         setCurrentImgUrl: (state, imgUrl) => {
@@ -16,7 +18,8 @@ export default{
         },
         setVerificationStatus: (state, status) => {
             state.verificationStatus = status;
-        }
+        },
+        setAWSVerifications: (state, aws) => state.awsVerifications = aws,
     },
     actions:{
         awsVerify({ commit }, params){
@@ -36,6 +39,12 @@ export default{
                     commit("setVerificationStatus", res.status)
                 }
             )
+        },
+        getAWSVerifications({commit}) {
+            return aws_verify.getAWSVerifications().then(res => {
+                commit('setAWSVerifications', res.awsVerifications);
+                return res.awsVerifications;
+            })
         }
     }
 }
