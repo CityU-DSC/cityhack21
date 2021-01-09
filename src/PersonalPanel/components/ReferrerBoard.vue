@@ -5,10 +5,9 @@
         :items="referrers"
         @click:row="openDetailProfile"
         class="elevation-1 clickable"
-        :pagination.sync="pagination"
     >
       <template v-slot:items="props">
-        <td>{{ props.items.id }}</td>
+        <td>{{props.items.rank}}</td>
         <td>{{ props.item.accountId }}</td>
         <td class="text-xs-right">{{ props.item.referrerCount }}</td>
       </template>
@@ -28,11 +27,8 @@ export default {
   },
   data() {
     return {
-      pagination: {
-        page: 1,
-      },
       headers: [
-        {text: "Ranking", value: 'id'},
+        {text: "Ranking", value: 'rank'},
         {text: "Account ID", align: "left", value: "accountId"},
         {text: "Referrer Count", value: "referrerCount"},
       ],
