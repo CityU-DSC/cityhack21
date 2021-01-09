@@ -143,34 +143,6 @@
                       outlined
                   ></v-text-field>
                 </v-row>
-
-
-                <!--                <v-radio-group-->
-                <!--                    label="Have you joined a team?"-->
-                <!--                    v-model="submission.joinedTeam"-->
-                <!--                    row-->
-                <!--                    :rules="[rules.required]"-->
-                <!--                >-->
-                <!--                  <v-radio-->
-                <!--                      class="ml-5"-->
-                <!--                      label="Yes"-->
-                <!--                      value="true"-->
-                <!--                  ></v-radio>-->
-                <!--                  <v-radio-->
-                <!--                      label="No"-->
-                <!--                      value="false"-->
-                <!--                  ></v-radio>-->
-                <!--                </v-radio-group>-->
-                <!--                <vuetify-google-combobox-->
-                <!--                    ref="submission.address"-->
-                <!--                    id="map"-->
-                <!--                    append-icon="mdi-search"-->
-                <!--                    classname="form-control"-->
-                <!--                    country="hk"-->
-                <!--                    placeholder="Please type your address"-->
-                <!--                    v-on:placechanged="getAddressData"-->
-                <!--                >-->
-                <!--                </vuetify-google-combobox>-->
               </v-col>
             </v-row>
           </v-container>
@@ -192,7 +164,7 @@
 
               <v-avatar size="80" color="#121212" class="mr-5 mx-2">
                 <img
-                    :src="accountDetails.avatarUrl"
+                    :src="avatarImg.url"
                     alt="Personal Avatar"
                 >
               </v-avatar>
@@ -203,7 +175,6 @@
                   prepend-icon="mdi-camera"
                   label="Profile Avatar"
                   class="mx-2 mt-2"
-                  v-model="avatarImg"
                   @change="avatarImgtoUrl"
               ></v-file-input>
             </v-row>
@@ -414,6 +385,7 @@
 import Swal from 'sweetalert2';
 import {mapActions} from "vuex";
 import shareNetworks from "@/components/shareNetworks";
+import {db, storage} from "@/config/firebaseConfig";
 
 export default {
   name: "register",
@@ -455,7 +427,7 @@ export default {
         hasAWSAccount: "false",
         needAWSExtraCredit: "false",
       },
-      avatarImg: null,
+      avatarImg: {name: null, url: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Flogo_w%20(1).png?alt=media&token=cb078b46-349e-4a0c-b228-11b262a9fe8b", file: null},
       verifiedPassword: null,
       showPassword: false,
       showVerifiedPassword: false,
@@ -631,9 +603,6 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["registerUser", "verifyUser", "resendVerification", "updateMe", "accountIdUsed"]),
-    // getAddressData(addressData) {
-    //   this.submission.address = addressData;
-    // },
     async checkIsIdUsed(id) {
       await this.accountIdUsed(id).then(res => this.isAccountIdUsed = res.accountIdUsed);
     },
@@ -643,6 +612,32 @@ export default {
         if (this.$vuetify.breakpoint.mdAndUp) {
           this.submission.year = this.years[this.year_1];
         }
+        let mountRef = storage.ref().child(`avatar/${this.avatarImg.name}`);
+        mountRef.put(this.avatarImg.file).then(snapshot => {
+          snapshot.ref.getDownloadURL().then(url => {
+            console.log("URL,", url);
+            this.accountDetails.avatarUrl = url;
+            const bucketName = "cityhack21-6404b.appspot.com";
+            const filePath = this.avatarImg.name;
+            try {
+              db.collection("avatarImg").add({
+                url,
+                downloadUrl:
+                    `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/avatar` +
+                    "%2F" +
+                    `${encodeURIComponent(filePath)}?alt=media`,
+                timestamp: Date.now()
+              }).then(() => this.accountDetails.avatarUrl = url);
+            } catch (err) {
+              console.error(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.message,
+              });
+            }
+          })
+        });
         await this.registerUser({...this.submission, ...this.accountDetails})
             .then(
                 ({err}) => {
@@ -650,12 +645,12 @@ export default {
                     Swal.fire({
                       icon: 'error',
                       title: 'Oops...',
-                      text: 'Something went wrong!',
+                      text: err,
                     })
                   } else {
                     Swal.fire(
                         'Success',
-                        'Please Input the verification code send to your email',
+                        'Please Input the verification code send to your email (maybe in spamQQ)',
                         'success'
                     );
                   }
@@ -675,11 +670,10 @@ export default {
                   }
                 })
               } else {
-
                 Swal.fire({
                   icon: 'error',
                   title: 'Opps...',
-                  text: 'Unknown error, please try again later',
+                  text: err.message,
                   showConfirmButton: false,
                 })
               }
@@ -736,27 +730,23 @@ export default {
     resetAccountForm() {
       this.$refs.accountForm.reset();
     },
-    avatarImgtoUrl() {
-      try {
-        this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
-      } catch (err) {
-        console.error(err);
-        Swal.fire({
-          icon: "error",
-          title: "Oops... too big (,,>_<,,)",
-          text: "Please pick another picture",
+    avatarImgtoUrl(e) {
+      const avatar = e;
+      if (avatar) {
+        this.avatarImg.name = avatar.name;
+        if (this.avatarImg.name.lastIndexOf(".") <= 0) {
+          return;
+        }
+        const fr = new FileReader();
+        fr.readAsDataURL(avatar);
+        fr.addEventListener("load", () => {
+          this.avatarImg.url = fr.result;
+          this.avatarImg.file = avatar;
         });
+        this.accountDetails.avatarUrl = this.avatarImg.url;
+      } else {
+        this.avatarImg = {name: null, url: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Flogo_w%20(1).png?alt=media&token=cb078b46-349e-4a0c-b228-11b262a9fe8b", file: null};
       }
-
-      const reader = new FileReader();
-
-      reader.addEventListener(
-          "load", () => {
-            this.accountDetails.avatarUrl = reader.result;
-          }
-      );
-      reader.readAsDataURL(this.avatarImg);
-
     },
     saveReferPromoCode() {
       this.updateMe({

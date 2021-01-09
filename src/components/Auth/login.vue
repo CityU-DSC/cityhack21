@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-form>
-      <v-container class="mt-5" style="width: 600px;">
+      <v-container class="mt-5" style="max-width: 600px;">
         <v-text-field
             v-model="login.email"
             :rules="emailRules"
@@ -15,12 +15,13 @@
             @click:append="showPassword = !showPassword"
             v-model="login.password"
             label="Password"
+            @keyup.enter="loginUser"
             required
             outlined
         ></v-text-field>
         <v-row>
           <router-link to="/register" style='text-decoration: none;'>Dont have an account?</router-link>
-          <v-spacer/>
+          <v-spacer />
           <v-btn @click="loginUser" class="ml-5">
             Sign in
           </v-btn>
@@ -89,7 +90,7 @@ export default {
               'Login Successful',
               'success'
           );
-          this.adminList.includes(res.user.email) ? this.$router.push("/admin") : this.$router.push("/");
+          this.adminList.includes(res.user.email) ? this.$router.push("/admin") : this.$router.push({name: 'personal'});
         }
       }).catch(err => {
         if (err.reverify) {

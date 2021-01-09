@@ -2,7 +2,9 @@
   <div id="promotion_template">
     <h3>#CityHack21 is comming!</h3>
     <div id="img_container">
-      <img src="../../assets/image/promotion_poster/img1.jpg"/>
+      <a href="https://forms.gle/SfbbtPnLscM2Sxtw5" target="_blank">
+        <img src="../../assets/image/promotion_poster/aws.jpg"/>
+      </a>
     </div>
   </div>
 </template>
