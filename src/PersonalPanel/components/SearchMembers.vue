@@ -53,8 +53,8 @@
           <v-switch
               class="ml-4"
               color="#53354a"
-              v-model="searchHasTeam"
-              label="Has Team?"
+              v-model="searchNoTeam"
+              label="Search Members without Team?"
           ></v-switch>
           <v-spacer />
           <v-btn outlined color="#ff9900" class="mr-3" @click="searchUsers"
@@ -114,7 +114,7 @@ export default {
       searchMemberYear: null,
       searchMemberProgram: null,
       searchMemberAccountId: null,
-      searchHasTeam: false,
+      searchNoTeam: false,
 
       universities: [
         "City University of Hong Kong",
@@ -262,6 +262,7 @@ export default {
         searchMemberSchool,
         searchMemberYear,
         searchMemberProgram,
+        searchNoTeam,
       } = this;
 
       const params = {
@@ -271,6 +272,7 @@ export default {
         ...(searchMemberYear && { year: searchMemberYear }),
         ...(searchMemberEmail && { email: searchMemberEmail }),
         ...(searchMemberProgram && { majorProgram: searchMemberProgram }),
+        noTeam: searchNoTeam,
       };
 
       this.listAllUsers(params).then((res) => (this.filteredUsers = res));
