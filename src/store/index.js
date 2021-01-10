@@ -7,7 +7,8 @@ import menu from "./modules/menu";
 import util from "./modules/util";
 import users from "./modules/users";
 import aws_verify from "./modules/aws_verify"
-import teams from "./modules/teams"
+import teams from "./modules/teams";
+import project from "./modules/project";
 
 Vue.use(Vuex);
 
@@ -20,7 +21,8 @@ const store = () =>
             util,
             users,
             aws_verify,
-            teams
+            teams,
+            project,
         }
     });
 
