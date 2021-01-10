@@ -66,7 +66,8 @@ export default {
         {id: 2, title: "Profile Page", icon: 'mdi-account', page: '/personal/profile'},
         {id: 3, title: "AWS Educate Verification", icon: 'mdi-aws', page: '/personal/verification'},
         {id: 4, title: "Team Up", icon: 'mdi-account-group', page: '/personal/team'},
-        // {id: 5, title: "File", icon: 'mdi-upload'},
+        {id: 5, title: "Submission", icon: 'mdi-upload', page: '/personal/submission'},
+        {id: 6, title: "Time Table", icon: 'mdi-calendar-clock', page: '/personal/timeSlot'},
       ],
     };
   },
