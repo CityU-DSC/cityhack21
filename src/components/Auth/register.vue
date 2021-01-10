@@ -615,7 +615,6 @@ export default {
         let mountRef = storage.ref().child(`avatar/${this.avatarImg.name}`);
         mountRef.put(this.avatarImg.file).then(snapshot => {
           snapshot.ref.getDownloadURL().then(url => {
-            console.log("URL,", url);
             this.accountDetails.avatarUrl = url;
             const bucketName = "cityhack21-6404b.appspot.com";
             const filePath = this.avatarImg.name;

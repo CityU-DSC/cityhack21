@@ -26,7 +26,7 @@
       <router-link class="d-md-none pl-3" to="/" style="font-size: 25px; font-weight: bold;">#CityHack 20<span
           style="color:#ff9900;">21</span></router-link>
     </div>
-    <v-app-bar elevation="0" flat justify="center" no-gutters dense>
+    <v-app-bar class="appBar" elevation="0" flat justify="center" no-gutters dense>
       <v-spacer/>
       <v-app-bar-nav-icon
           v-if="isOverviewPage"
@@ -54,21 +54,7 @@
         <v-btn text><router-link to="/login">Log In</router-link></v-btn>
         <v-btn text><router-link to="/register">Register</router-link></v-btn>
       </div>
-
       <v-spacer/>
-      <!--        <v-menu offset-y>-->
-      <!--          <template v-slot:activator="{ on, attrs }">-->
-      <!--            <v-btn text v-bind="attrs" v-on="on"> Account </v-btn>-->
-      <!--          </template>-->
-      <!--          <v-list>-->
-      <!--            <v-list-item>-->
-      <!--              <v-list-item-title><router-link to="/login">Log In</router-link></v-list-item-title>-->
-      <!--            </v-list-item>-->
-      <!--            <v-list-item>-->
-      <!--              <v-list-item-title><router-link to="/register">Register</router-link></v-list-item-title>-->
-      <!--            </v-list-item>-->
-      <!--          </v-list>-->
-      <!--        </v-menu>-->
     </v-app-bar>
   </div>
 </template>
@@ -158,8 +144,14 @@ a:hover {
   z-index: 6;
   background: #121212;
 }
+#app > div.v-application--wrap > div.navigation > header {
+  background: #121212 !important;
+}
+#app > div.v-application--wrap > div.navigation > header > div > div:nth-child(4) > button {
+  background: #121212 !important;
+}
 
-.theme--dark[data-v-05e13aec] {
+#app > div.v-application--wrap > div.navigation > header > div > button {
   background: #121212 !important;
 }
 </style>

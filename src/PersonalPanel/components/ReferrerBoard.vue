@@ -7,7 +7,7 @@
         class="elevation-1 clickable"
     >
       <template v-slot:items="props">
-        <td>{{props.items.id}}</td>
+        <td>{{props.items.rank}}</td>
         <td>{{ props.item.accountId }}</td>
         <td class="text-xs-right">{{ props.item.referrerCount }}</td>
       </template>
@@ -25,35 +25,33 @@ export default {
   components: {
     ProfileDetail,
   },
-  data(){
-    return{
+  data() {
+    return {
       headers: [
-        { text: "Ranking", value: 'id' },
-        { text: "Account ID", align: "left", value: "accountId" },
-        { text: "Referrer Count", value: "referrerCount" },
+        {text: "Ranking", value: 'rank'},
+        {text: "Account ID", align: "left", value: "accountId"},
+        {text: "Referrer Count", value: "referrerCount"},
       ],
-      referrers: [
-
-      ],
+      referrers: [],
       openProfile: false,
       selectedProfile: null,
     }
   },
   watch: {
-    referrers(newVal){
+    referrers(newVal) {
       this.referrers = newVal
     }
   },
   methods: {
     ...mapActions('users', ['listReferrers']),
-    openDetailProfile(profile){
+    openDetailProfile(profile) {
       this.selectedProfile = profile;
       this.openProfile = true;
     },
   },
   async mounted() {
-    await this.listReferrers().then(res => this.referrers = res.usersReferrerCount);
-    this.referrers.map((item, idx)=> item.id = idx+1);
+    await this.listReferrers().then(res => this.referrers = res.referrers);
+    await this.referrers.map((item, idx) => item.id = idx + 1);
   },
 }
 </script>

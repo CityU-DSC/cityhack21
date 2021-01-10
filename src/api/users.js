@@ -9,5 +9,5 @@ export default {
     },
     listReferrers() {
         return axios.get(`/user/referrerCounts`).catch(err => console.error(err));
-    }
+    },
 }

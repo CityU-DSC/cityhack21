@@ -4,14 +4,12 @@
     <v-card class="mx-auto" max-width="80%" tile>
       <v-img height="100%" src="https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2F1.jpg?alt=media&token=183fac76-6f53-4ca6-88f1-7bf080067780"></v-img>
       <v-col>
-        <v-avatar size="100" style="position:absolute; top: 30rem;">
+        <v-avatar size="100" style="position: relative; top: -3rem;">
           <v-img :src="accountDetails.avatarUrl"></v-img>
         </v-avatar>
       </v-col>
       <div class="px-4 mx-2">
-        <v-simple-table
-            fixed-header
-        >
+        <v-simple-table fixed-header>
           <template v-slot:default>
             <thead>
             <tr>
@@ -53,7 +51,6 @@
                 prepend-icon="mdi-camera"
                 label="Profile Avatar"
                 class="mx-2 mt-2"
-                v-model="avatarImg"
                 @change="avatarImgtoUrl"
             ></v-file-input>
             <v-col>
@@ -161,10 +158,10 @@
               <v-row class="mt-5 mb-5">
                 <v-text-field
                     label="Home Address"
-                    :rules="[rules.blank]"
+                    :rules="[rules.required]"
                     v-model="userInfo.address"
                     class="mx-2 ml-5"
-                    prepend-icon="mdi-email-check"
+                    prepend-icon="mdi-at"
                     single-line
                 ></v-text-field>
               </v-row>
@@ -199,6 +196,7 @@
 import navDrawer from "@/PersonalPanel/components/navDrawer";
 import { mapActions, mapGetters } from 'vuex';
 import Swal from "sweetalert2";
+import {db, storage} from "@/config/firebaseConfig";
 
 export default {
   name: "personal_profile",
@@ -236,7 +234,7 @@ export default {
         password: "",
         avatarUrl: null,
       },
-      avatarImg: null,
+      avatarImg: this.avatarImg = {name: null, url: "", file: null},
       year_1: 0,
       universities: [
         "City University of Hong Kong",
@@ -351,6 +349,7 @@ export default {
       ],
       years: ["Year 1", "Year 2", "Year 3", "Year 4", "> Year 4", "Graduated", "Postgrad"],
       rules: {
+        required: (value) => !!value || "Required.",
         blank: v => (v || '').indexOf(' ') < 0 || 'No spaces are allowed',
         numeric: (value) => {
           const pattern = /^[0-9]*$/;
@@ -389,43 +388,74 @@ export default {
     directTo(page) {
       this.$router.push(page);
     },
-    avatarImgtoUrl() {
-      this.accountDetails.avatarUrl = URL.createObjectURL(this.avatarImg);
-
-      const reader = new FileReader();
-
-      reader.addEventListener(
-        "load", () => {
-          this.accountDetails.avatarUrl = reader.result;
+    avatarImgtoUrl(e) {
+      const avatar = e;
+      if (avatar) {
+        this.avatarImg.name = avatar.name;
+        if (this.avatarImg.name.lastIndexOf(".") <= 0) {
+          return;
         }
-      );
-      reader.readAsDataURL(this.avatarImg);
+        const fr = new FileReader();
+        fr.readAsDataURL(avatar);
+        fr.addEventListener("load", () => {
+          this.avatarImg.url = fr.result;
+          this.avatarImg.file = avatar;
+        });
+        this.accountDetails.avatarUrl = this.avatarImg.url;
+      } else {
+        this.avatarImg = {name: null, url: null, file: null};
+      }
     },
-    alterProfile(){
-      this.userInfo.avatarUrl = this.accountDetails.avatarUrl;
+    async alterProfile(){
       if (this.$vuetify.breakpoint.mdAndUp){
         this.userInfo.academicYear = this.years[this.year_1];
       }
-      this.updateMe(this.userInfo).then(
-        res => {
-          Swal.fire(
-              'Success',
-              'Update Profile Successfully',
-              'success'
-          );
-          this.show=false;
-          console.log(res);
-        }
-      ).catch(
-        err => {
-          console.error(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Profile did not updated successfully!',
-          });
-        }
-      );
+      let mountRef = storage.ref().child(`avatar/${this.avatarImg.name}`);
+      await mountRef.put(this.avatarImg.file).then(snapshot => {
+        snapshot.ref.getDownloadURL().then(url => {
+          const bucketName = "cityhack21-6404b.appspot.com";
+          const filePath = this.avatarImg.name;
+          try {
+            db.collection("avatarImg").add({
+              url,
+              downloadUrl:
+                  `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/avatar` +
+                  "%2F" +
+                  `${encodeURIComponent(filePath)}?alt=media`,
+              timestamp: Date.now()
+            }).then(() => {
+              this.accountDetails.avatarUrl = url;
+              this.userInfo.avatarUrl = url;
+              this.updateMe(this.userInfo).then(
+                  () => {
+                    Swal.fire(
+                        'Success',
+                        'Update Profile Successfully',
+                        'success'
+                    );
+                    this.show=false;
+                  }
+              ).catch(
+                  err => {
+                    console.error(err);
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Profile did not updated successfully!',
+                    });
+                  }
+              );
+            });
+          } catch (err) {
+            console.error(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message,
+            });
+          }
+        })
+      });
     },
     ...mapActions("auth", ["init", "updateMe"]),
 
