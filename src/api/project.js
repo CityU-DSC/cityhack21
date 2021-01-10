@@ -8,7 +8,7 @@ export default {
 	me: get('/project/me'),
 
 	create: post('/project/create'),
-	toogleVote: put('/project/toogleVote'),
+	toggleVote: put('/project/toggleVote'),
 
 	edit: put('/team/edit')
 }
