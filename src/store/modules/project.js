@@ -14,9 +14,9 @@ export default {
         // eslint-disable-next-line no-return-assign
         setProjectsList: (state, projectsList) => state.projectsList = projectsList,
         setCurrentProject: (state, project) => state.currentProject = project,
-        toggleProjectVote: (state, projectVoted) => {
+        toggleProjectVote: (state, voteProjectId) => {
           for (let project of state.projectLists ){
-            if (project._id == projectVoted._id){
+            if (project._id == voteProjectId._id){
               project.voted = !project.voted;
             }
           }
@@ -55,10 +55,11 @@ export default {
         },
 
         // edit toggle project like
-        toggleProjectVote({ commit }) {
-            return projectAPI.toggleVote({}).then(
+        toggleProjectVote({ commit }, voteProjectId) {
+            // params = { voteProjectId }
+            return projectAPI.toggleVote({voteProjectId}).then(
                 res => {
-                    commit('toggleProjectVote');
+                    commit('toggleProjectVote', voteProjectId);
                     return res;
                 }
             )
