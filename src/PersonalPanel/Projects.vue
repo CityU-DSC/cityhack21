@@ -9,7 +9,7 @@
 
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-app-bar-title class="ml-5 mt-2">CityHack21 Projects List</v-app-bar-title>
+      <h4 class="ml-5 mt-2">CityHack21 Projects List</h4>
 
       <v-spacer></v-spacer>
       <v-autocomplete
@@ -26,7 +26,8 @@
     <v-sheet
         id="scrolling-techniques-2"
         class="overflow-y-auto"
-        max-height="800"
+        max-height="850"
+
     >
       <section class="wrapper1">
         <div class="box">
@@ -45,7 +46,7 @@
                 </v-img>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="#2c3e50" rounded @click.stop="drawer = !drawer">
+                  <v-btn color="#2c3e50" rounded @click.stop="drawer=true; selectCategory='All Projects'">
                     Check Out More
                     <v-icon>mdi-chevron-right</v-icon>
                   </v-btn>
@@ -66,7 +67,7 @@
                 </v-img>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="#2c3e50" rounded>
+                  <v-btn color="#2c3e50" rounded @click.stop="drawer=true; selectCategory='Winning Projects'">
                     Check Out More
                     <v-icon>mdi-chevron-right</v-icon>
                   </v-btn>
@@ -89,7 +90,7 @@
                 </v-img>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="#2c3e50" rounded>
+                  <v-btn color="#2c3e50" rounded @click.stop="drawer=true; selectCategory='Final Round Projects'">
                     Check Out More
                     <v-icon>mdi-chevron-right</v-icon>
                   </v-btn>
@@ -110,7 +111,8 @@
                 </v-img>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="#2c3e50" rounded>
+                  <v-btn color="#2c3e50" rounded
+                         @click.stop="drawer=true; selectCategory='Honorable mention & Best Team Award'">
                     Check Out More
                     <v-icon>mdi-chevron-right</v-icon>
                   </v-btn>
@@ -118,22 +120,26 @@
               </v-card>
             </v-col>
             <v-col cols="2">
-                <v-col>
-                  <v-card style="background-color: rgba(255,153,0,.7); " class="pt-3" height="135px">
-                    <v-card-text>
-                      AWS Sage Maker
-                    </v-card-text>
-                    <v-btn icon small outlined><v-icon>mdi-chevron-right</v-icon></v-btn>
-                  </v-card>
-                </v-col>
-                <v-col>
-                  <v-card class="mx-auto" color="rgba(207, 10, 44, .6)" height="135px">
-                    <v-card-text class="pt-4">
-                      Huawei Atlas 200
-                    </v-card-text>
-                    <v-btn icon small outlined><v-icon>mdi-chevron-right</v-icon></v-btn>
-                  </v-card>
-                </v-col>
+              <v-col>
+                <v-card style="background-color: rgba(255,153,0,.7); " class="pt-3" height="135px">
+                  <v-card-text>
+                    AWS Sage Maker
+                  </v-card-text>
+                  <v-btn icon small outlined @click.stop="drawer=true; selectCategory='AWS SageMaker Projects'">
+                    <v-icon>mdi-chevron-right</v-icon>
+                  </v-btn>
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card class="mx-auto" color="rgba(207, 10, 44, .6)" height="135px">
+                  <v-card-text class="pt-4">
+                    Huawei Atlas 200
+                  </v-card-text>
+                  <v-btn icon small outlined @click.stop="drawer=true; selectCategory='Huawei Atlas Projects'">
+                    <v-icon>mdi-chevron-right</v-icon>
+                  </v-btn>
+                </v-card>
+              </v-col>
             </v-col>
           </v-row>
         </div>
@@ -142,38 +148,42 @@
     <v-navigation-drawer
         v-model="drawer"
         absolute
-        width="300"
-        right
         temporary
-    >
-      <v-list-item-title class="ma-5" style="">Category</v-list-item-title>
-      <v-divider></v-divider>
-
-      <v-list dense>
-        <v-list-item
-            v-for="project in allProjects"
-            :key="project._id"
-            link
-        >
-          <v-list-item-avatar>
-            <v-img :src="project.logoUrl"></v-img>
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title @click="viewDetailProject(project)">{{ project.name }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-navigation-drawer
-        v-model="drawer2"
-        style="margin-right: 300px;"
-        width="500"
-        absolute
+        width="1000"
         right
-        temporary
     >
-      <ProjectDetail :projectDetail="selectedProject" />
+      <v-row>
+        <v-col>
+          <ProjectDetail :projectDetail="selectedProject" @vote="toggleProjectVote"/>
+        </v-col>
+        <v-col>
+          <v-btn
+              icon
+              @click.stop="drawer = !drawer"
+          >
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+          <v-list-item-title class="ma-5">{{ selectCategory }}</v-list-item-title>
+          <v-divider></v-divider>
+
+          <v-list dense>
+            <v-list-item
+                v-for="project in filteredProjects"
+                :key="project._id"
+                @click.stop="viewDetailProject(project)"
+                link
+            >
+              <v-list-item-avatar>
+                <v-img :src="project.logoUrl"></v-img>
+              </v-list-item-avatar>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ project.name }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-col>
+      </v-row>
     </v-navigation-drawer>
   </v-app>
 </template>
@@ -186,38 +196,53 @@ import {mapActions} from 'vuex';
 export default {
   name: "Projects",
   components: {navDrawer, ProjectDetail},
-  data(){
+  data() {
     return {
       //search
       categories: [
-          'All',
-          'Winning',
-          'Final Round',
-          'Champion',
-          '1st runner up',
-          '2nd runner up',
-          'Honorable mention',
-          'Best Team Award',
-          'Atlas Projects',
-          'AWS SageMaker Projects',
+        'All Projects',
+        'Winning Projects',
+        'Final Round Projects',
+        'Honorable mention & Best Team Award',
+        'Huawei Atlas Projects',
+        'AWS SageMaker Projects',
       ],
       selectCategory: null,
 
       //drawer
       drawer: null,
-      drawer2: false,
       showProjectDetail: false,
 
       allProjects: [],
+      filteredProjects: [],
       currentProject: null,
       selectedProject: null,
     }
   },
   watch: {
-    drawer(val){
-      console.log(this.drawer)
-      if(!val) { this.drawer2 = false; }
-    },
+    selectCategory(v) {
+      switch (v) {
+        case 'Winning Projects':
+          this.filteredProjects = this.allProjects.filter(pro => pro.status === 'champion' || pro.status === '1st' || pro.status === '2nd');
+          break;
+        case 'Final Round Projects':
+          this.filteredProjects = this.allProjects.filter(pro => pro.status === 'final');
+          break;
+        case 'Honorable mention & Best Team Award':
+          this.filteredProjects = this.allProjects.filter(pro => pro.status === 'bestTeam' || pro.status === 'honorable');
+          break;
+        case 'Huawei Atlas Projects':
+          this.filteredProjects = this.allProjects.filter(pro => pro.team.topic === 'Atlas');
+          break;
+        case 'AWS SageMaker Projects':
+          this.filteredProjects = this.allProjects.filter(pro => pro.team.topic === 'SageMaker');
+          break;
+        default:
+          this.filteredProjects = this.allProjects;
+          break;
+      }
+      this.drawer = true;
+    }
   },
   methods: {
     ...mapActions('project', ['myProject', 'listAllProjects', 'toggleProjectVote']),
@@ -225,18 +250,44 @@ export default {
       this.$router.push(page);
     },
     viewDetailProject(project) {
-      if (!this.selectedProject || this.selectedProject.name !== project.name) {
-        this.selectedProject = project;
-        this.drawer2 = true;
-      } else {
-        this.selectedProject = null;
-        this.drawer = false;
-      }
+      console.log(project);
+      this.selectedProject = project;
     },
   },
   async mounted() {
     await this.listAllProjects().then(res => this.allProjects = res).catch(console.error);
     await this.myProject().then(res => this.currentProject = res).catch(console.error);
+    this.selectedProject = this.allProjects[0];
+    this.allProjects = this.allProjects.concat(
+        {
+          created_at: "2021-01-12T15:18:58.848Z",
+          description: "efojrpoierofjroifejrofije rofiejrf oijrejroijferoifjeoirjfeo",
+          logoUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/logo%2Faws%20sagemaker%20workshop%20poster.jpg?alt=media&token=ef5ebe48-bc62-4752-8fe1-9ce8cc9d47a6",
+          motivation: "efojrpoierofjroifejrofije rofiejrf oijrejroijferoifjeoirjfeo",
+          name: "HHrtojrowHH",
+          pdfUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/presentation%2FQuick%20Setup%20Guide%20for%20Atlas%20200%20DK%20for%20IT21VDMB.pdf?alt=media&token=8107f5be-45c8-45c2-95c0-167f34b8407f",
+          repositoryUrl: "https://github.com",
+          team: {_id: "5ffc527ed2bc1f24a0fb0a09", name: "hello", topic: "Atlas"},
+          tech: ["AWS Sagemaker", "Hardware", "Atlas 200 DK"],
+          updated_at: "2021-01-12T15:18:58.851Z",
+          votes: 0,
+          _id: "5ffdbde2e4fg980c5838630f"
+        },
+        {
+          created_at: "2021-01-12T15:18:58.848Z",
+          description: "efojrpoierofjroifejrofije rofiejrf oijrejroijferoifjeoirjfeo",
+          logoUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/logo%2Faws%20sagemaker%20workshop%20poster.jpg?alt=media&token=ef5ebe48-bc62-4752-8fe1-9ce8cc9d47a6",
+          motivation: "efojrpoierofjroifejrofije rofiejrf oijrejroijferoifjeoirjfeo",
+          name: "efefergreg",
+          pdfUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/presentation%2FQuick%20Setup%20Guide%20for%20Atlas%20200%20DK%20for%20IT21VDMB.pdf?alt=media&token=8107f5be-45c8-45c2-95c0-167f34b8407f",
+          repositoryUrl: "https://github.com",
+          team: {_id: "5ffc527ed2bc1f24a0fb3309", name: "low", topic: "SageMaker"},
+          tech: ["AWS Sagemaker", "Hardware", "Atlas 200 DK"],
+          updated_at: "2021-01-12T15:18:58.851Z",
+          votes: 0,
+          _id: "5ffdbde2e4fd890c5838630f"
+        }
+    )
   },
 }
 </script>
@@ -271,6 +322,6 @@ export default {
 }
 
 .v-card {
-  box-shadow: 11px 13px 7px 0 rgba(18,18,18,0.8) !important;
+  box-shadow: 11px 13px 7px 0 rgba(18, 18, 18, 0.8) !important;
 }
 </style>

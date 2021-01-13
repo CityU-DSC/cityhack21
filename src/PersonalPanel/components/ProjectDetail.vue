@@ -1,7 +1,8 @@
 <template>
   <v-card
+      v-if="projectDetail"
       class="mx-auto my-12"
-      max-width="420"
+      max-width="520"
   >
     <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg" height="100px">
       <v-row class="mb-5">
@@ -34,8 +35,9 @@
       </v-row>
     </v-parallax>
     <v-row style="position: relative; top: -30px;">
-      <v-col cols="1" class="ml-3">
-        <v-btn elevation="24" icon>
+      <v-col cols="3" class="ml-3">
+        <v-btn color="warning" rounded elevation="24" @click="this.$emit('vote')">
+          Vote
           <v-icon color="red" large>mdi-heart</v-icon>
         </v-btn>
       </v-col>
@@ -79,48 +81,62 @@
       </v-card-text>
 
     </v-row>
-    <!--    <v-row class="pa-3" v-if="currentTeam">-->
-    <!--      <v-col cols="5">-->
-    <!--        <v-card-subtitle>{{ currentTeam.name }}</v-card-subtitle>-->
-    <!--      </v-col>-->
-    <!--      <v-col>-->
-    <!--        <v-divider class="mt-5"></v-divider>-->
-    <!--      </v-col>-->
-    <!--      <v-card-text style="padding-bottom: 0;">-->
-    <!--        <v-row style="position: relative; top: -40px;">-->
-    <!--          <v-col class="mt-2">-->
-    <!--            <v-chip>{{ currentTeam.topic }}</v-chip>-->
-    <!--          </v-col>-->
-    <!--          <v-spacer/>-->
-    <!--          <v-col align="right">-->
-    <!--            <v-avatar-->
-    <!--                class="mr-2"-->
-    <!--                v-for="member in currentTeam.members"-->
-    <!--                :key="member._id"-->
-    <!--                @click="openDetailProfile(member)"-->
-    <!--                size="40"-->
-    <!--            >-->
-    <!--              <img-->
-    <!--                  :src="member.avatarUrl"-->
-    <!--                  alt="member.name"-->
-    <!--              >-->
-    <!--            </v-avatar>-->
-    <!--          </v-col>-->
-    <!--        </v-row>-->
-    <!--      </v-card-text>-->
-    <!--    </v-row>-->
+    <v-row class="pa-3">
+      <v-col cols="5">
+        <v-card-subtitle>{{ projectDetail.team.name }}</v-card-subtitle>
+      </v-col>
+      <v-col>
+        <v-divider class="mt-5"></v-divider>
+      </v-col>
+      <v-card-text style="padding-bottom: 0;">
+        <v-row style="position: relative; top: -40px;">
+          <v-col class="mt-2">
+            <v-chip>{{ projectDetail.team.topic }}</v-chip>
+          </v-col>
+          <v-spacer/>
+<!--          <v-col align="right">-->
+<!--            <v-avatar-->
+<!--                class="mr-2"-->
+<!--                v-for="member in projectDetail.team.members"-->
+<!--                :key="member._id"-->
+<!--                @click="openDetailProfile(member)"-->
+<!--                size="40"-->
+<!--            >-->
+<!--              <img-->
+<!--                  :src="member.avatarUrl"-->
+<!--                  alt="member.name"-->
+<!--              >-->
+<!--            </v-avatar>-->
+<!--          </v-col>-->
+        </v-row>
+      </v-card-text>
+    </v-row>
+    <ProfileDetail v-model="openProfile" :profileDetail="selectedProfile"/>
   </v-card>
 </template>
 
 <script>
+import ProfileDetail from "@/PersonalPanel/components/ProfileDetail";
+
 export default {
   name: "ProjectDetail",
   props: {
     projectDetail: Object,
   },
-  computed: {},
+  components: {ProfileDetail},
+  data() {
+    return {
+      openProfile: false,
+      selectedProfile: null,
+    }
+  },
+  methods: {
+    openDetailProfile(profile) {
+      this.selectedProfile = profile;
+      this.openProfile = true;
+    },
+  },
   mounted() {
-    console.log('Project', this.projectDetail);
   }
 }
 </script>
