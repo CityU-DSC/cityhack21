@@ -7,6 +7,5 @@ module.exports = {
   },
   devServer: {
     disableHostCheck: true,
-    host: '192.168.72.1',
   },
 };
