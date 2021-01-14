@@ -10,6 +10,9 @@ import PersonalPanel from "./PersonalPanel/home";
 import PersonalProfile from "./PersonalPanel/profile";
 import AWSVerification from "./PersonalPanel/AWSVerification";
 import TeamUp from "@/PersonalPanel/TeamUp";
+import TimeSlot from "@/PersonalPanel/TimeSlot";
+import Submission from "@/PersonalPanel/Submission";
+import Projects from "@/PersonalPanel/Projects";
 
 Vue.use(VueRouter);
 
@@ -23,6 +26,9 @@ const routes = [
     {path: "/personal/profile", component: PersonalProfile, name: "personal_profile"},
     {path: "/personal/verification", component: AWSVerification, name: "personal_verification"},
     {path: "/personal/team", component: TeamUp, name: "personal_team"},
+    {path: "/personal/timeSlot", component: TimeSlot, name: "personal_time"},
+    {path: "/personal/submission", component: Submission, name: "personal_submission"},
+    {path: "/personal/projects", component: Projects, name: "personal_projects"},
 ];
 
 const router = new VueRouter({
