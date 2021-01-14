@@ -36,9 +36,9 @@
     </v-parallax>
     <v-row style="position: relative; top: -30px;">
       <v-col cols="3" class="ml-3">
-        <v-btn color="warning" rounded elevation="24" @click="this.$emit('vote')">
+        <v-btn color="warning" rounded elevation="24" @click="toggleVote">
           Vote
-          <v-icon color="red" large>mdi-heart</v-icon>
+          <v-icon :color="this.voted? 'red' : null" large>mdi-heart</v-icon>
         </v-btn>
       </v-col>
       <v-col cols="1" class="ml-5">
@@ -94,20 +94,20 @@
             <v-chip>{{ projectDetail.team.topic }}</v-chip>
           </v-col>
           <v-spacer/>
-<!--          <v-col align="right">-->
-<!--            <v-avatar-->
-<!--                class="mr-2"-->
-<!--                v-for="member in projectDetail.team.members"-->
-<!--                :key="member._id"-->
-<!--                @click="openDetailProfile(member)"-->
-<!--                size="40"-->
-<!--            >-->
-<!--              <img-->
-<!--                  :src="member.avatarUrl"-->
-<!--                  alt="member.name"-->
-<!--              >-->
-<!--            </v-avatar>-->
-<!--          </v-col>-->
+          <v-col align="right">
+            <v-avatar
+                class="mr-2"
+                v-for="member in projectDetail.team.members"
+                :key="member._id"
+                @click="openDetailProfile(member)"
+                size="40"
+            >
+              <img
+                  :src="member.avatarUrl"
+                  alt="member.name"
+              >
+            </v-avatar>
+          </v-col>
         </v-row>
       </v-card-text>
     </v-row>
@@ -122,6 +122,7 @@ export default {
   name: "ProjectDetail",
   props: {
     projectDetail: Object,
+    voted: Boolean,
   },
   components: {ProfileDetail},
   data() {
@@ -130,13 +131,18 @@ export default {
       selectedProfile: null,
     }
   },
+  watch: {
+  },
   methods: {
     openDetailProfile(profile) {
       this.selectedProfile = profile;
       this.openProfile = true;
     },
+    toggleVote(){
+      this.$emit('vote', this.projectDetail._id)
+    }
   },
-  mounted() {
+  async mounted() {
   }
 }
 </script>

@@ -130,37 +130,35 @@ export default {
           name: 'Warm up session',
           start: new Date('2021-01-30T09:00:00'),
           end: new Date('2021-01-30T09:20:00'),
-          color: 'grey darken-3',
+          color: '#000000',
           timed: true,
         },
         {
           name: 'Opening Ceremony',
           start: new Date('2021-01-30T09:20:00'),
           end: new Date('2021-01-30T10:30:00'),
-          color: '#054e02',
+          color: '#BB86FC',
           timed: true,
         },
         {
           name: 'Hacking Time!',
-
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
           start: new Date('2021-01-30T10:30:00'),
           end: new Date('2021-01-31T13:30:00'),
-          color: '#1a237e',
+          color: '#3700B3',
           timed: true,
         },
         {
           name: 'Mentoring Session 1',
           start: new Date('2021-01-30T14:00:00'),
           end: new Date('2021-01-30T15:00:00'),
-          color: 'cyan darken-4',
+          color: 'cyan darken-1',
           timed: true,
         },
         {
-          name: 'MS only for Atlas',
+          name: 'Atlas Mentoring Session',
           start: new Date('2021-01-30T15:00:00'),
           end: new Date('2021-01-30T16:00:00'),
-          color: 'rgb(255, 0, 119)',
+          color: 'cyan darken-2',
           timed: true,
         },
 
@@ -168,7 +166,7 @@ export default {
           name: 'Mentoring Session 2',
           start: new Date('2021-01-30T16:00:00'),
           end: new Date('2021-01-30T17:00:00'),
-          color: 'cyan darken-4',
+          color: 'cyan darken-3',
           timed: true,
         },
 
@@ -184,14 +182,14 @@ export default {
           name: 'Warm Up Session',
           start: new Date('2021-01-31T10:00:00'),
           end: new Date('2021-01-31T10:20:00'),
-          color: 'grey darken-3',
+          color: '#000000',
           timed: true,
         },
         {
           name: 'Day 2 Briefing',
           start: new Date('2021-01-31T10:20:00'),
           end: new Date('2021-01-31T11:00:00'),
-          color: '#054e02',
+          color: '#BB86FC',
           timed: true,
         },
         {
@@ -214,14 +212,14 @@ export default {
           name: 'Briefing before Pitching',
           start: new Date('2021-01-31T14:10:00'),
           end: new Date('2021-01-31T14:30:00'),
-          color: 'grey darken-2',
+          color: '#BB86FC',
           timed: true,
         },
         {
           name: 'First Round Pitching',
           start: new Date('2021-01-31T14:30:00'),
           end: new Date('2021-01-31T15:40:00'),
-          color: 'black',
+          color: '#CF6679',
           timed: true,
         },
 
@@ -230,21 +228,21 @@ export default {
           name: 'Judges Marking Time',
           start: new Date('2021-01-31T15:40:00'),
           end: new Date('2021-01-31T16:00:00'),
-          color: 'lime darken-4',
+          color: 'black',
           timed: true,
         },
         {
           name: 'Final Round Pitching',
           start: new Date('2021-01-31T16:00:00'),
           end: new Date('2021-01-31T17:50:00'),
-          color: 'black',
+          color: '#CF6679',
           timed: true,
         },
         {
           name: 'Judges Marking Time. Voting Time',
           start: new Date('2021-01-31T17:50:00'),
           end: new Date('2021-01-31T18:10:00'),
-          color: 'lime darken-4',
+          color: 'black',
           timed: true,
         },
 
@@ -252,17 +250,10 @@ export default {
           name: 'Closing Ceremony',
           start: new Date('2021-01-31T18:10:00'),
           end: new Date('2021-01-31T18:30:00'),
-          color: '#054e02',
+          color: '#BB86FC',
           timed: true,
         },
-
-
-
-
-        
       ],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
     }
   },
   methods: {
@@ -273,37 +264,6 @@ export default {
     getEventColor(event) {
       return event.color
     },
-    // fetchEvents({start, end}) {
-      // const events = [];
-
-      // const min = new Date(`${start.date}T00:00:00`)
-      // const max = new Date(`${end.date}T23:59:59`)
-      // const days = (max.getTime() - min.getTime()) / 86400000
-      // const eventCount = this.rnd(days, days + 20)
-
-      // for (let i = 0; i < eventCount; i++) {
-      //   const allDay = this.rnd(0, 3) === 0
-      //   const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-      //   const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-      //   const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-      //   const second = new Date(first.getTime() + secondTimestamp)
-
-      //   events.push({
-      //     name: this.names[this.rnd(0, this.names.length - 1)],
-      //     start: first,
-      //     end: second,
-      //     color: this.colors[this.rnd(0, this.colors.length - 1)],
-      //     timed: true,
-      //     category: this.categories[this.rnd(0, this.categories.length - 1)],
-      //   })
-      // }
-      // // console.log(this.duringEvents);
-      // this.duringEvents.push(...events);
-      // console.log(this.duringEvents);
-    // },
-    // rnd(a, b) {
-    //   return Math.floor((b - a + 1) * Math.random()) + a
-    // },
   },
   mounted() {
     this.$refs.calendar.checkChange()

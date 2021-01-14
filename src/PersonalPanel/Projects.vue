@@ -154,7 +154,7 @@
     >
       <v-row>
         <v-col>
-          <ProjectDetail :projectDetail="selectedProject" @vote="toggleProjectVote"/>
+          <ProjectDetail :projectDetail="selectedProject" :voted="voted" @vote="voteProject"/>
         </v-col>
         <v-col>
           <v-btn
@@ -191,7 +191,8 @@
 <script>
 import navDrawer from "@/PersonalPanel/components/navDrawer";
 import ProjectDetail from "@/PersonalPanel/components/ProjectDetail";
-import {mapActions} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
+import Swal from "sweetalert2";
 
 export default {
   name: "Projects",
@@ -217,7 +218,13 @@ export default {
       filteredProjects: [],
       currentProject: null,
       selectedProject: null,
+
+      voted: false,
+      userDetail: null,
     }
+  },
+  computed: {
+    ...mapGetters('auth', ['currentUser']),
   },
   watch: {
     selectCategory(v) {
@@ -242,7 +249,7 @@ export default {
           break;
       }
       this.drawer = true;
-    }
+    },
   },
   methods: {
     ...mapActions('project', ['myProject', 'listAllProjects', 'toggleProjectVote']),
@@ -250,8 +257,85 @@ export default {
       this.$router.push(page);
     },
     viewDetailProject(project) {
-      console.log(project);
       this.selectedProject = project;
+      // console.log(this.userDetail.projectVoted);
+      if(this.userDetail.projectVoted.length > 0){
+        this.userDetail.projectVoted.map(p => {
+          if(p === this.selectedProject._id) {
+            this.voted = true;
+          }
+          else {
+            this.voted = false;
+          }
+        });
+      }
+      else this.voted = false;
+    },
+
+    voteProject(_id) {
+      if(this.userDetail.projectVoted.length >= 2 && _id){
+        Swal.fire({
+          icon: 'error',
+          title: 'Too Greedy...',
+          text: 'You already have two votes! unvote one and vote this again',
+        })
+      } else if (this.voted) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "This will UnVote this project!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, UnVote it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.toggleProjectVote(_id).then(() => {
+              Swal.fire(
+                  'Success',
+                  'Projects has been un-voted',
+                  'success'
+              );
+              this.userDetail.projectVoted = this.userDetail.projectVoted.filter(p => p !== _id);
+              this.voted = false;
+            }).catch(err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.message,
+              })
+            });
+          }
+        });
+      } else {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You will vote this project!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, Vote it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.toggleProjectVote(_id).then(() => {
+              Swal.fire(
+                  'Success',
+                  'Projects has been Voted',
+                  'success'
+              );
+              if(this.userDetail.projectVoted.length === 0){
+                this.userDetail.projectVoted[0] = _id;
+              } else {
+                this.userDetail.projectVoted[1] = _id;
+              }
+              this.voted = true;
+            }).catch(err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err.message,
+              })
+            });
+          }
+        });
+      }
     },
   },
   async mounted() {
@@ -287,7 +371,11 @@ export default {
           votes: 0,
           _id: "5ffdbde2e4fd890c5838630f"
         }
-    )
+    );
+    this.userDetail = this.currentUser;
+    if (this.selectedProject && this.userDetail){
+      await this.userDetail.projectVoted.map(p => this.voted = this.selectedProject._id === p)
+    }
   },
 }
 </script>
