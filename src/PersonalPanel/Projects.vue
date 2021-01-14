@@ -342,36 +342,6 @@ export default {
     await this.listAllProjects().then(res => this.allProjects = res).catch(console.error);
     await this.myProject().then(res => this.currentProject = res).catch(console.error);
     this.selectedProject = this.allProjects[0];
-    this.allProjects = this.allProjects.concat(
-        {
-          created_at: "2021-01-12T15:18:58.848Z",
-          description: "efojrpoierofjroifejrofije rofiejrf oijrejroijferoifjeoirjfeo",
-          logoUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/logo%2Faws%20sagemaker%20workshop%20poster.jpg?alt=media&token=ef5ebe48-bc62-4752-8fe1-9ce8cc9d47a6",
-          motivation: "efojrpoierofjroifejrofije rofiejrf oijrejroijferoifjeoirjfeo",
-          name: "HHrtojrowHH",
-          pdfUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/presentation%2FQuick%20Setup%20Guide%20for%20Atlas%20200%20DK%20for%20IT21VDMB.pdf?alt=media&token=8107f5be-45c8-45c2-95c0-167f34b8407f",
-          repositoryUrl: "https://github.com",
-          team: {_id: "5ffc527ed2bc1f24a0fb0a09", name: "hello", topic: "Atlas"},
-          tech: ["AWS Sagemaker", "Hardware", "Atlas 200 DK"],
-          updated_at: "2021-01-12T15:18:58.851Z",
-          votes: 0,
-          _id: "5ffdbde2e4fg980c5838630f"
-        },
-        {
-          created_at: "2021-01-12T15:18:58.848Z",
-          description: "efojrpoierofjroifejrofije rofiejrf oijrejroijferoifjeoirjfeo",
-          logoUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/logo%2Faws%20sagemaker%20workshop%20poster.jpg?alt=media&token=ef5ebe48-bc62-4752-8fe1-9ce8cc9d47a6",
-          motivation: "efojrpoierofjroifejrofije rofiejrf oijrejroijferoifjeoirjfeo",
-          name: "efefergreg",
-          pdfUrl: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/presentation%2FQuick%20Setup%20Guide%20for%20Atlas%20200%20DK%20for%20IT21VDMB.pdf?alt=media&token=8107f5be-45c8-45c2-95c0-167f34b8407f",
-          repositoryUrl: "https://github.com",
-          team: {_id: "5ffc527ed2bc1f24a0fb3309", name: "low", topic: "SageMaker"},
-          tech: ["AWS Sagemaker", "Hardware", "Atlas 200 DK"],
-          updated_at: "2021-01-12T15:18:58.851Z",
-          votes: 0,
-          _id: "5ffdbde2e4fd890c5838630f"
-        }
-    );
     this.userDetail = this.currentUser;
     if (this.selectedProject && this.userDetail){
       await this.userDetail.projectVoted.map(p => this.voted = this.selectedProject._id === p)
