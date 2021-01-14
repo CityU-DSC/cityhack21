@@ -54,7 +54,9 @@ export default {
       this.overlay = false
     }
     try {
-      this.$ga.set('userId', JSON.parse(atob(localStorage.getItem("jwt").split('.')[1]))._id);
+      if (localStorage.getItem('jwt')){
+        this.$ga.set('userId', JSON.parse(atob(localStorage.getItem("jwt").split('.')[1]))._id);
+      }
     } catch (error) {
       console.error(error);
     }
