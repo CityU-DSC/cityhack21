@@ -14,7 +14,7 @@ export default {
     },
     mutations: {
         // eslint-disable-next-line no-return-assign
-        setTeamsList: (state, teamsList) => state.teamsList = teamsList,
+        setTeamsList: (state, teamsList) => state.teamLists = teamsList,
         setCurrentTeam: (state, team) => state.currentTeam = team,
         setCurrentTeamCode: (state, teamCode) => {
             if (state.currentTeam){
@@ -43,11 +43,11 @@ export default {
                     state.currentTeam.leader = state.currentTeam.members.filter(x => x._id == newLeaderId)[0];
                 }
             }
-            for (let i = 0; i < state.teamsList.length; i ++){
-                if (state.teamsList[i]._id == teamId){
-                    state.teamsList[i].members = state.currentTeam.members.filter(x => x._id != memberId);
-                    if (newLeaderId && state.teamsList[i].leader._id == memberId){
-                        state.teamsList[i].leader = state.teamsList[i].members.filter(x => x._id == newLeaderId)[0];
+            for (let i = 0; i < state.teamLists.length; i ++){
+                if (state.teamLists[i]._id == teamId){
+                    state.teamLists[i].members = state.currentTeam.members.filter(x => x._id != memberId);
+                    if (newLeaderId && state.teamLists[i].leader._id == memberId){
+                        state.teamLists[i].leader = state.teamLists[i].members.filter(x => x._id == newLeaderId)[0];
                     }
                 }
             }

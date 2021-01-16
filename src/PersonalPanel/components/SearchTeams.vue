@@ -466,10 +466,16 @@ export default {
   },
   methods: {
     ...mapActions("teams", ["createTeam", "joinTeam", "leaveTeam", "editTeam", 'myTeam', 'searchTeam', 'kickMember']),
-    manageKickMember(id){
+    async manageKickMember(id){
       this.kickMemberId = id;
-      this.kickMember({kickMemberId: this.kickMemberId}).then(()=> {
+      await this.kickMember({kickMemberId: this.kickMemberId}).then(()=> {
         this.currentTeam.members = this.currentTeam.members.filter(member => member._id !== this.kickMemberId);
+        for (let i = 0; i < this.filteredTeams.length; i ++){
+          if (this.filteredTeams[i]._id == this.currentTeam._id){
+            this.filteredTeams[i] = this.currentTeam;
+          }
+        }
+        this.editInfo.members = this.currentTeam.members;
       }).catch(err => {
         Swal.fire({
           icon: "error",
