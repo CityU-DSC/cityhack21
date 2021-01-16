@@ -35,6 +35,22 @@ export default {
         },
         addCurrentTeamToTeamList: (state) => {
             state.teamLists.unshift(state.currentTeam);
+        },
+        removeMemberFromTeam(state, { teamId, memberId, newLeaderId=undefined }) {
+            if (state.currentTeam && state.currentTeam._id == teamId){
+                state.currentTeam.members = state.currentTeam.members.filter(x => x._id != memberId);
+                if (newLeaderId && state.currentTeam.leader._id == memberId){
+                    state.currentTeam.leader = state.currentTeam.members.filter(x => x._id == newLeaderId)[0];
+                }
+            }
+            for (let i = 0; i < state.teamsList.length; i ++){
+                if (state.teamsList[i]._id == teamId){
+                    state.teamsList[i].members = state.currentTeam.members.filter(x => x._id != memberId);
+                    if (newLeaderId && state.teamsList[i].leader._id == memberId){
+                        state.teamsList[i].leader = state.teamsList[i].members.filter(x => x._id == newLeaderId)[0];
+                    }
+                }
+            }
         }
     },
     actions: {
@@ -113,6 +129,18 @@ export default {
                 async (res) => {
                     commit('setCurrentTeam', res.team)
                     return res.team;
+                }
+            )
+        },
+        kickMember({ commit, state }, params) {
+            // params = { kickMemberId };
+            return teamsAPI.kickMember(params).then(
+                async res => {
+                    commit('removeMemberFromTeam', {
+                        teamId: state.currentTeam._id,
+                        memberId: params.kickMemberId 
+                    });
+                    return res;
                 }
             )
         }
