@@ -1,5 +1,7 @@
 import projectAPI from '../../api/project'
 
+const dc = x => x? JSON.parse(JSON.stringify(x)): undefined;
+
 export default {
     namespaced: true,
     state: {
@@ -23,7 +25,7 @@ export default {
         },
         addCurrentProjectToProjectList: (state) => {
           state.projectLists.unshift(state.currentProject);
-      }
+        }
     },
     actions: {
         listAllProjects({ commit }){
@@ -70,6 +72,29 @@ export default {
                 async (res) => {
                   commit('setCurrentProject', res.project)
                   return res.project;
+                }
+            )
+        },
+        setProjectStatus({ commit, state }, params) {
+            // params = { projectId, status }
+            return projectAPI.setStatus(params). then(
+                async res => {
+
+                    const currentProject = dc(state.currentProject);
+                    const projectLists = dc(state.projectLists);
+                    
+                    if (currentProject && currentProject._id == params.projectId){
+                        currentProject.status = params.status;
+                        commit('setCurrentProject', currentProject)                        
+                    }
+                    for (let project of projectLists){
+                        if (project._id == params.projectId){
+                            project.status = params.status;
+                        }
+                    }
+                    commit('setProjectsList', projectLists)
+                    
+                    return res;
                 }
             )
         }

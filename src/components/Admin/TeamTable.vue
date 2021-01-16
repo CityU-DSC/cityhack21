@@ -356,7 +356,7 @@
                       </v-list-item-content>
 
                       <v-list-item-action v-if="editMode === team.name "
-                                        @click="manageKickMember(member._id)"
+                                          @click="manageKickMember(member._id)"
                       >
                         <v-btn rounded>Kick<v-icon>mdi-exit-run</v-icon></v-btn>
                       </v-list-item-action>
@@ -396,7 +396,7 @@ import ProfileDetail from "@/PersonalPanel/components/ProfileDetail";
 import Swal from "sweetalert2";
 
 export default {
-  name: "searchTeams",
+  name: "TeamTable",
   components: {
     ProfileDetail,
   },
@@ -466,16 +466,10 @@ export default {
   },
   methods: {
     ...mapActions("teams", ["createTeam", "joinTeam", "leaveTeam", "editTeam", 'myTeam', 'searchTeam', 'kickMember']),
-    async manageKickMember(id){
+    manageKickMember(id){
       this.kickMemberId = id;
-      await this.kickMember({kickMemberId: this.kickMemberId}).then(()=> {
+      this.kickMember({kickMemberId: this.kickMemberId}).then(()=> {
         this.currentTeam.members = this.currentTeam.members.filter(member => member._id !== this.kickMemberId);
-        for (let i = 0; i < this.filteredTeams.length; i ++){
-          if (this.filteredTeams[i]._id == this.currentTeam._id){
-            this.filteredTeams[i] = this.currentTeam;
-          }
-        }
-        this.editInfo.members = this.currentTeam.members;
       }).catch(err => {
         Swal.fire({
           icon: "error",

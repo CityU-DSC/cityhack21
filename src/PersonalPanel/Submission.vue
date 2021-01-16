@@ -71,10 +71,10 @@
           <v-row class="pa-4" style="position: relative; top: -40px;">
             <v-card-title>{{ projectDetail.name }}</v-card-title>
             <v-card-text>
-              <h4  style="color: #ff9900; font-weight: bold;">Description</h4>
-              <div>{{projectDetail.description}}</div>
+              <h4 style="color: #ff9900; font-weight: bold;">Description</h4>
+              <div>{{ projectDetail.description }}</div>
               <h4 class="mt-5" style="color: #ff9900; font-weight: bold;">Motivation</h4>
-              <div> {{projectDetail.motivation}}</div>
+              <div> {{ projectDetail.motivation }}</div>
             </v-card-text>
             <v-card-text class="mt-5" style="padding-bottom: 0;">
               <h4 style="color: #ff9900; font-weight: bold;">Technologies</h4>
@@ -211,12 +211,13 @@
             ></v-select>
             <v-card-actions>
               <v-row>
-                <v-spacer />
+                <v-spacer/>
                 <v-btn
                     color="#ff9900"
                     class="mr-4"
                     :disabled="uploading || uploadingLogo"
                     @click="submit"
+                    :loading="submitting"
                 >
                   Submit Project
                 </v-btn>
@@ -279,7 +280,11 @@ export default {
       uploading: false,
 
       // logo
-      logoImg: {name: "logo", file: null, url: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Flogo_w%20(1).png?alt=media&token=cb078b46-349e-4a0c-b228-11b262a9fe8b"},
+      logoImg: {
+        name: "logo",
+        file: null,
+        url: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Flogo_w%20(1).png?alt=media&token=cb078b46-349e-4a0c-b228-11b262a9fe8b"
+      },
       uploadingLogo: false,
 
       // form
@@ -292,6 +297,7 @@ export default {
         motivation: '',
         tech: [],
       },
+      submitting: false,
 
       rules: {
         logoSize: (value) => !value || value.size <= 3500000 || 'Avatar size should be less than 3 MB!',
@@ -386,42 +392,6 @@ export default {
           this.pdfTempUrl = fr.result;
           this.uploadPdf.file = file;
         });
-
-        //upload
-        const storageRef = storage.ref().child(`presentation/${this.uploadPdf.name}`);
-        await storageRef.put(this.uploadPdf.file).then(snapshot => {
-          snapshot.ref.getDownloadURL().then(url => {
-            console.log("URL", url);
-            try {
-              db.collection('presentation').add({
-                name: this.uploadPdf.name,
-                url: url,
-                timestamp: Date.now(),
-              }).then(() => {
-                this.uploadPdf.url = url;
-                this.projectDetail.pdfUrl = url;
-                Swal.fire(
-                    'Success',
-                    'Upload Presentation File Successfully',
-                    'success'
-                );
-              }).catch(error => {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: error.message,
-                });
-              });
-            } catch (err) {
-              console.error(err);
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err.message,
-              });
-            }
-          })
-        })
       } else {
         if (storage.ref().child(`presentation/${this.uploadPdf.name}`)) {
           await storage.ref().child(`presentation/${this.uploadPdf.name}`).delete().then(() => {
@@ -438,10 +408,71 @@ export default {
       }
       this.uploading = false;
     },
+    async upToFireBase(){
+      //upload pdf
+      const storageRef = storage.ref().child(`presentation/${this.uploadPdf.name}`);
+      await storageRef.put(this.uploadPdf.file).then(async snapshot => {
+        await snapshot.ref.getDownloadURL().then(async url => {
+          try {
+            await db.collection('presentation').add({
+              name: this.uploadPdf.name,
+              url: url,
+              timestamp: Date.now(),
+            }).then(() => {
+              this.uploadPdf.url = url;
+              this.projectDetail.pdfUrl = url;
+            }).catch(error => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error.message,
+              });
+            });
+          } catch (err) {
+            console.error(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message,
+            });
+          }
+        })
+      });
+      // upload logo image
+      let mountRef = storage.ref().child(`logo/${this.logoImg.name}`);
+      await mountRef.put(this.logoImg.file).then(async snapshot => {
+        await snapshot.ref.getDownloadURL().then(async url => {
+          this.projectDetail.logoUrl = url;
+          const bucketName = "cityhack21-6404b.appspot.com";
+          const filePath = this.logoImg.name;
+          try {
+            await db.collection("logoImg").add({
+              url,
+              downloadUrl:
+                  `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/avatar` +
+                  "%2F" +
+                  `${encodeURIComponent(filePath)}?alt=media`,
+              timestamp: Date.now()
+            }).then(() => {
+              this.projectDetail.logoUrl = url;
+            });
+          } catch (err) {
+            console.error(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message,
+            });
+          }
+        })
+      });
+    },
     // from
     async submit() {
-      if (this.$refs.form.validate() && this.projectDetail.logoUrl && this.projectDetail.pdfUrl){
-        if(this.currentProject){
+      this.submitting = true;
+      if (this.$refs.form.validate() && this.logoImg.url && this.uploadPdf.url) {
+        await this.upToFireBase();
+        if (this.currentProject) {
           await this.editProject(this.projectDetail).then(res => {
             this.currentProject = res;
             Swal.fire(
@@ -449,7 +480,13 @@ export default {
                 'Successfully Edit Project',
                 'success'
             );
-          })
+          }).catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message,
+            });
+          });
         } else {
           await this.createProject(this.projectDetail).then(res => {
             this.currentProject = res;
@@ -461,17 +498,23 @@ export default {
               if (result.isConfirmed) {
                 this.$router.push({name: "personal_projects"});
               }
+            })
+          }).catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.message,
             });
           })
         }
-      }
-      else {
+      } else {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Please Finish all the form input',
         });
       }
+      this.submitting = false;
     },
     reset() {
       this.$refs.form.reset()
@@ -481,7 +524,10 @@ export default {
       if (logo) {
         this.uploadingLogo = true;
         this.logoImg.name = logo.name;
-        if (this.logoImg.name.lastIndexOf(".") <= 0) {this.uploading=false; return;}
+        if (this.logoImg.name.lastIndexOf(".") <= 0) {
+          this.uploading = false;
+          return;
+        }
         const fr = new FileReader();
         fr.readAsDataURL(logo);
         await fr.addEventListener("load", () => {
@@ -489,39 +535,6 @@ export default {
           this.logoImg.file = logo;
         });
         this.projectDetail.logoUrl = this.logoImg.url;
-
-        let mountRef = storage.ref().child(`logo/${this.logoImg.name}`);
-        mountRef.put(this.logoImg.file).then(snapshot => {
-          snapshot.ref.getDownloadURL().then(url => {
-            this.projectDetail.logoUrl = url;
-            const bucketName = "cityhack21-6404b.appspot.com";
-            const filePath = this.logoImg.name;
-            try {
-              db.collection("logoImg").add({
-                url,
-                downloadUrl:
-                    `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/avatar` +
-                    "%2F" +
-                    `${encodeURIComponent(filePath)}?alt=media`,
-                timestamp: Date.now()
-              }).then(() => {
-                this.projectDetail.logoUrl = url;
-                Swal.fire(
-                    'Success',
-                    'Upload Logo Img Successfully',
-                    'success'
-                );
-              });
-            } catch (err) {
-              console.error(err);
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err.message,
-              });
-            }
-          })
-        });
       } else {
         if (storage.ref().child(`logoImg/${this.logoImg.name}`)) {
           await storage.ref().child(`logoImg/${this.logoImg.name}`).delete().then(() => {
@@ -532,7 +545,11 @@ export default {
             );
           }).catch(console.error);
         }
-        this.logoImg = {name: null, url: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Flogo_w%20(1).png?alt=media&token=cb078b46-349e-4a0c-b228-11b262a9fe8b", file: null};
+        this.logoImg = {
+          name: null,
+          url: "https://firebasestorage.googleapis.com/v0/b/cityhack21-6404b.appspot.com/o/registration_material%2Flogo_w%20(1).png?alt=media&token=cb078b46-349e-4a0c-b228-11b262a9fe8b",
+          file: null
+        };
         this.projectDetail.logoUrl = this.logoImg.url;
       }
       this.uploadingLogo = false;
@@ -542,11 +559,11 @@ export default {
     await this.myTeam().then(res => this.currentTeam = res).catch(err => console.error(err));
     await this.myProject().then(res => {
       this.currentProject = res;
-      for (let key in this.projectDetail){
+      for (let key in this.projectDetail) {
         this.projectDetail[key] = this.currentProject[key];
       }
       this.logoImg.url = this.projectDetail.logoUrl;
-      console.log(this.projectDetail, this.logoImg.url);
+      this.uploadPdf.url = this.projectDetail.pdfUrl;
     }).catch(err => console.error(err));
   },
 }

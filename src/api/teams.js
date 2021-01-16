@@ -16,6 +16,7 @@ export default {
 
 	join: put('/team/join'),
 	// tooglePrivate: put('/team/tooglePrivate'),
-	edit: put('/team/edit')
+	edit: put('/team/edit'),
+	kickMember: put('/team/kickMember')
 
 }

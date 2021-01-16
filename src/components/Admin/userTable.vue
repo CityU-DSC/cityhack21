@@ -8,8 +8,6 @@
     >
       <template v-slot:items="props">
         <td>{{ props.item.id }}</td>
-        <td class="text-xs-right">{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.email }}</td>
         <td class="text-xs-right"> {{ formatDateTime(props.item.created_at) }}</td>
         <td class="text-xs-right"> {{ formatDateTime(props.item.updated_at) }}</td>
       </template>
@@ -26,8 +24,13 @@ export default {
     return {
       headers: [
         { text: 'User ID', align: 'left', value: '_id'},
-        {text: 'Name', value: 'name'},
+        {text: 'AccountId', value: 'accountId'},
         {text: 'Email', value: 'email'},
+        {text: 'University', value: 'university'},
+        {text: 'Year', value: 'year'},
+        {text: 'Major', value: 'majorProgram'},
+        {text: 'Team', value: 'team.name'},
+        {text: 'Verify?', value: 'verified'},
         {text: 'Created At', value: 'created_at'},
         {text: 'Updated At', value: 'updated_at'},
       ],
@@ -40,7 +43,6 @@ export default {
       this.listAllUsers().then(res => this.filteredUsers = res);
     },
     formatDateTime(time){
-      console.log(time)
       return dayjs(time).format("YYYY-MM-DD");
     },
   },

@@ -58,7 +58,7 @@
         <v-card width="400">
           <v-img
               height="200px"
-              :src="submissionDetail.imageUrl? submissionDetail.imageUrl : awsImgs[0].imageUrl"
+              :src="submissionDetail.imageUrl? submissionDetail.imageUrl : awsImgs.length>0? awsImgs[0].imageUrl : null"
           >
           </v-img>
 
