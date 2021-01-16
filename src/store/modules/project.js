@@ -75,7 +75,7 @@ export default {
                 }
             )
         },
-        statusProject({ commit, state }, params) {
+        setProjectStatus({ commit, state }, params) {
             // params = { projectId, status }
             return projectAPI.setStatus(params). then(
                 async res => {
