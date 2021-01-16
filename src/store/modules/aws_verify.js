@@ -6,6 +6,7 @@ export default{
         currentImgUrl: null,
         verificationStatus: 'not submitted',
         awsVerifications: [],
+        allAWSVerifications: [],
     },
     getters:{
         currentImgUrl: state => state.currentImgUrl,
@@ -20,6 +21,16 @@ export default{
             state.verificationStatus = status;
         },
         setAWSVerifications: (state, aws) => state.awsVerifications = aws,
+        setAllAWSVerifications: (state, allAWSVerifications) => state.allAWSVerifications = allAWSVerifications,
+        setVerificationStatusForAWSVerification: (state, { awsVerification, status }) => {
+            let toUpdates = [...state.awsVerifications.filter(s => s._id == awsVerification._id), ...state.allAWSVerifications.filter(s => s._id == awsVerification._id)];
+            for (let toUpdate of toUpdates){
+                toUpdate.status = status;
+                if (state.awsVerifications.filter(s => s._id == awsVerification._id).length > 0){
+                    state.verificationStatus = status;
+                }
+            }
+        }
     },
     actions:{
         awsVerify({ commit }, params){
@@ -32,8 +43,7 @@ export default{
             })
         },
         isAWSVerified({ commit } ) {
-            const token = localStorage.getItem('jwt');
-            return aws_verify.isAWSVerified(token).then(
+            return aws_verify.isAWSVerified().then(
                 res => {
                     commit("setCurrentImgUrl", res.imgURL);
                     commit("setVerificationStatus", res.status)
@@ -45,7 +55,26 @@ export default{
                 commit('setAWSVerifications', res.awsVerifications);
                 return res.awsVerifications;
             })
-        }
+        },
+        getAllAWSVerification({commit}){
+            return aws_verify.getAllAWSVerification().then(
+                res => {
+                    commit('setAllAWSVerifications', res.awsVerifications)
+                    return res
+                });
+        },
+        updateAWSVerificationStatus({commit}, params){
+            // params = { awsId, status };
+            return aws_verify.updateAWSVerificationStatus(params).then(
+                res => {
+                    commit('setVerificationStatusForAWSVerification', 
+                        { awsVerification: params.awsId, status: params.status }
+                    );
+                    return res;
+                }
+            )
+        },
+
     }
 }
 
