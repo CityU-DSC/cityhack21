@@ -23,6 +23,14 @@
     <v-row class="ml-4">
       <v-col class="mt-5">
         <h3 class="mb-5">Rules & Terms</h3>
+        <v-alert
+            border="right"
+            colored-border
+            type="warning"
+            elevation="2"
+        >
+          By registering for the competition, the participants and the unit fully agree to the above terms and conditions
+        </v-alert>
         <v-list>
           <v-list-group
               v-for="item in items"
@@ -94,11 +102,11 @@ export default {
           action: 'mdi-account-group',
           active: true,
           items: [
-            {title: 'Every student (Bachelor’s Degree Year 1 - 5, Master’s Degree, PhD Degree, Fresh Graduate, Alumni)  from all universities are welcomed.'},
-            {title: 'It is a competition tailored for Hong Kong University students (including locals and non-locals). However, participants from other oversea universities are allowed as well. But please note that the participants from other oversea universities may not be eligible to receive the souvenirs and prizes.'},
-            {title: 'A team should be composed of  3 - 5 members, over half of the HK university students (local or non-local) is required.'},
+            {title: 'Every student (Bachelor’s Degree Year 1 - 5, Master’s Degree, Ph.D. Degree, Fresh Graduate, Alumni)  from all universities are welcomed.'},
+            {title: 'It is a competition tailored for Hong Kong University students (including locals and non-locals). However, participants from other overseas universities are allowed as well. But please note that the participants from other overseas universities may not be eligible to receive the souvenirs and prizes.'},
+            {title: 'A team should be composed of  3 - 5 members, over half of the HK university students (local or non-local) is required for each team.'},
             {title: 'Teams with non-CityU students are not allowed to use Huawei Atlas 200 DK, since the provided physical room is located in CityU and open to CityU students only.'},
-            {title: 'The team-up session will be conducted on the personal panel of the website by 28th Jan. Please create a team with more than 2 members or join any public group by the end of 28th Jan. We are not responsible for finding a team for any participant.'},
+            {title: 'Please create a team with more than 2 members or join any public group by the end of 28th Jan. We are not responsible for finding a team for any participant. Please team-up with the tool on your personal panel on cityhack21.com'},
             {title: 'Every team needs to prepare their own equipment such as laptops, mobile phones, and chargers. For teams that are using Atlas 200 DK, we’ll only provide the boards and USB drives (if needed).'},
           ],
           title: 'Participants & Teams',
@@ -122,7 +130,7 @@ export default {
           items: [
             {title: 'Participants must register and form a team of at least 3 members first, then confirm that they’ll use Atlas 200 DK in the competition'},
             {title: 'Participants must be physically in HK (as we will require you to return the board right after the competition ends)'},
-            {title: 'There must be at least one CityU student in the team. Only CityU students can borrow the Atlas'},
+            {title: 'There must be at least one CityU student on the team. Only CityU students can borrow the Atlas'},
             {title: 'Only ONE session will be opened for borrowing the Atlas in CityU Student Residence'},
             {title: 'The borrowing session will be soon announced after the registration period ends.'},
           ],

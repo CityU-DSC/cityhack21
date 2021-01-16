@@ -62,10 +62,10 @@ export default {
         {
           name: 'Technical complexity',
           percentage: "35%",
-          description: "The technical skills and concepts applied. To measure how well the participants understand the technical skills and concepts.",
+          description: "The technical skills and concepts applied. To measure how well the participants understand the technical skills and concepts based on the demo.",
         },
         {
-          name: 'Originality and creativity',
+          name: 'Originality & creativity',
           percentage: "20%",
           description: "The project demonstrates insight into the problem that inspired a creative and original solution.",
         },
@@ -75,13 +75,13 @@ export default {
           description: "How thorough the solution can you come up with and on what standards can the problem be solved.",
         },
         {
-          name: 'Practicality',
+          name: 'Practicality & Usefulness',
           percentage: "15%",
           description: "Does your product serve a purpose? Justify if the presented solutions can be implemented in a practical sense. ",
         },
         {
           name: 'Pitching Skills',
-          percentage: "5%",
+          percentage: "10%",
           description: "The project should be presented well, in a professional and to the point manner, covering all of the above aspects in the specific time frame",
         },
         {
