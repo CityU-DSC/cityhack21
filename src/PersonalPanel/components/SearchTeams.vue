@@ -332,7 +332,6 @@
                         v-for="member in team.members"
                         :key="member.id"
                         :color="team.leader === member.name ? '#a64942' : null"
-                        @click="openProfileDetail(member)"
                     >
                       <v-list-item-avatar>
                         <v-img :src="member.avatarUrl"></v-img>
@@ -346,14 +345,21 @@
                       >
                         <v-icon>mdi-flag-variant</v-icon>
                       </v-list-item-icon>
-                      <v-list-item-content>
+                      <v-list-item-content @click="openProfileDetail(member)">
                         <v-list-item-title
                             v-text="member.firstName + ' ' + member.lastName"
                         ></v-list-item-title>
                         <v-list-item-subtitle
                             v-html="member.email"
                         ></v-list-item-subtitle>
+                        <v-spacer />
                       </v-list-item-content>
+
+                      <v-list-item-action v-if="editMode === team.name "
+                                        @click="manageKickMember(member._id)"
+                      >
+                        <v-btn rounded>Kick<v-icon>mdi-exit-run</v-icon></v-btn>
+                      </v-list-item-action>
                     </v-list-item>
                   </v-list-item-group>
                 </v-list>
@@ -435,6 +441,7 @@ export default {
         topic: null,
         members: null,
       },
+      kickMemberId: null,
 
     };
   },
@@ -444,6 +451,7 @@ export default {
       if (!value.private) {
         this.currentTeam.teamCode = null;
       }
+      this.searchTeams();
       console.log(value);
     },
     searchTeamName() {
@@ -457,7 +465,19 @@ export default {
     ...mapGetters("auth", ["currentUser"]),
   },
   methods: {
-    ...mapActions("teams", ["createTeam", "joinTeam", "leaveTeam", "editTeam", 'myTeam', 'searchTeam']),
+    ...mapActions("teams", ["createTeam", "joinTeam", "leaveTeam", "editTeam", 'myTeam', 'searchTeam', 'kickMember']),
+    manageKickMember(id){
+      this.kickMemberId = id;
+      this.kickMember({kickMemberId: this.kickMemberId}).then(()=> {
+        this.currentTeam.members = this.currentTeam.members.filter(member => member._id !== this.kickMemberId);
+      }).catch(err => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.message,
+        });
+      })
+    },
     async createTeamHandler() {
       if (this.$refs.createTeamForm.validate()) {
         await this.createTeam(this.newTeam).then(res => {
