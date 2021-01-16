@@ -10,5 +10,7 @@ export default {
 	create: post('/project/create'),
 	toggleVote: put('/project/toggleVote'),
 
-	edit: put('/team/edit')
+	edit: put('/project/edit'),
+
+	setStatus: put('/project/status')
 }
