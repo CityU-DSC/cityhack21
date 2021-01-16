@@ -58,19 +58,13 @@
         <v-card width="400">
           <v-img
               height="200px"
-              :src="submissionDetail.imageUrl"
+              :src="submissionDetail.imageUrl? submissionDetail.imageUrl : awsImgs[0].imageUrl"
           >
           </v-img>
 
           <v-card-text v-if="submissionDetail.imageUrl">
             <div class="font-weight-bold ml-8 mb-2">
               Status: Upload Completed
-            </div>
-          </v-card-text>
-
-          <v-card-text v-else>
-            <div class="font-weight-bold ml-8 mb-2">
-              Status: Upload incomplete
             </div>
           </v-card-text>
 
