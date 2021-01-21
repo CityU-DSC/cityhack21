@@ -24,6 +24,8 @@ import VueAnalytics from 'vue-analytics';
 
 import { firestorePlugin } from 'vuefire';
 
+import './registerServiceWorker'
+
 const dayjsPlugin = {
   install(Vue) {
     Vue.prototype.$dayjs = dayjs
