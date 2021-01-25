@@ -12,6 +12,7 @@ export default{
         currentImgUrl: state => state.currentImgUrl,
         verificationStatus: state => state.verificationStatus,
         awsVerifications: state => state.awsVerifications,
+        vuexGetAllAWSVerifications: state => state.allAWSVerifications,
     },
     mutations:{
         setCurrentImgUrl: (state, imgUrl) => {
@@ -67,7 +68,7 @@ export default{
             // params = { awsId, status };
             return aws_verify.updateAWSVerificationStatus(params).then(
                 res => {
-                    commit('setVerificationStatusForAWSVerification', 
+                    commit('setVerificationStatusForAWSVerification',
                         { awsVerification: params.awsId, status: params.status }
                     );
                     return res;
