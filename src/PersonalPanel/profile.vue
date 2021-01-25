@@ -158,12 +158,20 @@
               <v-row class="mt-5 mb-5">
                 <v-text-field
                     label="Home Address"
-                    :rules="[rules.required]"
                     v-model="userInfo.address"
-                    class="mx-2 ml-5"
-                    prepend-icon="mdi-at"
+                    class="mx-2"
+                    prepend-icon="mdi-home"
                     single-line
                 ></v-text-field>
+              </v-row>
+              <v-row class="mt-5 mb-5">
+              <v-text-field
+                  label="Referrer Account Id"
+                  v-model="userInfo.referrerAccountId"
+                    class="mx-2"
+                  prepend-icon="mdi-account"
+                  single-line
+              ></v-text-field>
               </v-row>
             </v-col>
             <v-col>
@@ -227,6 +235,7 @@ export default {
         phoneNumber: "",
         avatarUrl: "",
         address: "",
+        referrerAccountId: "",
       },
       discordImgUrl: "",
       accountDetails: {
@@ -441,7 +450,7 @@ export default {
                     Swal.fire({
                       icon: 'error',
                       title: 'Oops...',
-                      text: 'Profile did not updated successfully!',
+                      text: 'Profile did not updated successfully!' + (err.message? '\n'+err.message : ''),
                     });
                   }
               );
@@ -471,6 +480,9 @@ export default {
 
     for (let key in this.userInfo){
       this.userInfo[key] = this.currentUser[key];
+    }
+    if (this.currentUser.referrer){
+      this.userInfo.referrerAccountId = this.currentUser.referrer.accountId;
     }
 
     for (let key in this.accountDetails){
