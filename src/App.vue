@@ -10,13 +10,13 @@
 <!--      </v-progress-circular>-->
       <PreLoader />
     </v-overlay>
-    <v-dialog v-model="showDialog" max-width='500px' close>
+    <!-- <v-dialog v-model="showDialog" max-width='500px' close>
       <v-card>
         <div class="d-block text-center">
           <PromotionMaterial/>
         </div>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
     <NavBar/>
     <router-view/>
   </v-app>
@@ -24,7 +24,7 @@
 
 <script>
 import NavBar from './views/navBar.vue';
-import PromotionMaterial from './components/promotion/promotion.vue';
+// import PromotionMaterial from './components/promotion/promotion.vue';
 import CityHackLogo from "./assets/logo/logo_w.png";
 import PreLoader from "./views/preLoader";
 
@@ -39,7 +39,7 @@ export default {
   },
   components: {
     NavBar,
-    PromotionMaterial,
+    // PromotionMaterial,
     PreLoader,
   },
   async mounted() {

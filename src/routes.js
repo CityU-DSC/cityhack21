@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import LandingPage from "./views/home";
 import Overview from "./views/overView";
 import Login from "./components/Auth/login";
-import Register from "./components/Auth/register";
+// import Register from "./components/Auth/register";
 import Admin from "./views/admin";
 
 import PersonalPanel from "./PersonalPanel/home";
@@ -20,7 +20,7 @@ const routes = [
     {path: "/", component: LandingPage, name: "landing"},
     {path: "/overview", component: Overview, name: "overview"},
     {path: "/login", component: Login, name: "login"},
-    {path: "/register", component: Register, name: "register"},
+    // {path: "/register", component: Register, name: "register"},
     {path: "/admin", component: Admin, name: "admin", meta: {requiresAuth: true}},
     {path: "/personal", component: PersonalPanel, name: "personal"},
     {path: "/personal/profile", component: PersonalProfile, name: "personal_profile"},

@@ -52,7 +52,7 @@
 
       <div v-else>
         <v-btn text><router-link to="/login">Log In</router-link></v-btn>
-        <v-btn text><router-link to="/register">Register</router-link></v-btn>
+        <!-- <v-btn text><router-link to="/register">Register</router-link></v-btn> -->
       </div>
       <v-spacer/>
     </v-app-bar>
