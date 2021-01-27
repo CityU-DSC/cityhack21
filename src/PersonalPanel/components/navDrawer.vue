@@ -107,14 +107,14 @@
 						icon: 'mdi-calendar-clock',
 						page: '/personal/timeSlot',
 					},
+					//{
+					//	id: 6,
+					//	title: 'Submission',
+					//	icon: 'mdi-upload',
+					//	page: '/personal/submission',
+					//},
 					{
 						id: 6,
-						title: 'Submission',
-						icon: 'mdi-upload',
-						page: '/personal/submission',
-					},
-					{
-						id: 7,
 						title: 'Projects',
 						icon: 'mdi-projector-screen',
 						page: '/personal/projects',

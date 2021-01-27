@@ -1,14 +1,14 @@
 <template>
   <div>
     <Carousel/>
-    <v-btn
+    <!-- <v-btn
         class="mx-2 btn btn-marquee"
         dark
         x-large
         @click.stop="gotoRegister"
     >
       Registration
-    </v-btn>
+    </v-btn> -->
   </div>
 </template>
 
@@ -24,9 +24,9 @@ export default {
     return {}
   },
   methods: {
-    gotoRegister() {
-      this.$router.push({name: 'register'});
-    }
+    // gotoRegister() {
+    //   this.$router.push({name: 'register'});
+    // }
   }
 }
 </script>
