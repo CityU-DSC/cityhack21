@@ -35,10 +35,10 @@
               label="Using SageMaker?"
           ></v-switch>
           <v-spacer/>
-          <v-btn outlined color="#ff9900" @click="show = !show" class="mt-3">
+          <!-- <v-btn outlined color="#ff9900" @click="show = !show" class="mt-3">
             Create Team
             <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-row>
         <v-expand-transition>
           <v-card v-show="show" shaped elevation="12" class="mr-4 mt-5 mb-3">
