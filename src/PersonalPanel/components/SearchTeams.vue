@@ -120,7 +120,7 @@
       <v-col>
         <v-expansion-panels>
           <v-expansion-panel v-for="team in filteredTeams" :key="team.name">
-            <v-expansion-panel-header v-bind:class="{ inTeam: checkUserInTeam(team.name) }">
+            <v-expansion-panel-header v-if='team.members.length >= 3' v-bind:class="{ inTeam: checkUserInTeam(team.name) }">
               <template v-slot:default="{ open }">
                 <v-row no-gutters>
                   <v-col cols="4">
@@ -162,7 +162,7 @@
                 </v-row>
               </template>
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content  v-if='team.members.length >= 3' >
               <v-row class="mt-3">
                 <v-card
                     v-if="editMode !== team.name"
