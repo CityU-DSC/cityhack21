@@ -55,7 +55,7 @@ export default {
       let csvContent = "data:text/csv;charset=utf-8,";
       csvContent += [
         Object.keys(this.usersList[0]).join(','),
-        ...this.usersList.map(item => Object.values(item).join(","))
+        ...this.usersList.map(item => Object.values(item).map(x => x?x.toString().replace(',','，'):"").join(","))
       ]
           .join("\n").replace(/(^\[)|(\]$)/gm, "");
 
