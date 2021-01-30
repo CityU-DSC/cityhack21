@@ -75,6 +75,7 @@
               show-week="false"
               start='2021-01-30:09:00:00'
               end='2021-01-31:23:59:59'
+              style='background-color: #121212; border: none;'
               interval-count='17'
               :first-interval='8.5'
               :hide-header="false"
@@ -142,20 +143,20 @@ export default {
         },
         {
           name: 'Hacking Time!',
-          start: new Date('2021-01-30T10:30:00'),
+          start: new Date('2021-01-30T10:40:00'),
           end: new Date('2021-01-31T13:30:00'),
           color: '#3700B3',
           timed: true,
         },
         {
-          name: 'Mentoring Session 1',
+          name: 'Atlas Mentoring Session 1',
           start: new Date('2021-01-30T14:00:00'),
           end: new Date('2021-01-30T15:00:00'),
           color: 'cyan darken-1',
           timed: true,
         },
         {
-          name: 'Atlas Mentoring Session',
+          name: 'Atlas Mentoring Session 2',
           start: new Date('2021-01-30T15:00:00'),
           end: new Date('2021-01-30T16:00:00'),
           color: 'cyan darken-2',
@@ -163,40 +164,24 @@ export default {
         },
 
         {
-          name: 'Mentoring Session 2',
+          name: 'Atlas Mentoring Session 3',
           start: new Date('2021-01-30T16:00:00'),
           end: new Date('2021-01-30T17:00:00'),
           color: 'cyan darken-3',
           timed: true,
         },
-
-        {
-          name: 'Mentoring session 3',
-          start: new Date('2021-01-30T19:30:00'),
-          end: new Date('2021-01-30T20:30:00'),
-          color: 'cyan darken-4',
-          timed: true,
-        },
-
         {
           name: 'Warm Up Session',
           start: new Date('2021-01-31T10:00:00'),
-          end: new Date('2021-01-31T10:20:00'),
+          end: new Date('2021-01-31T10:30:00'),
           color: '#000000',
           timed: true,
         },
         {
           name: 'Day 2 Briefing',
-          start: new Date('2021-01-31T10:20:00'),
+          start: new Date('2021-01-31T10:30:00'),
           end: new Date('2021-01-31T11:00:00'),
           color: '#BB86FC',
-          timed: true,
-        },
-        {
-          name: 'Mentoring Session 4',
-          start: new Date('2021-01-31T11:00:00'),
-          end: new Date('2021-01-31T12:00:00'),
-          color: 'cyan darken-4',
           timed: true,
         },
         {
@@ -210,15 +195,15 @@ export default {
 
         {
           name: 'Briefing before Pitching',
-          start: new Date('2021-01-31T14:10:00'),
-          end: new Date('2021-01-31T14:30:00'),
+          start: new Date('2021-01-31T14:00:00'),
+          end: new Date('2021-01-31T14:15:00'),
           color: '#BB86FC',
           timed: true,
         },
         {
           name: 'First Round Pitching',
-          start: new Date('2021-01-31T14:30:00'),
-          end: new Date('2021-01-31T15:40:00'),
+          start: new Date('2021-01-31T14:15:00'),
+          end: new Date('2021-01-31T15:30:00'),
           color: '#CF6679',
           timed: true,
         },
@@ -226,29 +211,29 @@ export default {
 
         {
           name: 'Judges Marking Time',
-          start: new Date('2021-01-31T15:40:00'),
-          end: new Date('2021-01-31T16:00:00'),
+          start: new Date('2021-01-31T15:30:00'),
+          end: new Date('2021-01-31T15:45:00'),
           color: 'black',
           timed: true,
         },
         {
           name: 'Final Round Pitching',
-          start: new Date('2021-01-31T16:00:00'),
-          end: new Date('2021-01-31T17:50:00'),
+          start: new Date('2021-01-31T15:45:00'),
+          end: new Date('2021-01-31T17:00:00'),
           color: '#CF6679',
           timed: true,
         },
         {
           name: 'Judges Marking Time. Voting Time',
-          start: new Date('2021-01-31T17:50:00'),
-          end: new Date('2021-01-31T18:10:00'),
+          start: new Date('2021-01-31T17:00:00'),
+          end: new Date('2021-01-31T17:30:00'),
           color: 'black',
           timed: true,
         },
 
         {
           name: 'Closing Ceremony',
-          start: new Date('2021-01-31T18:10:00'),
+          start: new Date('2021-01-31T17:30:00'),
           end: new Date('2021-01-31T18:30:00'),
           color: '#BB86FC',
           timed: true,
