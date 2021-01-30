@@ -8,7 +8,7 @@
 <script>
 // set the competition date and time in here.
 // default is (just for testing) Jan 11 2021, 9:00 am
-const competitionDate = "2021-01-29T15:59:59.003Z";
+const competitionDate = "2021-01-31T05:29:59.003Z";
 const MILLISECONDS_SECOND = 1000;
 const MILLISECONDS_MINUTE = 60 * MILLISECONDS_SECOND;
 const MILLISECONDS_HOUR = 60 * MILLISECONDS_MINUTE;
@@ -116,7 +116,7 @@ export default {
         this.hours + " hours " +
         this.minutes + " minutes " +
         this.seconds + " seconds ";
-      this.infoCompetition = "COMPETITION STARTS"
+      this.infoCompetition = "Submission Deadline"
     },
   },
   mounted() {

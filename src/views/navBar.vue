@@ -34,7 +34,7 @@
           @click.stop="setDrawer(true)"
           width
       ></v-app-bar-nav-icon>
-      <v-btn text><a href='https://cityu.zoom.us/j/94666607657' target='_blank'>Join</a></v-btn>
+      <v-btn text><a href='https://cityu.zoom.us/j/94666607657' target='_blank'>Join Zoom</a></v-btn>
       <v-btn text><router-link v-if="isLoggedIn" to="/personal">Personal</router-link></v-btn>
       <v-menu offset-y v-if="isLoggedIn" cols="3" lg="1">
         <template v-slot:activator="{ on, attrs }">

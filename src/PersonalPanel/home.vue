@@ -13,12 +13,22 @@
           <AWSVerified v-else-if="this.verificationStatus === 'success'"/>
           <AWSRejected v-else/>
         </v-col>
+
+        <v-col>
+          <a href="https://docs.google.com/document/d/1gfcLIOJckvMmaUUNu-FZEe4aOPTZ7D2U3lTbtpA8lNA/edit?usp=sharing">
+            <h3 style="color: #ff9900" class="mb-5">EVENT + PITCHING RUNDOWN</h3>
+          </a>
+        </v-col>
       </v-col>
 
       <v-col class="ml-5">
         <h3 class="mb-5">Referrer Board</h3>
         <ReferrerBoard/>
       </v-col>
+    </v-row>
+    <v-row class="ml-4">
+
+
     </v-row>
     <v-row class="ml-4">
       <v-col class="mt-5">
