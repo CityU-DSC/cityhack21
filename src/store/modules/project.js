@@ -18,7 +18,7 @@ export default {
         setCurrentProject: (state, project) => state.currentProject = project,
         toggleProjectVote: (state, voteProjectId) => {
           for (let project of state.projectLists ){
-            if (project._id == voteProjectId._id){
+            if (project._id === voteProjectId._id){
               project.voted = !project.voted;
             }
           }
@@ -82,18 +82,18 @@ export default {
 
                     const currentProject = dc(state.currentProject);
                     const projectLists = dc(state.projectLists);
-                    
-                    if (currentProject && currentProject._id == params.projectId){
+
+                    if (currentProject && currentProject._id === params.projectId){
                         currentProject.status = params.status;
-                        commit('setCurrentProject', currentProject)                        
+                        commit('setCurrentProject', currentProject)
                     }
                     for (let project of projectLists){
-                        if (project._id == params.projectId){
+                        if (project._id === params.projectId){
                             project.status = params.status;
                         }
                     }
-                    commit('setProjectsList', projectLists)
-                    
+                    commit('setProjectsList', projectLists);
+
                     return res;
                 }
             )
