@@ -70,6 +70,7 @@
                 <li>Date: <span class='highlight'>30 - 31 JAN 2021</span></li>
                 <li>Format: <span class='highlight'>Virtual + Physical</span></li>
                 <li>Participants: <span class='highlight'> > 120 students</span></li>
+                <li>Zoom Link: <span class='highlight'><a href='https://cityu.zoom.us/j/94666607657' target='_blank'>https://cityu.zoom.us/j/94666607657</a></span></li>
               </ul>
               <br>
               <h2>Cooperation with Corporation</h2>
