@@ -412,7 +412,7 @@ export default {
     },
     async upToFireBase(){
       //upload pdf
-      const storageRef = storage.ref().child(`presentation/${this.uploadPdf.name}`);
+      const storageRef = storage.ref().child(`presentation/${Date.now()+'_' +this.uploadPdf.name}`);
       await storageRef.put(this.uploadPdf.file).then(async snapshot => {
         await snapshot.ref.getDownloadURL().then(async url => {
           try {
@@ -441,7 +441,7 @@ export default {
         })
       });
       // upload logo image
-      let mountRef = storage.ref().child(`logo/${this.logoImg.name}`);
+      let mountRef = storage.ref().child(`logo/${Date.now()+'_' +this.logoImg.name}`);
       await mountRef.put(this.logoImg.file).then(async snapshot => {
         await snapshot.ref.getDownloadURL().then(async url => {
           this.projectDetail.logoUrl = url;
