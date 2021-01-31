@@ -33,16 +33,18 @@
                     </v-icon>
                   </v-btn>
                 </a>
-                <v-btn
-                    color="blue-grey"
-                    class="ma-2 white--text"
-                    :disabled="!pdfTempUrl"
-                >
-                  Presentation
-                  <v-icon right>
-                    mdi-cloud-download
-                  </v-icon>
-                </v-btn>
+                <a :href="projectDetail.pdfUrl" target="_blank">
+                  <v-btn
+                      color="#2b3137"
+                      class="ma-2 white--text"
+                      :disabled="!projectDetail.pdfUrl"
+                  >
+                    Presentation
+                    <v-icon right>
+                      mdi-cloud-download
+                    </v-icon>
+                  </v-btn>
+                </a>
               </v-col>
             </v-row>
           </v-parallax>
@@ -68,6 +70,7 @@
               </v-avatar>
             </v-col>
           </v-row>
+          <v-row><v-col class='ml-4'><span v-if='projectDetail.pdfUrl' style='color: lightgreen;'> PDF Uploaded</span></v-col></v-row>
           <v-row class="pa-4" style="position: relative; top: -40px;">
             <v-card-title>{{ projectDetail.name }}</v-card-title>
             <v-card-text>
@@ -136,7 +139,6 @@
           >
             <small style="color: #ff9900;">Please Upload Your Logo Image</small>
             <v-file-input
-                :rules="[rules.logoSize]"
                 accept="image/png, image/jpeg, image/bmp"
                 placeholder="upload your logo"
                 prepend-icon="mdi-camera"
@@ -312,7 +314,7 @@ export default {
               || 'Url should be valid'
         ],
         textArea: [
-          v => v.length <= 100 || 'Maximum 300 characters',
+          v => v.length <= 300 || 'Maximum 300 characters',
           v => v.length >= 50 || 'Too short buddy, at least 50 characters',
         ],
         techs: [
@@ -564,6 +566,7 @@ export default {
       }
       this.logoImg.url = this.projectDetail.logoUrl;
       this.uploadPdf.url = this.projectDetail.pdfUrl;
+      // this.pdfTempUrl = this.projectDetail.pdfUrl;
     }).catch(err => console.error(err));
   },
 }
